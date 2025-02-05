@@ -1,0 +1,10 @@
+[
+    {
+        "key": "status",
+        "value": "301"
+    },
+    {
+        "key": "Location",
+        "value": "https://a.test/other_path"
+    }
+]

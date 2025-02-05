@@ -1,0 +1,8 @@
+<head>
+<meta http-equiv="content-security-policy" content="img-src 'self'; script-src 'unsafe-inline'">
+</head>
+<script>
+  var w = window.open("", "_blank");
+  w.document.body.innerHTML =
+    "<img src='https://a.test/report/?leak=c669086-img' />";
+</script>

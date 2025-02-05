@@ -1,0 +1,6 @@
+[
+    {
+        "key": "allow-csp-from",
+        "value": "https://leak.test"
+    }
+]

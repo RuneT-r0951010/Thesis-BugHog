@@ -1,0 +1,12 @@
+<head>
+<meta http-equiv="content-security-policy" content="default-src 'self'">
+</head>
+--boundary Content-type: text/html Page 1:
+<script>
+  document.location.href = "https://a.test/report/?leak=f1223743";
+</script>
+--boundary Content-type: text/html Page 2:
+<script>
+  document.location.href = "https://a.test/report/?leak=f1223743";
+</script>
+--boundary

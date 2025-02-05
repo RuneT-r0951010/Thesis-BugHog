@@ -1,0 +1,8 @@
+<head>
+<meta http-equiv="content-security-policy" content="default-src 'self';script-src 'self' 'unsafe-inline'">
+</head>
+<script>
+  var d =
+    "javascript:'<iframe src=https://a.test/report/?leak=c747847-iframe />'";
+  window.open(d, "_self");
+</script>
