@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <!-- Test script with mismatched case path -->
+    <script src="https://localhost/a/b/c/d/script.js"></script>
+
+    <!-- Log the outcome -->
+    <script>
+        window.onload = function () {
+            var scriptLoaded = false;
+            var scriptElement = document.querySelector("script[src='https://localhost/a/b/c/d/script.js']");
+            if (scriptElement && scriptElement.textContent) {
+                scriptLoaded = true;
+            }
+
+            // Report the outcome
+            fetch("https://a.test/report/?leak=c590505-GenAI&loaded=" + scriptLoaded, {
+                method: "GET"
+            });
+        };
+    </script>
+</body>
+</html>

