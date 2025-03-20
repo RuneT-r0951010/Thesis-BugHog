@@ -7,7 +7,7 @@ iframeHref.addEventListener("load", function () {
       .getElementById("iframe_href")
       .contentWindow.document.body.innerHTML.indexOf("IT WORKED") > -1
   ) {
-    document.location.href = "https://a.test/report/?leak=c909865";
+    document.location.href = "https://a.test/report/?leak=c909865-CSP";
   }
 
   iframeHref.contentWindow.location.href = "javascript:'IT WORKED'";

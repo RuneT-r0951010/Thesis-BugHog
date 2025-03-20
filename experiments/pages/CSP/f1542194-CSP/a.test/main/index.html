@@ -7,9 +7,9 @@
   document.addEventListener("securitypolicyviolation", function (e) {
     console.dir(e);
     alert(e.blockedURI);
-    if (e.blockedURI.indexOf("f1542194") > -1) {
+    if (e.blockedURI.indexOf("f1542194-CSP") > -1) {
       document.getElementById("iframe").src =
-        "https://a.test/report/?leak=f1542194";
+        "https://a.test/report/?leak=f1542194-CSP";
     }
   });
 </script>

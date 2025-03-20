@@ -2,7 +2,7 @@
 <meta http-equiv="content-security-policy" content="default-src 'none'; script-src 'unsafe-inline'; frame-src https://leak.test">
 </head>
 <!DOCTYPE html>
-<iframe id="f" src="https://leak.test/CSP/c1117687/main"></iframe>
+<iframe id="f" src="https://leak.test/CSP/c1117687-CSP/main"></iframe>
 <script>
   f.onload = async function () {
     var promisify = function promisify(func) {
@@ -27,7 +27,7 @@
     var writer = await promisify(entry.createWriter.bind(entry))();
     writer.write(
       new Blob([
-        "<!doctype html><script>var req = new XMLHttpRequest(); req.onreadystatechange = function () { if (this.readyState == 4 && this.status == 200) { document.location.href = 'https://a.test/report/?leak=c1117687'; } }; req.open('GET', 'https://a.test/CSP/c1117687/secret', true); req.send();<\/script>",
+        "<!doctype html><script>var req = new XMLHttpRequest(); req.onreadystatechange = function () { if (this.readyState == 4 && this.status == 200) { document.location.href = 'https://a.test/report/?leak=c1117687-CSP'; } }; req.open('GET', 'https://a.test/CSP/c1117687-CSP/secret', true); req.send();<\/script>",
       ])
     );
     f.contentWindow.frames[0].location = entry.toURL();

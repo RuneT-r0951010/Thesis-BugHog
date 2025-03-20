@@ -5,6 +5,6 @@
     },
     {
         "key": "Location",
-        "value": "javascript: window.open('https://a.test/report/?leak=c967780')"
+        "value": "javascript: window.open('https://a.test/report/?leak=c967780-CSP')"
     }
 ]

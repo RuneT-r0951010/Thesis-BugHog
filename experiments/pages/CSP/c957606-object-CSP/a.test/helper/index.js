@@ -9,7 +9,7 @@ window.addEventListener("load", function () {
         setTimeout(function () {
             var iframeDocument = iframe.contentWindow.document;
             var object = iframeDocument.createElement("object");
-            object.data = "/report/?leak=c957606-object";
+            object.data = "/report/?leak=c957606-object-CSP";
             iframeDocument.body.appendChild(object);
         }, 1000);
     }, 2000);

@@ -8,14 +8,14 @@
     <script>
       function breakit1() {
         open(
-          "javascript:'<object data=https://a.test/report/?leak=c971231-object>'",
+          "javascript:'<object data=https://a.test/report/?leak=c971231-object-CSP>'",
           "_self"
         );
       }
 
       function breakit2() {
         location.href =
-          "javascript:'<object data=https://a.test/report/?leak=c971231-object>'";
+          "javascript:'<object data=https://a.test/report/?leak=c971231-object-CSP>'";
       }
       window.addEventListener("load", function () {
         document.getElementById("123").click();

@@ -1,0 +1,18 @@
+<head>
+<meta http-equiv="content-security-policy" content="form-action 'none'">
+</head>
+<html>
+  <body>
+    <!-- Form with target="_blank" -->
+    <form action="https://a.test/report/?leak=c630332-GenAI2-CSP" method="POST" target="_blank">
+      <input type="submit" value="Submit Form">
+    </form>
+
+    <!-- Log the outcome -->
+    <script>
+      window.onload = function () {
+        document.querySelector("form").submit();
+      };
+    </script>
+  </body>
+</html>

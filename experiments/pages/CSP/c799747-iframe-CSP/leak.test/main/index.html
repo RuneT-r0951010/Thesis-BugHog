@@ -3,7 +3,7 @@
 </head>
 <script nonce="test">
   var attackerControlledString =
-    "<iframe src=https://a.test/report/?leak=c799747-iframe><\/iframe>";
+    "<iframe src=https://a.test/report/?leak=c799747-iframe-CSP><\/iframe>";
   var blob = new Blob([attackerControlledString], { type: "text/html" });
   var url = URL.createObjectURL(blob);
   location.href = url;

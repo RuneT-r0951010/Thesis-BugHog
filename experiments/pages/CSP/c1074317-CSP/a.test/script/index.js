@@ -14,6 +14,6 @@ var draw_image = function draw_image() {
 setTimeout(function () {
   var error_message = document.getElementsByTagName("p")[0].innerHTML;
   if (error_message.indexOf("secret_info=123") > -1) {
-    document.location.href = "https://a.test/report/?leak=c1074317";
+    document.location.href = "https://a.test/report/?leak=c1074317-CSP";
   }
 }, 1000);
