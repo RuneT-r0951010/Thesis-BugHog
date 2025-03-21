@@ -1,5 +1,6 @@
 <head>
-    <link rel="icon" href="https://a.test/report/?leak=c482558-GenAI">
+    <meta http-equiv="content-security-policy" content="default-src 'none'">
+    <link rel="icon" href="https://a.test/report/?leak=c482558-GenAI-CSP">
     <script>
         // Log CSP violations (if any)
         document.addEventListener("securitypolicyviolation", (e) => {
@@ -10,7 +11,7 @@
         window.addEventListener("load", () => {
             const favicon = document.createElement("link");
             favicon.rel = "icon";
-            favicon.href = "https://a.test/report/?leak=c482558-GenAI";
+            favicon.href = "https://a.test/report/?leak=c482558-GenAI-CSP";
             document.head.appendChild(favicon);
         });
     </script>

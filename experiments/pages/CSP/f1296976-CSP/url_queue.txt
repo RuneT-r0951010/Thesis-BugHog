@@ -1,2 +1,2 @@
-https://a.test/CSP/f1296976/main
+https://a.test/CSP/f1296976-CSP/main
 https://a.test/report/?leak=baseline

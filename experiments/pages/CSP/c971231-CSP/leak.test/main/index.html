@@ -1,3 +1,6 @@
+<head>
+<meta http-equiv="content-security-policy" content="script-src 'unsafe-inline' 'self';img-src 'self'">
+</head>
 <html>
   <body>
     <button id="123" onclick="breakit1()">CSP TEST1</button>
@@ -5,14 +8,14 @@
     <script>
       function breakit1() {
         open(
-          "javascript:'<img src=https://a.test/report/?leak=c971231>'",
+          "javascript:'<img src=https://a.test/report/?leak=c971231-CSP>'",
           "_self"
         );
       }
 
       function breakit2() {
         location.href =
-          "javascript:'<img src=https://a.test/report/?leak=c971231>'";
+          "javascript:'<img src=https://a.test/report/?leak=c971231-CSP>'";
       }
       window.addEventListener("load", function () {
         document.getElementById("123").click();

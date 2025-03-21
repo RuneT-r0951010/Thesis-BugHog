@@ -1,2 +1,2 @@
-https://leak.test/CSP/c482558-GenAI/main
+https://leak.test/CSP/c482558-GenAI-CSP/main
 https://a.test/report/?leak=baseline

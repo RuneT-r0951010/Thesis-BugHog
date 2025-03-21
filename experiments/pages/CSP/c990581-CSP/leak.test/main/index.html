@@ -1,8 +1,11 @@
+<head>
+<meta http-equiv="content-security-policy" content="script-src 'unsafe-inline'">
+</head>
 <body>
   <script>
     var blob = new Blob(
       [
-        "<script>\neval('location.href = \"https://a.test/report/?leak=c990581\"');\n<\/script>",
+        "<script>\neval('location.href = \"https://a.test/report/?leak=c990581-CSP\"');\n<\/script>",
       ],
       {
         type: "text/html",

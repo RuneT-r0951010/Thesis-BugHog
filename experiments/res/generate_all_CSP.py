@@ -81,9 +81,25 @@ def insert_meta_tag(page, meta_content):
 def remove_head_content(page):
     with open(page, 'r') as file:
         content = file.read()
-    updated_content = re.sub(r'<meta.*?>', '', content, flags=re.DOTALL)
-    with open(page, 'w') as file:
+    # Match the <head>...</head> section
+    head_pattern = re.compile(r'(<head.*?>)(.*?)(</head>)', re.DOTALL)
+    def remove_meta_tags(match):
+        head_open = match.group(1)  # <head> or <head attributes>
+        head_content = match.group(2)  # Content inside <head>
+        head_close = match.group(3)  # </head>
+
+        # Remove only <meta> tags inside the <head> section
+        cleaned_head_content = re.sub(r'<meta[^>]*?>', '', head_content)
+
+        return head_open + cleaned_head_content + head_close
+
+    # Apply the meta removal only inside <head>
+    updated_content = head_pattern.sub(remove_meta_tags, content)
+
+    with open(page, 'w', encoding='utf-8') as file:
         file.write(updated_content)
+
+    
 
 # Headers.json => meta tag
 def header_to_meta(index, header):
@@ -104,11 +120,16 @@ def meta_to_header(index, header):
 
 # bug_id-CSP
 def update_bug_id_in_content(bug_id, new_relative_path):
-    with open(new_relative_path, "r") as f:
-        content = f.read()
-        updated_content = re.sub(f'{bug_id}', f'{bug_id}-CSP', content, flags=re.DOTALL)
-    with open(new_relative_path, 'w') as f:
-        f.write(updated_content)
+    try:
+        with open(new_relative_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        
+        updated_content = re.sub(re.escape(bug_id), f"{bug_id}-CSP", content, flags=re.DOTALL)
+        
+        with open(new_relative_path, 'w', encoding="utf-8") as f:
+            f.write(updated_content)
+    except:
+        return
 
 
 CSP_tests_folder = "../pages/CSP"
@@ -132,14 +153,14 @@ for PoC_folder in [os.path.join(CSP_tests_folder, d) for d in os.listdir(CSP_tes
         relative_path = os.path.join(new_PoC_folder, domain_folder)  # Combine the parent folder with the subdirectory name
         _, ext = os.path.splitext(domain_folder)
 
+        update_bug_id_in_content(bug_id, relative_path) # for when its queue.txt
+
         if os.path.isdir(relative_path):  # Use full path for isdir check
 
             for page_folder, _, files in os.walk(relative_path):
                 for file in files:
                     new_relative_path = os.path.join(page_folder, file)
-
-                    if os.path.exists(new_relative_path):
-                        update_bug_id_in_content(bug_id, new_relative_path)
+                    update_bug_id_in_content(bug_id, new_relative_path)
             
                 index = os.path.join(page_folder, "index.html")
                 header = os.path.join(page_folder, "headers.json")
@@ -154,4 +175,4 @@ for PoC_folder in [os.path.join(CSP_tests_folder, d) for d in os.listdir(CSP_tes
                         meta_to_header(index, header)
 
         else:
-            break
+            continue
