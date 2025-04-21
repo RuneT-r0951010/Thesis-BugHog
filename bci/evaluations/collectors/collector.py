@@ -1,5 +1,4 @@
 import logging
-from abc import abstractmethod
 from enum import Enum
 
 from bci.evaluations.collectors.base import BaseCollector
@@ -34,10 +33,10 @@ class Collector:
         for collector in self.collectors:
             collector.stop()
 
-    @abstractmethod
     def collect_results(self) -> dict:
         all_data = {}
         for collector in self.collectors:
+            collector.parse_data()
             all_data.update(collector.data)
         logger.debug(f'Collected data: {all_data}')
         return all_data

@@ -1,4 +1,5 @@
 import logging
+import time
 
 import bci.database.mongo.container as mongodb_container
 from bci.configuration import Global, Loggers
@@ -11,12 +12,12 @@ from bci.evaluations.logic import (
     EvaluationParameters,
     TestParameters,
 )
-from bci.evaluations.outcome_checker import OutcomeChecker
 from bci.search_strategy.bgb_search import BiggestGapBisectionSearch
 from bci.search_strategy.bgb_sequence import BiggestGapBisectionSequence
 from bci.search_strategy.composite_search import CompositeSearch
 from bci.search_strategy.sequence_strategy import SequenceFinished, SequenceStrategy
-from bci.version_control.factory import StateFactory
+from bci.version_control.state_result_factory import StateResultFactory
+from bci.version_control.state_factory import StateFactory
 from bci.version_control.states.revisions.firefox import BINARY_AVAILABILITY_MAPPING
 from bci.web.clients import Clients
 
@@ -83,36 +84,64 @@ class Main:
             self.__update_state(is_running=False, status='idle', queue=self.eval_queue)
 
     def run_single_evaluation(self, eval_params: EvaluationParameters, worker_manager: WorkerManager) -> None:
-        browser_name = eval_params.browser_configuration.browser_name
-        experiment_name = eval_params.evaluation_range.mech_group
+        # Quick fix: we attempt a couple of retries for each evaluation, to make sure pinpointing is comprehensive.
+        # TODO: Pinpoint the issue that causes pinpointing to be incomprehensive. Presumably, this is caused by not all
+        # states being evaluated upon deciding for the next state to be evaluated.
+        nb_of_iterations = 3
+        for i in range(1, nb_of_iterations + 1):
+            start_time = time.time()
+            browser_name = eval_params.browser_configuration.browser_name
+            experiment_name = eval_params.evaluation_range.mech_group
+            search_strategy = self.create_sequence_strategy(eval_params)
 
-        logger.info(f"Starting evaluation for experiment '{experiment_name}' with browser '{browser_name}'")
+            logger.info(f"Starting evaluation for experiment '{experiment_name}' with browser '{browser_name}', iteration {i}/{nb_of_iterations}.")
+            try:
+                while (self.stop_gracefully or self.stop_forcefully) is False:
+                    # Update search strategy with new potentially new results
+                    current_state = search_strategy.next()
 
-        search_strategy = self.create_sequence_strategy(eval_params)
+                    # Prepare worker parameters
+                    worker_params = eval_params.create_worker_params_for(current_state, self.db_connection_params)
 
-        try:
-            while (self.stop_gracefully or self.stop_forcefully) is False:
-                # Update search strategy with new potentially new results
-                current_state = search_strategy.next()
+                    # Start worker to perform evaluation
+                    worker_manager.start_test(worker_params)
 
-                # Prepare worker parameters
-                worker_params = eval_params.create_worker_params_for(current_state, self.db_connection_params)
+            except SequenceFinished:
+                iteration_time = round(time.time() - start_time)
+                worker_manager.wait_until_all_evaluations_are_done()
+                logger.debug(f"Last experiment has finished for iteration {i}/{nb_of_iterations}. This iteration took {iteration_time}s.")
 
-                # Start worker to perform evaluation
-                worker_manager.start_test(worker_params)
+        # Retry all tests with a dirty result once.
+        self.retry_dirty_tests(eval_params, worker_manager)
 
-        except SequenceFinished:
-            logger.debug('Last experiment has started')
-            self.state['reason'] = 'finished'
-            self.__update_eval_queue(eval_params.evaluation_range.mech_group, 'done')
+        self.state['reason'] = 'finished'
+        self.__update_eval_queue(eval_params.evaluation_range.mech_group, 'done')
+
+    def retry_dirty_tests(self, eval_params: EvaluationParameters, worker_manager: WorkerManager) -> None:
+        state_result_factory = StateResultFactory()
+        dirty_states = MongoDB().get_evaluated_states(eval_params, None, state_result_factory, dirty=True)
+        if (nb_of_dirty_states := len(dirty_states)) == 0:
+            logger.info("No tests are associated with a dirty result.")
+            return
+
+        logger.info(f"Retrying {nb_of_dirty_states} tests with a dirty result...")
+        for dirty_state in dirty_states:
+            if self.stop_gracefully or self.stop_forcefully:
+                return
+            worker_params = eval_params.create_worker_params_for(dirty_state, self.db_connection_params)
+            test_params = worker_params.create_test_params()
+            MongoDB().remove_datapoint(test_params)
+            worker_manager.start_test(worker_params)
+        worker_manager.wait_until_all_evaluations_are_done()
+        dirty_states_after_retry = MongoDB().get_evaluated_states(eval_params, None, state_result_factory, dirty=True)
+        logger.info(f"Dirty test results reduced from {nb_of_dirty_states} to {len(dirty_states_after_retry)}.")
 
     @staticmethod
     def create_sequence_strategy(eval_params: EvaluationParameters) -> SequenceStrategy:
         sequence_config = eval_params.sequence_configuration
         search_strategy = sequence_config.search_strategy
         sequence_limit = sequence_config.sequence_limit
-        outcome_checker = OutcomeChecker(sequence_config)
-        state_factory = StateFactory(eval_params, outcome_checker)
+        state_factory = StateFactory(eval_params)
 
         if search_strategy == 'bgb_sequence':
             strategy = BiggestGapBisectionSequence(state_factory, sequence_limit)

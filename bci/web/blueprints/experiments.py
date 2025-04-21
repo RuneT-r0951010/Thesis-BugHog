@@ -140,7 +140,7 @@ def report_leak_if_contains(expected_header_name: str, expected_header_value: st
     )
 
 
-@exp.route("/<string:project>/<string:experiment>/<string:file_name>.py")
+@exp.route("/<string:project>/<string:experiment>/<string:file_name>.py", methods=["GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"])
 def python_evaluation(project: str, experiment: str, file_name: str):
     """
     Evaluates the python script and returns its result.
@@ -157,4 +157,15 @@ def python_evaluation(project: str, experiment: str, file_name: str):
     sys.modules[module_name] = module
     spec.loader.exec_module(module)
 
-    return module.main(request)
+    def report_leak() -> None:
+        remote_ip = request.headers.get("X-Real-IP")
+        response_data = {
+            "url": url_for("experiments.report_endpoint", leak=experiment),
+            "method": request.method,
+            "headers": dict(request.headers),
+            "content": request.data.decode("utf-8"),
+        }
+
+        requests.post(f"http://{remote_ip}:5001/report/", json=response_data, timeout=5)
+
+    return module.main(request, report_leak)

@@ -15,12 +15,11 @@ from bci.evaluations.logic import (
     DatabaseParameters,
     EvaluationParameters,
     PlotParameters,
-    StateResult,
     TestParameters,
     TestResult,
 )
-from bci.evaluations.outcome_checker import OutcomeChecker
-from bci.version_control.states.state import State, StateCondition
+from bci.version_control.state_result_factory import StateResultFactory
+from bci.version_control.states.state import State
 
 logger = logging.getLogger(__name__)
 
@@ -120,6 +119,14 @@ class MongoDB:
                 raise ServerException(f"Could not find collection '{name}'")
         return self._db[name]
 
+    def get_all_collection_names_for_browser(self, browser_name: str) -> list[str]:
+        """
+        Returns all collections associated with the given browser.
+        """
+        if self._db is None:
+            raise ServerException('Database server does not have a database')
+        return self._db.list_collection_names(filter={'name': {'$regex': rf'^.+_{browser_name}$'}})
+
     @property
     def gridfs(self) -> GridFS:
         if self._db is None:
@@ -127,10 +134,13 @@ class MongoDB:
         return GridFS(self._db)
 
     def store_result(self, result: TestResult):
+        """
+        Upserts the result.
+        """
         browser_config = result.params.browser_configuration
         eval_config = result.params.evaluation_configuration
         collection = self.__get_data_collection(result.params)
-        document = {
+        query = {
             'browser_automation': eval_config.automation,
             'browser_version': result.browser_version,
             'binary_origin': result.binary_origin,
@@ -139,27 +149,30 @@ class MongoDB:
             'cli_options': browser_config.cli_options,
             'extensions': browser_config.extensions,
             'state': result.params.state.to_dict(),
-            'mech_group': result.params.mech_group,
-            'results': result.data,
-            'dirty': result.is_dirty,
-            'ts': str(datetime.now(timezone.utc).replace(microsecond=0)),
+            'mech_group': result.params.mech_group
         }
         if result.driver_version:
-            document['driver_version'] = result.driver_version
+            query['driver_version'] = result.driver_version
 
         if browser_config.browser_name == 'firefox':
             build_id = self.get_build_id_firefox(result.params.state)
             if build_id is None:
-                document['artisanal'] = True
-                document['build_id'] = 'artisanal'
+                query['artisanal'] = True
+                query['build_id'] = 'artisanal'
             else:
-                document['build_id'] = build_id
-
-        collection.insert_one(document)
+                query['build_id'] = build_id
+        update = {
+            '$set': {
+                'results': result.data,
+                'dirty': result.is_dirty,
+                'ts': str(datetime.now(timezone.utc).replace(microsecond=0)),
+            }
+        }
+        collection.update_one(query, update, upsert=True)
 
     def get_result(self, params: TestParameters) -> Optional[TestResult]:
         collection = self.__get_data_collection(params)
-        query = self.__to_query(params)
+        query = self.__to_test_query(params)
         document = collection.find_one(query)
         if document:
             return params.create_test_result_with(
@@ -171,12 +184,12 @@ class MongoDB:
 
     def has_result(self, params: TestParameters) -> bool:
         collection = self.__get_data_collection(params)
-        query = self.__to_query(params)
+        query = self.__to_test_query(params)
         nb_of_documents = collection.count_documents(query)
         return nb_of_documents > 0
 
     def get_evaluated_states(
-        self, params: EvaluationParameters, boundary_states: tuple[State, State], outcome_checker: OutcomeChecker
+        self, params: EvaluationParameters, boundary_states: Optional[tuple[State, State]], result_factory: StateResultFactory, dirty: Optional[bool]=None
     ) -> list[State]:
         collection = self.get_collection(params.database_collection, create_if_not_found=True)
         query = {
@@ -185,11 +198,12 @@ class MongoDB:
             'state.browser_name': params.browser_configuration.browser_name,
             'results': {'$exists': True},
             'state.type': 'version' if params.evaluation_range.only_release_revisions else 'revision',
-            'state.revision_number': {
+        }
+        if boundary_states is not None:
+            query['state.revision_number'] = {
                 '$gte': boundary_states[0].revision_nb,
                 '$lte': boundary_states[1].revision_nb,
-            },
-        }
+            }
         if params.browser_configuration.extensions:
             query['extensions'] = {
                 '$size': len(params.browser_configuration.extensions),
@@ -204,20 +218,17 @@ class MongoDB:
             }
         else:
             query['cli_options'] = []
+        if dirty is not None:
+            query['dirty'] = dirty
         cursor = collection.find(query)
         states = []
         for doc in cursor:
             state = State.from_dict(doc['state'])
-            state.result = StateResult.from_dict(doc['results'], is_dirty=doc['dirty'])
-            state.outcome = outcome_checker.get_outcome(state.result)
-            if doc['dirty']:
-                state.condition = StateCondition.FAILED
-            else:
-                state.condition = StateCondition.COMPLETED
+            state.result = result_factory.get_result(doc['results'])
             states.append(state)
         return states
 
-    def __to_query(self, params: TestParameters) -> dict:
+    def __to_test_query(self, params: TestParameters) -> dict:
         query = {
             'state': params.state.to_dict(),
             'browser_automation': params.evaluation_configuration.automation,
@@ -307,14 +318,14 @@ class MongoDB:
             return None
         return result['build_id']
 
-    def get_documents_for_plotting(self, params: PlotParameters, releases: bool = False):
+    def get_documents_for_plotting(self, params: PlotParameters, releases: bool = False) -> list:
         collection = self.get_collection(params.database_collection, create_if_not_found=True)
         query = {
             'mech_group': params.mech_group,
             'browser_config': params.browser_config,
             'state.type': 'version' if releases else 'revision',
             'extensions': {'$size': len(params.extensions) if params.extensions else 0},
-            'cli_options': {'$size': len(params.cli_options) if params.cli_options else 0}
+            'cli_options': {'$size': len(params.cli_options) if params.cli_options else 0},
         }
         if params.extensions:
             query['extensions']['$all'] = params.extensions
@@ -342,14 +353,41 @@ class MongoDB:
 
     def remove_datapoint(self, params: TestParameters) -> None:
         collection = self.get_collection(params.database_collection)
-        query = self.__to_query(params)
+        query = self.__to_test_query(params)
         collection.delete_one(query)
+
+    def remove_all_data_from_collection(self, collection_name: str) -> None:
+        collection = self.get_collection(collection_name)
+        collection.delete_many({})
 
     def get_info(self) -> dict:
         if self.client and self.client.address:
             return {'type': 'mongo', 'host': self.client.address[0], 'connected': True}
         else:
             return {'type': 'mongo', 'host': None, 'connected': False}
+
+    def get_previous_cli_options(self, params: dict) -> list[str]:
+        """
+        Returns a list of all cli options used for the browser defined in the given parameter dictionary.
+        """
+        if browser_name := params.get('browser_name', None):
+            collection_names = self.get_all_collection_names_for_browser(browser_name)
+            previous_cli_options = []
+            for name in collection_names:
+                # Appartently simply asking for a set of distinct arrays requires a complicated pipeline in MongoDB,
+                # so we'll use Python logic.
+                cursor = self.get_collection(name).find(
+                    {'cli_options': {'$exists': True, '$not': {'$size': 0}}}, {'_id': False, 'cli_options': True}
+                )
+                # We convert to tuples because they are, in contract to lists, hashable.
+                cli_options_list = set(' '.join(doc['cli_options']) for doc in cursor)
+                if cli_options_list:
+                    previous_cli_options.extend(list(filter(lambda x: x not in previous_cli_options, cli_options_list)))
+            previous_cli_options.sort()
+            return previous_cli_options
+        else:
+            logger.warning('Could not find browser name in parameters, returning empty list')
+            return []
 
 
 class ServerException(Exception):

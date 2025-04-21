@@ -7,9 +7,7 @@ from typing import Optional
 
 from werkzeug.datastructures import ImmutableMultiDict
 
-import bci.browser.cli_options.chromium as cli_options_chromium
-import bci.browser.cli_options.firefox as cli_options_firefox
-from bci.version_control.states.state import State, StateResult
+from bci.version_control.states.state import State
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +48,6 @@ class EvaluationParameters:
             self.browser_configuration.extensions,
             self.browser_configuration.cli_options,
             dirty_allowed,
-            self.sequence_configuration.target_cookie_name,
         )
 
 
@@ -67,7 +64,10 @@ class BrowserConfiguration:
     @staticmethod
     def from_dict(data: dict) -> BrowserConfiguration:
         return BrowserConfiguration(
-            data['browser_name'], data['browser_setting'], data['cli_options'], data['extensions']
+            data['browser_name'],
+            data['browser_setting'],
+            data['cli_options'],
+            data['extensions']
         )
 
 
@@ -105,8 +105,6 @@ class EvaluationRange:
 class SequenceConfiguration:
     nb_of_containers: int = 8
     sequence_limit: int = 10000
-    target_mech_id: str | None = None
-    target_cookie_name: str | None = None
     search_strategy: str | None = None
 
 
@@ -220,23 +218,19 @@ class TestResult:
             padded_version.append('0' * (padding_target - len(sub)) + sub)
         return '.'.join(padded_version)
 
-    def get_state_result(self) -> StateResult:
-        return StateResult.from_dict(self.data, self.is_dirty)
-
 
 @dataclass(frozen=True)
 class PlotParameters:
-    mech_group: str
-    target_mech_id: str
-    browser_name: str
-    database_collection: str
+    mech_group: Optional[str]
+    target_mech_id: Optional[str]
+    browser_name: Optional[str]
+    database_collection: Optional[str]
     major_version_range: Optional[tuple[int,int]] = None
     revision_number_range: Optional[tuple[int,int]] = None
     browser_config: str = 'default'
     extensions: Optional[list[str]] = None
     cli_options: Optional[list[str]] = None
     dirty_allowed: bool = True
-    target_cookie_name: Optional[str] = None
 
     @staticmethod
     def from_dict(data: dict) -> PlotParameters:
@@ -252,39 +246,36 @@ class PlotParameters:
         else:
             revision_number_range = None
         return PlotParameters(
-            data.get("plot_mech_group"),
-            data.get("target_mech_id"),
-            data.get("browser_name"),
-            data.get("db_collection"),
+            data.get('plot_mech_group', None),
+            data.get('target_mech_id', None),
+            data.get('browser_name', None),
+            data.get('db_collection', None),
             major_version_range=major_version_range,
             revision_number_range=revision_number_range,
             browser_config=data.get("browser_setting", "default"),
             extensions=data.get("extensions", []),
             cli_options=data.get("cli_options", []),
             dirty_allowed=data.get("dirty_allowed", True),
-            target_cookie_name=None
-            if data.get("check_for") == "request"
-            else data.get("target_cookie_name", "generic"),
         )
 
 
 @staticmethod
 def evaluation_factory(kwargs: ImmutableMultiDict) -> list[EvaluationParameters]:
-    browser_configuration = BrowserConfiguration(
-        kwargs.get('browser_name'), kwargs.get('browser_setting'), __get_cli_arguments(kwargs), __get_extensions(kwargs)
-    )
+    mech_groups = kwargs.get('tests')
+    if mech_groups is None:
+        raise MissingParametersException()
+
+    browser_configuration = BrowserConfiguration.from_dict(kwargs)
     evaluation_configuration = EvaluationConfiguration(
-        kwargs.get('project'), kwargs.get('automation'), int(kwargs.get('seconds_per_visit', 5))
+        kwargs['project'], kwargs['automation'], int(kwargs.get('seconds_per_visit', 5))
     )
     sequence_configuration = SequenceConfiguration(
         int(kwargs.get('nb_of_containers')),
         int(kwargs.get('sequence_limit')),
-        kwargs.get('target_mech_id', None),
-        __get_cookie_name(kwargs),
         kwargs.get('search_strategy'),
     )
     evaluation_params_list = []
-    for mech_group in kwargs.get('tests', []):
+    for mech_group in mech_groups:
         evaluation_range = EvaluationRange(
             mech_group,
             __get_version_range(kwargs),
@@ -341,14 +332,5 @@ def __get_extensions(form_data: dict[str, str]) -> list[str]:
     )
 
 
-@staticmethod
-def __get_cli_arguments(form_data: dict[str, str]) -> list[str]:
-    browser = form_data.get('browser_name', None)
-    match browser:
-        case 'chromium':
-            available_cli_options = cli_options_chromium.get_all_cli_options()
-        case 'firefox':
-            available_cli_options = cli_options_firefox.get_all_cli_options()
-        case _:
-            raise AttributeError(f"Unknown browser '{browser}'")
-    return list(filter(lambda x: x in form_data, available_cli_options))
+class MissingParametersException(Exception):
+    pass

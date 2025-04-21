@@ -23,6 +23,9 @@ class Firefox(Browser):
     def get_navigation_sleep_duration(self) -> int:
         return 2
 
+    def get_open_console_hotkey(self) -> list[str]:
+        return ["ctrl", "shift", "k"]
+
     def _get_terminal_args(self) -> list[str]:
         assert self._profile_path is not None
 
@@ -37,16 +40,6 @@ class Firefox(Browser):
             else:
                 user_prefs.append(f'user_pref("{key}", {value});'.lower())
 
-        # add_user_pref('network.proxy.ftp', proxy.HOST)
-        # add_user_pref('network.proxy.ftp_port', proxy.PORT)
-        # add_user_pref('network.proxy.http', proxy.HOST)
-        # add_user_pref('network.proxy.http_port', proxy.PORT)
-        # add_user_pref('network.proxy.socks', proxy.HOST)
-        # add_user_pref('network.proxy.socks_port', proxy.PORT)
-        # add_user_pref('network.proxy.ssl', proxy.HOST)
-        # add_user_pref('network.proxy.ssl_port', proxy.PORT)
-        # add_user_pref('network.proxy.type', 1)
-
         add_user_pref('app.update.enabled', False)
         add_user_pref('browser.shell.checkDefaultBrowser', False)
         if 'default' in self.browser_config.browser_setting:
@@ -55,7 +48,7 @@ class Firefox(Browser):
             add_user_pref('network.cookie.cookieBehavior', 1)
             add_user_pref('browser.contentblocking.category', 'custom')
         elif 'tp' in self.browser_config.browser_setting:
-            if self.version >= 65:
+            if int(self.version) >= 65:
                 add_user_pref('privacy.trackingprotection.enabled', True)
                 add_user_pref('pref.privacy.disable_button.change_blocklis', False)
                 add_user_pref('pref.privacy.disable_button.tracking_protection_exceptions', False)

@@ -23,8 +23,11 @@ export default {
       projects: [],
       browsers: [],
       browser_settings: [],
+      cli_options_str: "",
+      previous_cli_options_list: [],
       db_collection_suffix: "",
       tests: [],
+      select_all_tests: false,
       curr_options: {
         min_browser_version: 0,
         max_browser_version: 100
@@ -38,7 +41,7 @@ export default {
         // Browser config
         browser_name: null,
         browser_setting: "default",
-        cli_options: "",
+        cli_options: [],
         extensions: [],
         // Eval config
         project: null,
@@ -86,7 +89,8 @@ export default {
       target_mech_id_input: null,
       target_mech_id: null,
       fatal_error: null,
-      hide_advanced: true,
+      hide_advanced_evaluation_options: true,
+      hide_advanced_browser_options: true,
       hide_logs: true,
       hide_poc_editor: true,
       system: null,
@@ -179,6 +183,24 @@ export default {
       this.eval_params.db_collection = this.db_collection;
       this.propagate_new_params();
     },
+    "cli_options_str": function (val) {
+      if (val !== "") {
+        this.eval_params.cli_options = val.trim().split(" ");
+      } else {
+        this.eval_params.cli_options = [];
+      }
+      this.propagate_new_params()
+    },
+    "select_all_tests": function (val) {
+      console.log("hi")
+      if (this.select_all_tests === true) {
+        this.eval_params.tests = this.tests
+          .filter(tuple => tuple[1]) // Only select enabled checkboxes
+          .map(tuple => tuple[0]);;
+      } else {
+        this.eval_params.tests = [];
+      }
+    },
   },
   created: function () {
     this.websocket = this.create_socket();
@@ -250,6 +272,10 @@ export default {
           }
           if (data.update.hasOwnProperty("experiments")) {
             this.tests = data.update.experiments;
+          }
+          if (data.update.hasOwnProperty("previous_cli_options")) {
+            this.previous_cli_options_list = data.update.previous_cli_options;
+            console.log(this.previous_cli_options_list);
           }
           else {
             for (const variable in data.update) {
@@ -323,6 +349,10 @@ export default {
         .then((res) => {
           if (res.data.status == "OK") {
             this.system = res.data;
+            if ("cpu_count" in res.data) {
+              console.log("CPU: " + Math.max(res.data["cpu_count"] - 1, 1));
+              this.eval_params.nb_of_containers = Math.max(res.data["cpu_count"] - 1, 1);
+            }
           }
         })
         .catch((error) => {
@@ -335,6 +365,13 @@ export default {
         this.send_with_socket(
           {
             "new_params": this.eval_params
+          }
+        );
+      } else if (this.eval_params.browser_name !== null) {
+        console.log('Propagating browser change');
+        this.send_with_socket(
+          {
+            "new_browser": this.eval_params
           }
         );
       } else {
@@ -356,6 +393,7 @@ export default {
       })
       this.selected.project = project;
       this.eval_params.tests = [];
+      this.select_all_tests = false;
     },
     set_curr_browser(browser) {
       this.eval_params.browser_name = browser["name"];
@@ -369,7 +407,9 @@ export default {
       const path = `/api/evaluation/start/`;
       axios.post(path, this.eval_params)
         .then((res) => {
-
+          if (res.data.status === "NOK") {
+            alert(res.data.msg);
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -509,6 +549,18 @@ export default {
 
         <div class="h-0 grow overflow-y-auto overflow-x-hidden">
           <ul class="horizontal-select">
+            <li>
+              <div class="bg-gray-100 dark:bg-gray-800">
+                <input id="select_all_test" type="checkbox" class="ml-1" v-model="this.select_all_tests">
+                <label for="vue-checkbox-list" class="flex group w-full">
+                  <div class="pl-0 w-full">
+                    <p class="truncate w-0 grow">
+                      Select all
+                    </p>
+                  </div>
+                </label>
+              </div>
+            </li>
             <li v-for="tuple in tests">
               <div>
                 <input v-model="eval_params.tests" type="checkbox" class="ml-1" :value="tuple[0]" :disabled="!tuple[1]">
@@ -591,19 +643,53 @@ export default {
       </div>
     </div>
 
-    <!-- Advanced options -->
-    <div class="form-section h-fit col-span-2 row-start-4">
+    <!-- Advanced browser options -->
+    <div class="form-section col-span-2 row-start-4">
       <div class="flex">
-        <h2 class="flex-initial w-1/2 form-section-title pt-2">Advanced options</h2>
+        <h2 class="flex flex-initial w-1/2 form-section-title pt-2">
+          Advanced browser options
+        </h2>
         <div class="w-full text-right">
-          <button class="collapse-button" @click="this.hide_advanced = !this.hide_advanced">
+          <button class="collapse-button" @click="this.hide_advanced_browser_options = !this.hide_advanced_browser_options">
             <div class="flex items-center">
               <p class="text-xl pb-1 px-1">+</p>
             </div>
           </button>
         </div>
       </div>
-      <div :class="hide_advanced ? 'hidden' : ''">
+      <div :class="this.hide_advanced_browser_options ? 'hidden w-full' : 'w-full'">
+        <div>
+          <label for="cli_options" class="pb-2">CLI flags</label>
+          <input class="w-full dark:!text-white dark:!bg-gray-800" type="text" name="cli_options" v-model="this.cli_options_str">
+        </div>
+        <div>
+          <div>
+            <label class="pt-4 pb-2">Previously used CLI flags</label>
+          </div>
+          <ul class="">
+            <li v-for="cli_options_str in this.previous_cli_options_list">
+              <div role="button" @click="this.cli_options_str=cli_options_str" class="button my-1 !text-black !text-left !bg-white hover:!bg-gray-100 dark:!text-white dark:!bg-gray-800 dark:hover:!bg-gray-600">
+                {{ cli_options_str }}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced evaluation options -->
+    <div class="form-section h-fit col-span-2 row-start-5">
+      <div class="flex">
+        <h2 class="flex-initial w-1/2 form-section-title pt-2">Advanced evaluation options</h2>
+        <div class="w-full text-right">
+          <button class="collapse-button" @click="this.hide_advanced_evaluation_options = !this.hide_advanced_evaluation_options">
+            <div class="flex items-center">
+              <p class="text-xl pb-1 px-1">+</p>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div :class="hide_advanced_evaluation_options ? 'hidden' : ''">
         <div class="grid grid-cols-[auto,auto,auto] justify-start">
           <div class="flex flex-col">
             <div class="form-subsection">
@@ -617,13 +703,6 @@ export default {
                 <label for="upper_revision_nb">Upper rev nb</label>
                 <input v-model.lazy="eval_params.upper_revision_nb" class="number-input w-32" type="number">
               </div>
-            </div>
-
-            <div class="form-subsection row-start-2">
-              <section-header section="reproduction_id"></section-header>
-              <input v-model="target_mech_id_input" type="text" class="input-box" id="mech_id" name="mech_id"
-                :placeholder="eval_params.plot_mech_group"><br>
-              <br>
             </div>
           </div>
 
@@ -680,7 +759,7 @@ export default {
     </div>
 
     <!-- Logs -->
-    <div class="results-section h-fit col-span-2 row-start-5 flex-1">
+    <div class="results-section h-fit col-span-2 row-start-6 flex-1">
       <div class="flex">
         <h2 class="flex-initial w-1/2 form-section-title">Log</h2>
         <div class="w-full text-right">

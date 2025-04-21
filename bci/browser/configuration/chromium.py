@@ -35,6 +35,9 @@ class Chromium(Browser):
     def get_navigation_sleep_duration(self) -> int:
         return 1
 
+    def get_open_console_hotkey(self) -> list[str]:
+        return ["ctrl", "shift", "j"]
+
     def _get_terminal_args(self) -> list[str]:
         assert self._profile_path is not None
 
@@ -57,11 +60,6 @@ class Chromium(Browser):
 
         if self.browser_config.extensions:
             raise AttributeError("Not implemented")
-
-        # Proxy settings
-        # args.append(f'--proxy-server=ftp={proxy.HOST}:{proxy.PORT};http={proxy.HOST}:{proxy.PORT};https={proxy.HOST}:{proxy.PORT}')
-        # os.environ['http.proxyHost'] = proxy.HOST
-        # os.environ['http.proxyPort'] = str(proxy.PORT)
 
         args.extend(self.browser_config.cli_options)
         args.extend(SELENIUM_USED_FLAGS)
