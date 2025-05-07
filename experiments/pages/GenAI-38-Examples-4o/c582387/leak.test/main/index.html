@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  var url1 = "javascript:'<scr" + "ipt>document.location=\"https://a.test/report/?leak=c582387-1\";</scr" + "ipt>'";
+  open(url1);
+  var url2 = "javascript:document.location=\"https://a.test/report/?leak=c582387-2\";";
+  open(url2);
+</script>
+</head>
+</html>

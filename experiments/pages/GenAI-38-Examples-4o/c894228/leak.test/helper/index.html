@@ -1,0 +1,6 @@
+<script>
+    var blobContent = '<script>alert("Blocked by CSP")<\/script>';
+    var blob = new Blob([blobContent], { type: 'text/html' });
+    var url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+</script>

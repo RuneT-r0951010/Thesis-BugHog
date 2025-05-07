@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+  </head>
+  <body>
+    <script>
+      var filesystemURL = 'filesystem:https://a.test/temporary/1';  // Simulated FileSystem URL creation
+      var iframe = document.createElement('iframe');
+      iframe.src = filesystemURL;
+      document.body.appendChild(iframe);
+
+      // Simulate navigation from attacker page
+      setTimeout(function() {
+        iframe.contentWindow.location.href = 'data:text/html,<script>history.back()</script>';
+      }, 1000);
+    </script>
+  </body>
+</html>

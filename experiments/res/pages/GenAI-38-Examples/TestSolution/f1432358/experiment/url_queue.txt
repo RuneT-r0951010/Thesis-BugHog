@@ -1,0 +1,2 @@
+https://f1432358.test/main
+https://f1432358.test/report/?bughog_sanity_check=OK

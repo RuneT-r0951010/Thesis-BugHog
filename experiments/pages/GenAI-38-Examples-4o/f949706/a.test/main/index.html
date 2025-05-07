@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'">
+  <style>
+    body {
+      background-image: url('https://a.test/report/unpermitted-image');
+    }
+  </style>
+</head>
+<body>
+  <script>
+    var worker = new Worker('worker.js');
+    worker.postMessage('test');
+  </script>
+</body>
+</html>

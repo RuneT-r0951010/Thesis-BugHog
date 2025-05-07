@@ -1,0 +1,6 @@
+[
+  {
+    "key": "Content-Security-Policy",
+    "value": "script-src 'self'; report-uri /report/?leak=c916326"
+  }
+]

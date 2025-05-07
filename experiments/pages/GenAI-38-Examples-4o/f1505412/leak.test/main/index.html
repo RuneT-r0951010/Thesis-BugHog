@@ -1,0 +1,9 @@
+<script>
+  fetch('https://example.com/script.js').then(response => response.text()).then(text => {
+    let script = document.createElement('script');
+    script.nonce = 'test-nonce';
+    script.text = text;
+    document.body.appendChild(script);
+    console.log('Script loaded successfully');
+  }).catch(error => console.error('Error loading script:', error));
+</script>

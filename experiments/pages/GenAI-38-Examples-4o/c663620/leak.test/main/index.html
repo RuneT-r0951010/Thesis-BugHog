@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'">
+    <link rel="prefetch" href="https://a.test/report/?leak=c663620-prefetch">
+    <link rel="prerender" href="https://a.test/report/?leak=c663620-prerender">
+    <link rel="dns-prefetch" href="https://a.test/report/?leak=c663620-dns-prefetch">
+    <link rel="preconnect" href="https://a.test/report/?leak=c663620-preconnect">
+    <link rel="preload" href="https://a.test/report/?leak=c663620-preload" as="style">
+  </head>
+  <body>
+    <script>
+      window.onload = function () {
+        // Trigger the prefetch, prerender, dns-prefetch, preconnect, and preload
+        document.querySelectorAll('link').forEach(link => {
+          var img = new Image();
+          img.src = link.href;
+        });
+      };
+    </script>
+  </body>
+</html>

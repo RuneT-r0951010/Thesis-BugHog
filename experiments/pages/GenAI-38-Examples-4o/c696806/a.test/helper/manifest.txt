@@ -1,0 +1,9 @@
+CACHE MANIFEST
+
+FALLBACK:
+/ /report/?leak=c696806
+
+NETWORK:
+http://*
+https://*
+*

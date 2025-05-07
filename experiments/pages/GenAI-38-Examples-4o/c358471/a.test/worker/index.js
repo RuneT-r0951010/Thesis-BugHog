@@ -1,0 +1,1 @@
+importScripts('https://b.test/resource.js');

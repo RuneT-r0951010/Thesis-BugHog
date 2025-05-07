@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+</head>
+<body>
+    <a id="insecureLink" href="http://example.com/">Click Me</a>
+    <script>
+        document.getElementById('insecureLink').addEventListener('click', function(event) {
+            event.preventDefault();
+            location.href = 'https://a.test/report/?leak=c610441';
+        });
+    </script>
+</body>
+</html>

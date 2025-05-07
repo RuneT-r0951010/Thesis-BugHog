@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      const ifr = document.createElement('iframe');
+      ifr.src = 'https://leak.test/GenAI-38-Examples-4o/c845961/helper';
+      ifr.height = '600px';
+      const headers = [
+        'X-CSRF-TOKEN: 0123456789abcdef',
+        'Host: changed-host.bntk.pl',
+        'Cookie: aaaaa',
+        'User-Agent: Whatever',
+        'Content-type: application/json',
+      ];
+      ifr.csp = 'script-src\r\n' + headers.join('\r\n');
+      document.body.appendChild(ifr);
+    </script>
+  </head>
+</html>

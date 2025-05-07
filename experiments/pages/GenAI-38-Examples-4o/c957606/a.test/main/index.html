@@ -1,0 +1,20 @@
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="img-src none;">
+</head>
+<body>
+  <iframe id="target" src="https://example.com"></iframe>
+  <script>
+    setTimeout(() => {
+      const iframe = document.getElementById('target');
+      iframe.src = 'about:blank';
+      setTimeout(() => {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const img = doc.createElement('img');
+        img.src = 'https://a.test/report/?leak=c957606';
+        doc.body.appendChild(img);
+      }, 1000);
+    }, 2000);
+  </script>
+</body>
+</html>

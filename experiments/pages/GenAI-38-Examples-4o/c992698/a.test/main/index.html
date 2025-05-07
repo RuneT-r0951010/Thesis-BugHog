@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline'">
+</head>
+<body>
+    <script>
+        url2 = "javascript:'<script>eval(`alert(233)`)</script>'";
+        open(url2);  // Not blocked by CSP.
+    </script>
+</body>
+</html>

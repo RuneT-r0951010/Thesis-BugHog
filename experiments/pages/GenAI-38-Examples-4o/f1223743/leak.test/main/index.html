@@ -1,0 +1,20 @@
+<html>
+  <body>
+    <script>
+      var parts = [
+        'HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<script>alert(1)</script>',
+        'Content-Type: text/html\r\n\r\n<script>alert(2)</script>'
+      ];
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/', true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+          document.open();
+          document.write(parts.join('\r\n--//\r\n'));
+          document.close();
+        }
+      };
+      xhr.send();
+    </script>
+  </body>
+</html>
