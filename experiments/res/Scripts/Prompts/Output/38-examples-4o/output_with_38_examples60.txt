@@ -1,0 +1,13 @@
+```json
+{
+    "f1505412": {
+        "url_queue.txt": "https://leak.test/CSP/f1505412/main\nhttps://a.test/report/?leak=baseline\n",
+        "leak.test": {
+            "main": {
+                "index.html": "<script>\n  fetch('https://example.com/script.js').then(response => response.text()).then(text => {\n    let script = document.createElement('script');\n    script.nonce = 'test-nonce';\n    script.text = text;\n    document.body.appendChild(script);\n    console.log('Script loaded successfully');\n  }).catch(error => console.error('Error loading script:', error));\n</script>\n",
+                "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'nonce-test-nonce';\"\n  }\n]"
+            }
+        }
+    }
+}
+```

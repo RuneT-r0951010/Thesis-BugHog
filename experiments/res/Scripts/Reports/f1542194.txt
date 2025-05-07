@@ -1,0 +1,20 @@
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0
+Steps to reproduce:
+Navigate to https://l0.cm/fx_csp_violation_leak.html . This page has the following CSP and CSP violation event listener:
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' vulnerabledoma.in">
+document.addEventListener('securitypolicyviolation', e => {
+        console.dir(e);
+        alert(e.blockedURI);
+    });
+In addition, there are three buttons to embed other origin's pages into an iframe. These buttons are for testing the following cases.
+TEST 1: Navigate to domain not allowed by CSP via 302 redirect
+TEST 2: Navigate to domain not allowed by CSP via JavaScript
+TEST 3: Navigate to domain not allowed by CSP via link
+Click on the "TEST 1" button. "https://vulnerabledoma.in/fx_csp_violation_leak_302.php" is popped up. (= Safe. I think this behavior comes from a fix of bug 1069762 )
+Click on the "TEST 2" button. "https://www.vulnerabledoma.in/path?query" is popped up. (= leak of redirect URL )
+Click on the "TEST 3" button and then click on the displayed link. "https://www.vulnerabledoma.in/path?query" is popped up. (= leak of redirect URL )
+For your information, also the behavior of "TEST 1" is different from other browsers. Other browsers return "https://www.vulnerabledoma.in".
+Actual results:
+The CSP violation event object ( and CSP violation report ) contains the full redirect URL if the violation happens via a client-side navigation.
+Expected results:
+The CSP violation event object ( and CSP violation report ) should not contain the full redirect URL in the case of navigation started from a client-side code also. This is because the redirect URL might have sensitive information.

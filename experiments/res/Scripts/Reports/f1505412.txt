@@ -1,0 +1,24 @@
+User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.30 Safari/537.36
+
+Steps to reproduce:
+
+* Opened console
+* Ticked preserve log
+* Visited https://arturjanc.com/cgi-bin/ff63-nonce-redirect.py
+
+
+Actual results:
+
+An exception gets logged and reported:
+Content Security Policy: The page’s settings blocked the loading of a resource at https://payments.google.com/payments/v4/js/integrator.js (“script-src”).
+
+This is due to the fact that the script is dynamically loaded and redirects to "https://www.gstatic.com/..."
+
+This looks like a special case of bug 1469150 which was marked as fixed. Apparently it is still there for dynamically loaded scripts.
+
+This is not just a security issue for fingerprinting, but also a functional bug as it would break applications that use nonces correctly.
+
+
+Expected results:
+
+No violation reported.

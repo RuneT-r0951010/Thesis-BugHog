@@ -1,0 +1,7 @@
+VULNERABILITY DETAILS
+Given a CSP header of script-src \*.a.localhost, the script <script src="//a.localhost/script.js"></script> should not be loaded. CSP spec section 4.2.2 step 4.6 states "If the first character of the source expression’s host-part is an U+002A ASTERISK character (*) and the remaining characters, including the leading U+002E FULL STOP character (.), are not a case insensitive match for the rightmost characters of url-host, then return does not match". Scripts such as <script src="//b.a.localhost/script.js"></script> should be allowed by this policy.
+VERSION
+Chrome Version: 45.0.2454.85
+Operating System: Darwin c101.local 14.5.0 Darwin Kernel Version 14.5.0: Wed Jul 29 02:26:53 PDT 2015; root:xnu-2782.40.9~1/RELEASE_X86_64 x86_64 i386 MacBookPro11,3 Darwin
+REPRODUCTION CASE
+See VULNERABILITY DETAILS section above.

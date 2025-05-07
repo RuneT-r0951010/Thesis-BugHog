@@ -1,0 +1,19 @@
+UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36
+
+Steps to reproduce the problem:
+1.use `sudo php -S 0.0.0.0:80` to start a web server, and put the bypass-default-src.html and bypass-script-src.html into the web root directory
+2.open http://127.0.0.1/bypass-default-src.html and http://127.0.0.1/bypass-script-src.html in your chrome
+3.you will see `default-src 'self'` and `script-src 'self'` have been bypassed
+
+What is the expected behavior?
+bypass-default-src.html can not load https://xlab.tencent.com
+bypass-script-src.html can not load http://d1iv3.me/test.js
+
+What went wrong?
+CSP inheritance mechanism error
+
+Did this work before? N/A
+
+Chrome version: 84.0.4147.125  Channel: stable
+OS Version: OS X 10.15.6
+Flash Version:

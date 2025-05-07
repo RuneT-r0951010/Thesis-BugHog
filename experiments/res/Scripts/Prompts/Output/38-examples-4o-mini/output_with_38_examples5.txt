@@ -1,0 +1,12 @@
+```json
+{
+  "c894228": {
+    "leak.test": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'none';\">\n  </head>\n  <body>\n    <script>\n      var blob = new Blob([\"<script>alert('inherited alert')</script>\"], { type: 'text/html' });\n      var url = URL.createObjectURL(blob);\n      window.open(url);\n    </script>\n  </body>\n</html>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'none';\"\n    }\n]"
+      }
+    }
+  }
+}
+```

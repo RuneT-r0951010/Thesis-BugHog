@@ -1,0 +1,21 @@
+Responses with status code 100-199 (except from 101) should be ignored [1].
+
+Responses with status code 101 should have their body set to null [2]
+
+Chrome seems to treat those responses normally, as if their status code were 200. The response headers, on the other side, seems to be disregarded. This has security implications, like the one reported in https://crbug.com/1291060, but I guess that potentially other security policies could be escaped this way.
+
+We should disregard those responses instead, as the spec mandates. I checked what Firefox does, and it looks like Firefox correctly follows the spec.
+
+To reproduce, navigate to test.php serving
+
+```test.php
+<?php
+    header("HTTP/: 100");
+    header("Content-Security-Policy: default-src 'self'");
+?>
+<script>alert(1)</script>
+```
+
+[1] https://fetch.spec.whatwg.org/#:~:text=Any%20responses%20whose%20status%20is%20in%20the%20range%20100%20to%20199%2C%20inclusive%2C%20and%20is%20not%20101%2C%20are%20to%20be%20ignored%2C%20except%20for%20the%20purposes%20of%20setting%20timingInfo%E2%80%99s%20final%20network%2Dresponse%20start%20time%20above.
+
+[2] https://fetch.spec.whatwg.org/#:~:text=if%20response%20is%20not%20a%20network%20error%20and%20either%20request%E2%80%99s%20method%20is%20%60head%60%20or%20%60connect%60%2C%20or%20internalresponse%E2%80%99s%20status%20is%20a%20null%20body%20status%2C%20set%20internalresponse%E2%80%99s%20body%20to%20null%20and%20disregard%20any%20enqueuing%20toward%20it%20(if%20any).

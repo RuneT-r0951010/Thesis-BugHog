@@ -1,0 +1,13 @@
+```json
+{
+    "c957606": {
+        "a.test": {
+            "main": {
+                "index.html": "<iframe id=\"testFrame\"></iframe>\n<script>\n    var frame = document.getElementById(\"testFrame\");\n    frame.src = \"https://example.com\";\n    setTimeout(function() {\n        frame.src = \"about:blank\";\n        setTimeout(function() {\n            frame.contentWindow.document.open();\n            frame.contentWindow.document.write('<img src=\"https://a.test/report/?leak=c957606_image\">');\n            frame.contentWindow.document.close();\n        }, 1000);\n    }, 2000);\n</script>\n",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"img-src 'none'\"\n    }\n]"
+            }
+        },
+        "url_queue.txt": "https://a.test/main\nhttps://a.test/report/?leak=baseline\n"
+    }
+}
+```

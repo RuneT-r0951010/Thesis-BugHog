@@ -1,0 +1,12 @@
+```json
+{
+    "c605451": {
+        "a.test": {
+            "main": {
+                "index.html": "<html>\n<head>\n<link href=\"https://a.test/report/?leak=c605451\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n<body>\n<img src=\"https://a.test/report/?leak=c605451_img1\">\n<img src=\"https://a.test/report/?leak=c605451_img2\">\n<img src=\"https://a.test/report/?leak=c605451_img3\">\n<iframe src=\"https://a.test/report/?leak=c605451_iframe\"></iframe>\n<script src=\"https://a.test/report/?leak=c605451_script\"></script>\n<script>\nvar xmlhttp = new XMLHttpRequest();\nxmlhttp.open('GET', 'https://a.test/report/?leak=c605451_ajax', true);\nxmlhttp.send();\n</script>\n</body>\n</html>",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"referrer origin-when-cross-origin\"\n    }\n]"
+            }
+        }
+    }
+}
+```

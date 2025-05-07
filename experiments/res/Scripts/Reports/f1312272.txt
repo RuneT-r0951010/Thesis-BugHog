@@ -1,0 +1,15 @@
+User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36
+
+Steps to reproduce:
+
+Open the following URL: data:text/html,<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-eval'"><marquee onstart="alert('test')"></marquee>
+
+
+Actual results:
+
+JavaScript code "alert('test')" will be executed, while "'inline-inline'" not specified in CSP policy.
+
+
+Expected results:
+
+_inline_ javascript code not executed.

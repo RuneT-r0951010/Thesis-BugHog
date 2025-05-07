@@ -1,0 +1,12 @@
+```json
+{
+  "f1457100": {
+    "url_queue.txt": "https://leak.test/CSP/f1457100/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<meta http-equiv=\"Content-security-policy\" content=\"script-src none;\"/><script>alert(location)</script><object data=\"data:text/html,object<script>alert('object')</script>\"></object><iframe src=\"data:text/html,iframe<script>alert('frame')</script>\"></iframe>"
+      }
+    }
+  }
+}
+```

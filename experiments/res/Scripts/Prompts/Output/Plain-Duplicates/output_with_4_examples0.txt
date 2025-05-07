@@ -1,0 +1,17 @@
+```json
+{
+  "f949706": {
+    "url_queue.txt": "https://leak.test/csp/f949706/main\nhttps://report.test/report/?bughog_sanity_check=OK\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<style>\n  body {\n    background-image: url('https://a.test/report/?leak=f949706-css');\n  }\n</style>\n<script>\n  var worker = new Worker('worker');\n</script>\n",
+        "headers.json": "[{\n  \"key\": \"Content-Security-Policy\",\n  \"value\": \"default-src 'none'; script-src 'self'; style-src 'self'\"\n}]"
+      },
+      "worker": {
+        "index.js": "importScripts('https://a.test/report/?leak=f949706-import');\n",
+        "headers.json": "[{\n  \"key\": \"Content-Security-Policy\",\n  \"value\": \"default-src 'none'; script-src 'self';\"\n}]"
+      }
+    }
+  }
+}
+```

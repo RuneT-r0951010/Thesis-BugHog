@@ -1,0 +1,11 @@
+VULNERABILITY DETAILS
+I suspect following change caused this bug.
+https://chromium.googlesource.com/chromium/src.git/+/2ce31ab03b0e860eefff56647617e9851937eb12
+Before above change, navigation inside iframe to about:blank, data:, javascript:, and about:srcdoc would commit navigation into existing process, so those url would inherited the origin/process of navigation initiator.
+But after the change, if <iframe src="//evil.com"> on victim.com tries to navigate to about:srcdoc, then this will inherit the origin of parent (i.e. victim.com) which is weird.
+I was able to abuse this fact to bypass CSP. This is because CSP will try to inherit CSP from navigation initiator.
+VERSION
+Chrome Version: 78.0.3903.0 canary
+Operating System: Windows 10
+REPRODUCTION CASE
+Go to https://test.shhnjk.com/unxssable.php?xss=%3Ciframe%20srcdoc=%22%3Cscript%3Ealert(origin);window.stop()%3C/script%3E%3Cmeta%20http-equiv=refresh%20content=%270;url=https://shhnjk.azurewebsites.net/csp_srcdoc.html%27%3E%22%3E%3C/iframe%3E

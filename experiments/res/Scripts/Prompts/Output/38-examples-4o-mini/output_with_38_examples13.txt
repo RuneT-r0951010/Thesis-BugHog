@@ -1,0 +1,12 @@
+```json
+{
+  "c932892": {
+    "url_queue.txt": "https://a.test/CSP/c932892/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; img-src 'none'; report-uri https://a.test/report/?leak=c932892\">\n</head>\n<body>\n    <script>\n        document.addEventListener('securitypolicyviolation', function(e) {\n            console.log('Blocked URI:', e.blockedURI);\n            if (e.blockedURI) {\n                // Redirect to the report URL upon violation\n                document.location.href = 'https://a.test/report/?leak=c932892';\n            }\n        });\n        // Attempt to load an image that will cause a CSP violation\n        var img = document.createElement('img');\n        img.src = 'https://bugs.chromium.org/blocked-resource.png';\n        document.body.appendChild(img);\n    </script>\n</body>\n</html>\n"
+      }
+    }
+  }
+}
+```

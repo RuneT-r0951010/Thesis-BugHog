@@ -1,0 +1,12 @@
+```json
+{
+  "c1001982": {
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe name=\"iframe_a\" srcdoc=\"<script>alert(origin)</script><p>about-srcdoc iframe</p><a href='https://go-back.glitch.me' target='iframe_a'>click here</a>\"></iframe>"
+      },
+      "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'self'; script-src 'none';\"\n    }\n]"
+    }
+  }
+}
+```

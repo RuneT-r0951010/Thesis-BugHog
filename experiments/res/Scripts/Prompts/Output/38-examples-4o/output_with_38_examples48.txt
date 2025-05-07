@@ -1,0 +1,22 @@
+```json
+{
+  "c682673": {
+    "a.test": {
+      "main": {
+        "index.html": "<script src=\"http://leak.test/CSP/c682673/helper\"></script>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src http://*:111\"\n  }\n]\n"
+      }
+    },
+    "leak.test": {
+      "helper": {
+        "index.js": "document.location.href = \"https://a.test/report/?leak=c682673\";\n",
+        "headers.json": "[\n  {\n    \"key\": \"status\",\n    \"value\": \"200\"\n  },\n  {\n    \"key\": \"Location\",\n    \"value\": \"https://leak.test\"\n  }\n]\n"
+      },
+      "main": {
+        "index.html": "<script src=\"http://a.com:111\"></script>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src http://*/path\"\n  }\n]"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,29 @@
+UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3635.0 Safari/537.36
+
+Steps to reproduce the problem:
+1. Go to https://shhnjk.azurewebsites.net/IKnowYouHaveNonce.html
+2. Click go button
+
+What is the expected behavior?
+alert(self.origin) is blocked by CSP.
+
+What went wrong?
+https://crbug.com/chromium/894228 changed a way of inheriting CSP into local-schemes from parent/opener to navigation initiator. While this is good for many cases, there are corner cases that aren't covered.
+
+This is because navigation initiator can be the one who haven't created local-scheme urls.
+
+In above PoC, https://vuln.shhnjk.com/IHaveNonce.html creates FileSystem URL with valid nonce, but content of FileSystem URL contains attacker controlled script. When rendering FileSystem URL in iframe, attacker controlled script is blocked because navigation initiator was https://vuln.shhnjk.com/IHaveNonce.html who has CSP.
+
+But when user click go, FileSystem url is navigated to data URL (data:text/html,<script>history.back()</script>) by https://shhnjk.azurewebsites.net/IKnowYouHaveNonce.html. This data URL simply loads back the previous URL. And since this data URL doesn't have CSP, when FileSystem URL is rendered for second time, it inherits CSP of data URL and bypasses previous CSP.
+
+This attack might not be possible for blob URL due to it being temporary, but it should work for data URL too.
+
+My opinion is to save CSP from creator/navigator of local-scheme URLs. And have that in the local-scheme URL's document, so that it doesn't rely on who navigated to local-scheme.
+
+Though I'm not sure how easy/difficult the patch is. And I'm not sure if this is the best option :( But I'm happy to help :)
+
+Did this work before? N/A
+
+Chrome version: 73.0.3642.0  Channel: dev
+OS Version: 10.0
+Flash Version:

@@ -1,0 +1,12 @@
+```json
+{
+  "c799747": {
+    "url_queue.txt": "https://a.test/CSP/c799747/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<meta http-equiv=\"content-security-policy\" content=\"script-src 'nonce-test'\">\n<script nonce=\"test\">\nvar attackerControlledString = \"<script>document.location.href='https://a.test/report/?leak=c799747';<\/script>\";\nvar blob = new Blob([attackerControlledString], {type : 'text/html'});\nvar url = URL.createObjectURL(blob);\nlocation.href=url;\n</script>\n"
+      }
+    }
+  }
+}
+```

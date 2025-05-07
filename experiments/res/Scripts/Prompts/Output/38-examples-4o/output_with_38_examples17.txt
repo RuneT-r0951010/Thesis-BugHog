@@ -1,0 +1,16 @@
+```json
+{
+    "c967780": {
+        "url_queue.txt": "http://leak.test/CSP/c967780/main\nhttps://a.test/report/?leak=baseline\n",
+        "leak.test": {
+            "main": {
+                "index.html": "<html>\n<head>\n    <script src=\"helper\"></script>\n</head>\n<body>\n    <a href=\"download.txt\" id=\"download-link\" download></a>\n</body>\n</html>",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'self';\"\n    }\n]"
+            },
+            "helper": {
+                "index.js": "window.addEventListener(\"load\", function onLoad(event) {\n    setTimeout(() => {\n        var downloadLink = document.getElementById(\"download-link\");\n        downloadLink.click();\n    }, 10000);\n});"
+            }
+        }
+    }
+}
+```

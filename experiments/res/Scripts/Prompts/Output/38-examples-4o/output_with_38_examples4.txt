@@ -1,0 +1,1 @@
+{"f1550414": {"a.test": {"main": {"index.html": "<meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'none'\">\n<script>alert(window.location.href)</script>\n<iframe src=\"helper\"></iframe>\n"}, "helper": {"index.html": "<script>\n  parent.window.location = \"javascript:alert(window.location.href)\";\n</script>\n"}}}}

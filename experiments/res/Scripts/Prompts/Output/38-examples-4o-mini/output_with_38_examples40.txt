@@ -1,0 +1,17 @@
+```json
+{
+  "c633348": {
+    "evil.com": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"frame-src 'none'; report-uri https://evil.com/report\">\n  </head>\n  <body>\n    <iframe src=\"https://innocent.com\" id=\"child-frame\"></iframe>\n    <script>\n      document.addEventListener('securitypolicyviolation', function (e) {\n        console.log('securitypolicyviolation_event.sourceFile=' + e.sourceFile);\n        console.log('securitypolicyviolation_event.lineNumber=' + e.lineNumber);\n        console.log('securitypolicyviolation_event.columnNumber=' + e.columnNumber);\n      });\n    </script>\n  </body>\n</html>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"frame-src 'none'; report-uri https://evil.com/report\"\n  }\n]"
+      }
+    },
+    "innocent.com": {
+      "main": {
+        "index.html": "<html>\n  <body>\n    <script>\n      // This will attempt to navigate to a blocked origin.\n      window.location.href = 'https://blocked-origin.com';\n    </script>\n  </body>\n</html>"
+      }
+    }
+  }
+}
+```

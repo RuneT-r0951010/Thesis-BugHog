@@ -1,0 +1,15 @@
+```json
+{
+    "c696806": {
+        "a.test": {
+            "main": {
+                "index.html": "<html manifest=\"helper/manifest.txt\"></html>",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"sandbox\"\n    }\n]"
+            },
+            "helper": {
+                "manifest.txt": "CACHE MANIFEST\n\nFALLBACK:\n/ /report/?leak=c696806\n\nNETWORK:\nhttp://*\nhttps://*\n*"
+            }
+        }
+    }
+}
+```

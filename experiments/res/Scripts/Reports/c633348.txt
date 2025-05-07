@@ -1,0 +1,39 @@
+Repro steps:
+
+1. evil.com declares a frame-src CSP (via report-only CSP directive)
+2. evil.com listens to "securitypolicyviolation" events
+3. evil.com frames innocent.com and tickles a navigation within the innocent.com frame
+
+
+Expected behavior:
+
+evil.com should not be able to see information about child's sources.
+
+
+Actual behavior:
+
+SecurityPolicyViolationEvent includes sourceFile, lineNumber, columnNumber (https://www.w3.org/TR/CSP2/#securitypolicyviolationevent-interface).
+This information is disclosed to the parent frame via SecurityPolicyViolationEvent
+(in addition to being sent to the reporting endpoint provided in report-uri directive).
+
+
+
+In particular, if I add
+
+        testRunner.waitUntilDone();
+
+        document.addEventListener("securitypolicyviolation", function(e) {
+            // ...
+            console.log("securitypolicyviolation_event.sourceFile=" + e.sourceFile);
+            console.log("securitypolicyviolation_event.lineNumber=" + e.lineNumber);
+            console.log("securitypolicyviolation_event.columnNumber=" + e.columnNumber);
+            testRunner.notifyDone();
+        });
+
+to http/tests/security/contentSecurityPolicy/frame-src-child-frame-navigates-to-blocked-origin.html, then I see that we will disclose the following information:
+
+sourceFile=https://localhost:8443/security/contentSecurityPolicy/resources/frame-that-navigates-itself.html
+lineNumber=7
+columnNumber=18
+
+to a cross-origin frame at http://127.0.0.1:8000/security/contentSecurityPolicy/frame-src-child-frame-navigates-to-blocked-origin.html.

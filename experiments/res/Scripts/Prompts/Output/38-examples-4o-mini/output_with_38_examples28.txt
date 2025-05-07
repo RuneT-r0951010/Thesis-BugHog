@@ -1,0 +1,10 @@
+{
+  "f949706": {
+    "leak.test": {
+      "main": {
+        "index.html": "<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; img-src 'none'; script-src 'self';\">\n</head>\n<body>\n  <h1>CSP Bypass Test</h1>\n  <style>\n    /* Case 1: image URL in CSS */\n    body {\n      background-image: url('https://leak.test/report/?leak=f949706-cssimage');\n    }\n  </style>\n  <script>\n    // Case 2: Web Worker\n    var worker = new Worker('worker.js');\n    worker.postMessage('start');\n  </script>\n</body>\n</html>",
+        "worker.js": "importScripts('https://leak.test/report/?leak=f949706-importscripts');"
+      }
+    }
+  }
+}

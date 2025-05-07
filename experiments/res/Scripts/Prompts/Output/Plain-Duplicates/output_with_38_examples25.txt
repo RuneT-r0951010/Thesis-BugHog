@@ -1,0 +1,11 @@
+```json
+{
+  "c955350": {
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe id=\"myIframe\" src=\"https://a.test/report/?leak=start\"></iframe>\n<script>\n  var iframe = document.getElementById('myIframe');\n  iframe.contentWindow.location = \"javascript:window.open('https://a.test/report/?leak=c955350', '_blank')\";\n</script>\n"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,21 @@
+UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36
+
+Steps to reproduce the problem:
+1. Go to https://test.shhnjk.com/csp_open.php
+2. Click go
+
+What is the expected behavior?
+CSP violation report sent to test.shhnjk.com (CSP implementor)
+
+What went wrong?
+If <base> tag is specified to cross-origin (via local-scheme docuemnt or HTML injection) and CSP report-uri is relative URL, CSP violation report can be sent to cross-origin.
+
+This could be used to steal cross-origin information in violation report since report might contain secret information like nonce, referrer, page URL, and so on.
+
+Did this work before? N/A
+
+Chrome version: 62.0.3202.62  Channel: stable
+OS Version: 10.0
+Flash Version:
+
+I'm wondering this might further affect other report-uri features such as HPKP, XSS auditor, Expect-CT, and so on. Which I will test later today(I hope).

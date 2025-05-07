@@ -1,0 +1,11 @@
+{
+  "c689412": {
+    "url_queue.txt": "https://leak.test/CSP/c689412/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<html>\n<head>\n<meta http-equiv=content-security-policy content=\"object-src 'none';script-src 'nonce-random-secret'\">\n<title> Fake XSS </title>\n</head>\n<body>\n<base href=data:/,-alert(1)/>\n<script src=\"./lib/jquery.js\" nonce=random-secret></script>\n</body>\n</html>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"object-src 'none'; script-src 'nonce-random-secret'\"\n  }\n]"
+      }
+    }
+  }
+}

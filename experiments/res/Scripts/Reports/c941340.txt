@@ -1,0 +1,7 @@
+VULNERABILITY DETAILS
+Import maps allow defining import script urls without declearing nonce in script element. Landing this feature would basically allow CSP bypass on sites that uses module import.This feature is planned for Origin Trials in Chrome 74. See: https://developers.google.com/web/updates/2019/03/kv-storage
+VERSION
+Chrome Version: 74 dev + chrome://flags/#enable-experimental-web-platform-features
+Operating System: Windows 10
+REPRODUCTION CASE
+Go to https://test.shhnjk.com/imap.php

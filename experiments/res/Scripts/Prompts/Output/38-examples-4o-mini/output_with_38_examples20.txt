@@ -1,0 +1,11 @@
+```json
+{
+  "c992698": {
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'unsafe-inline'>\n</head>\n<body>\n    <script>\n        url1 = \"javascript:eval('alert(1)')\";\n        open(url1);  // Blocked by CSP\n        url2 = \"javascript:'<script>eval(\\'alert(233)\\')<\/script>'\";\n        open(url2);  // Not blocked by CSP.\n    </script>\n</body>\n</html>"
+      }
+    }
+  }
+}
+```

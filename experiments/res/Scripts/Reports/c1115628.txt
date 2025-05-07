@@ -1,0 +1,25 @@
+VULNERABILITY DETAILS
+Chrome does not properly inherit a CSP through blob URIs even though they share the same origin as the context thats creates them.
+As long as an attacker can execute JavaScript on a victim page, this allows CSP to be entirely bypassed by creating a blob URI and assigning it to the top frame's location.
+Note that this vulnerability is not present in Firefox because it treats blob URIs similarly to about:blank. As far as I can tell, the spec is unclear about this: https://w3c.github.io/FileAPI/#originOfBlobURL.
+VERSION
+Chrome Version: 84.0.4147.105 stable
+Operating System: Windows 10 OS Version 1903 (Build 18362.959)
+This vulnerability is also present in Chrome canary 86.0.4231.0.
+REPRODUCTION CASE
+There are two origins involved in this PoC.
+attacker origin: https://cgpq29r51wfnl2zd-attacker.okay.blue
+victim origin: https://cgpq29r51wfnl2zd-victim.netlify.app
+All paths on the victim origin have a CSP of: default-src 'none'; script-src 'unsafe-inline'
+There is also a secret value located at https://cgpq29r51wfnl2zd-victim.netlify.app/secret. Because of CSP, the victim origin is normally not able to fetch() the secret.
+Therefore, if you visit https://cgpq29r51wfnl2zd-victim.netlify.app/blocked an error should appear in the console.
+However, if you visit the attacker page at https://cgpq29r51wfnl2zd-attacker.okay.blue, the secret value should appear in an alert().
+Analysis:
+* The attacker page first loads the victim page in an iframe.
+* The victim page then uses URL.createObjectURL to create a blob URI containing HTML which fetches /secret.
+* The victim page then assigns the blob URI to parent.location. This replaces the parent attacker page, allowing the contents of the blob URI to execute without any CSP restrictions.
+* Note that sandbox="allow-top-navigation" is used on the attacker page so the victim page can set the top frame's location without any user interaction.
+* The contents of /secret are then displayed in an alert(). They could also easily be sent to the attacker's server.
+The attacker page, the victim page, the secret page, and the blocked page are attached.
+CREDIT INFORMATION
+Reporter credit: Philip Papurt

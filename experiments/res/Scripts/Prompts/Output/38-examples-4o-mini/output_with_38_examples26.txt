@@ -1,0 +1,12 @@
+```json
+{
+  "f886164": {
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe sandbox src=\"https://a.test/report/?leak=f886164\"></iframe>\n<script>\n  console.log('Sandboxed iframe loaded');\n</script>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"sandbox\"\n    }\n]"
+      }
+    }
+  }
+}
+```

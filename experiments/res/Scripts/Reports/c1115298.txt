@@ -1,0 +1,11 @@
+VULNERABILITY DETAILS
+It is possible to bypass the CSP of a page by creating and opening a blob URL in a new tab that will redirect itself to another page and back using a meta redirect and history.back (similar to a page reload).
+The blob URL inherits the CSP of the page that opened it, but after a page reload the CSP ends up being discarded, leading to a bypass of the directives that were previously set by the opener - which I believe shouldn't be happening.
+VERSION
+Chrome Version: 84.0.4147.125 (Official Build)
+REPRODUCTION CASE
+Access https://lbherrera.github.io/lab/chrome-csp/index.html
+Click anywhere on the page.
+After a few seconds, an alert should pop up.
+CREDIT INFORMATION
+Reporter credit: Luan Herrera (@lbherrera_)

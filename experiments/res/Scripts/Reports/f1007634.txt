@@ -1,0 +1,45 @@
+User Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:29.0) Gecko/20100101 Firefox/29.0 (Beta/Release)
+Build ID: 20140428193838
+
+Steps to reproduce:
+
+Serve an HTML file with the header Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'.
+
+Inside that file, use an inline script block to attempt to construct a Worker from a file:
+
+<script>
+  var worker = new Worker("/worker.js");
+
+  worker.onmessage = function(event) {
+    alert("Received " + event.data);
+  }
+
+  worker.postMessage("ping");
+</script>
+
+Where worker.js simply contains the following:
+
+this.onmessage = function(event) {
+  postMessage("pong");
+}
+
+
+Actual results:
+
+"pong" alert is shown. This means the Worker construction has been allowed from /worker.js, as the worker has replied to the message sent to it.
+
+
+Expected results:
+
+Construction of worker from /worker.js should be blocked by CSP.
+
+See test pages at:
+
+http://csp.charlie.ht/worker-incorrectly-allowed.html
+http://csp.charlie.ht/worker-correctly-allowed.html
+
+worker-incorrectly-allowed.html is served with the same HTML/header combination described in "steps to reproduce". The "pong" alert is shown, when I believe it shouldn't be. There is no directive stating that /worker.js is an allowed script source.
+
+worker-correctly-allowed.html has the same HTML, yet is served with script-src 'self' 'unsafe-inline'. In this case, I expect the Worker construction to be allowed, which is what happens.
+
+Note that this is similar to bug 929292 that I reported yesterday.

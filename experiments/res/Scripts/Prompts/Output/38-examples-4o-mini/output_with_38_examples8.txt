@@ -1,0 +1,13 @@
+```json
+{
+  "f1644076": {
+    "url_queue.txt": "https://leak.test/CSP/f1644076/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<html>\n  <body>\n    <embed src=\"https://accounts.google.com\">\n    <hr>\n    <object data=\"https://accounts.google.com\"></object>\n  </body>\n</html>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"frame-ancestors 'none';\"\n  }\n]"
+      }
+    }
+  }
+}
+```

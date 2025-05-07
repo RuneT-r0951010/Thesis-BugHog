@@ -1,0 +1,12 @@
+```json
+{
+  "c610441": {
+    "a.test": {
+      "main": {
+        "index.html": "<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"upgrade-insecure-requests\">\n</head>\n<body>\n  <a href=\"http://example.com/\">Home</a>\n</body>\n</html>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"upgrade-insecure-requests\"\n    }\n]"
+      }
+    }
+  }
+}
+```

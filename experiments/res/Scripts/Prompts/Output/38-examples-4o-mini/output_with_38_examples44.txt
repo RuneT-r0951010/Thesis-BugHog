@@ -1,0 +1,11 @@
+{
+  "f1377426": {
+    "url_queue.txt": "https://leak.test/CSP/f1377426/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <title>CSP Sandbox Test</title>\n</head>\n<body>\n    <script>\n        console.log('This script should not execute.');\n    </script>\n</body>\n</html>",
+        "headers.json": "[{\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"sandbox allow-scripts; script-src 'none'\"\n}]"
+      }
+    }
+  }
+}

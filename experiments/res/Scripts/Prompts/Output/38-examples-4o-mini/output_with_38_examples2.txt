@@ -1,0 +1,13 @@
+{
+  "f1548385": {
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'unsafe-inline'\">\n<template id=\"a\">\n    <script src=\"page.js\"></script>\n</template>\n</head>\n<body>\n<script>\n    var temp = document.getElementsByTagName(\"template\")[0];\n    var clon = temp.content.cloneNode(true);\n    document.body.appendChild(clon);\n</script>\n</body>\n</html>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'unsafe-inline'\"\n    }\n]"
+      },
+      "page": {
+        "page.js": "<html><head><meta name=\"color-scheme\" content=\"light dark\"></head><body><pre style=\"word-wrap: break-word; white-space: pre-wrap;\">alert(\"hello\");\n</pre></body></html>"
+      }
+    }
+  }
+}

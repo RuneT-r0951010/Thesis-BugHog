@@ -1,0 +1,22 @@
+See the attached test case. Edge and Chrome block the script from executing but Firefox executes it.
+With attachment: a.html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline'">
+<template id="a">
+    <script src="page.js"></script>
+</template>
+</head>
+<body>
+<script>
+    var temp = document.getElementsByTagName("template")[0];
+  var clon = temp.content.cloneNode(true);
+  document.body.appendChild(clon);
+</script>
+</body>
+</html>
+
+With attachment: page.js
+<html><head><meta name="color-scheme" content="light dark"></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">alert("hello");
+</pre></body></html>

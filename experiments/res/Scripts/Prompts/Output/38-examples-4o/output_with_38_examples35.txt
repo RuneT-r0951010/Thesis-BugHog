@@ -1,0 +1,13 @@
+```json
+{
+  "f1086999": {
+    "url_queue.txt": "https://a.test/CSP/f1086999/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<script>\n  var blob = new Blob([\"document.location='https://a.test/report/?leak=f1086999'\"], { type: 'text/javascript' });\n  var url = URL.createObjectURL(blob);\n  var script = document.createElement('script');\n  script.src = url;\n  document.body.appendChild(script);\n</script>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src *\"\n  }\n]"
+      }
+    }
+  }
+}
+```

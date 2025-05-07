@@ -1,0 +1,10 @@
+{
+  "f1505412": {
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'nonce-random';\">\n</head>\n<body>\n    <script nonce=\"random\">\n        var script = document.createElement('script');\n        script.src = 'https://payments.google.com/payments/v4/js/integrator.js';\n        document.head.appendChild(script);\n    </script>\n</body>\n</html>",
+        "headers.json": "[{\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'nonce-random';\"\n}]"
+      }
+    }
+  }
+}

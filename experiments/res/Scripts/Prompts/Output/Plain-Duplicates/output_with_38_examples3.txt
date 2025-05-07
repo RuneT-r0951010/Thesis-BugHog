@@ -1,0 +1,13 @@
+```json
+{
+  "f1548385": {
+    "a.test": {
+      "main": {
+        "index.html": "<script nonce=\"12345\" src=\"helper.js\"></script>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'nonce-12345' 'unsafe-inline'\"\n  }\n]"
+      },
+      "helper.js": "document.location.href = \"https://a.test/report/?leak=f1548385\";"
+    }
+  }
+}
+```

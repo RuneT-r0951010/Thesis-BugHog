@@ -1,0 +1,12 @@
+```json
+{
+  "c605451": {
+    "leak.test": {
+      "main": {
+        "index.html": "<?php\nheader(\"Content-Security-Policy: referrer origin-when-cross-origin\");\n?>\n<html>\n<head>\n<link href=\"http://www.style.com\" rel=\"stylesheet\" type=\"text/css\" />\n</head>\n<img src=\"https://www.img1.com/\">\n<img src=\"http://www.img2.com/x.png\">\n<img src=\"http://www.img3.com\" rel=\"noreferrer\">\n<iframe src=\"http://www.iframe.com/\"></iframe>\n<script src=\"http://www.script.com/\"></script>\n<script>\nvar xmlhttp;\nxmlhttp = new XMLHttpRequest();\nxmlhttp.open('http://www.ajaxtesttest.com').send();\n</script>\n</html>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"referrer origin-when-cross-origin\"\n    }\n]"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,23 @@
+User Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0 (Beta/Release)
+Build ID: 20131205075310
+
+Steps to reproduce:
+
+CSP does not block unpermitted resource in some case.
+PoC is the following:
+
+[Case1] image URL in CSS
+http://vulnerabledoma.in/fx_csp_bypass_with_cssimage
+
+[Case2] importScripts of Web Workers
+http://vulnerabledoma.in/fx_csp_bypass_with_importScripts
+
+
+Actual results:
+
+CSP does not block unpermitted resource.
+
+
+Expected results:
+
+CSP should block unpermitted resource.

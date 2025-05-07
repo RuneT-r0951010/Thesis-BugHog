@@ -1,0 +1,17 @@
+VULNERABILITY DETAILS
+A malicious page can abuse CSP violation reports to determine not only whether a request results in a cross-origin redirect, but also the origin of the redirection target, because the origin of the blocked resource is sent in the blocked-uri field of CSP reports and the blockedURI member of the securitypolicyviolation event.
+This is incorrect; the requested URL should be reported instead of the (blocked) destination URL.
+From https://w3c.github.io/webappsec-csp/#create-violation-for-request :
+Note: We use request’s url, and not its current url, as the latter might contain information about redirect targets to which the page MUST NOT be given access.
+VERSION
+Chrome Version: 72.0.3626.109 (stable), 74.0.3709.0 (canary)
+REPRODUCTION CASE
+Open the attached HTML file in Chrome.
+The page registers a "securitypolicyviolation" event listener, and loads of an attachment (from origin bugs.chromium.org via an <img>) of a (currently) non-public bug (https://crbug.com/chromium/805557 at the time of writing).
+If you are not logged in, a redirect to accounts.google.com occurs.
+If you are logged in and have access to the bug, a redirect to some long googleusercontent.com subdomain occurs.
+If you are logged in and have no access to the bug (e.g. log in via a Google account without security access), no redirect occurs.
+Because of this bug, the test page detects the redirection target via blockedURI and able to tell which of these events occurred.
+What should have happened is that the blockedURI contains the originally requested URL (at bugs.chromium.org).
+This is what Firefox does, in compliance with the CSP spec.
+The kind of bug was previously reported at https://crbug.com/chromium/633306, but only partially fixed.

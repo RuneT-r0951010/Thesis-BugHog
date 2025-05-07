@@ -1,0 +1,13 @@
+```json
+{
+  "c630332": {
+    "url_queue.txt": "https://a.test/CSP/c630332/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"form-action 'self';\">\n</head>\n<body>\n    <form action=\"https://example.com\" method=\"POST\" target=\"_blank\">\n        <input type=\"submit\" value=\"Submit\">\n    </form>\n</body>\n</html>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"form-action 'self';\"\n    }\n]"
+      }
+    }
+  }
+}
+```

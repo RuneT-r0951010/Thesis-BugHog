@@ -1,0 +1,15 @@
+```json
+{
+  "c358471": {
+    "a.test": {
+      "main": {
+        "index.html": "<iframe src=\"worker.html\"></iframe>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"connect-src 'self'; script-src 'self' 'unsafe-inline'\"\n  }\n]"
+      },
+      "worker.html": {
+        "index.html": "<script>\n  importScripts('https://b.lvh.me/script.js');\n</script>"
+      }
+    }
+  }
+}
+```

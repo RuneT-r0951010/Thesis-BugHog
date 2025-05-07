@@ -1,0 +1,11 @@
+Step to reproduce:
+
+1. Navigate the following data URL (or create a HTML document with the same content and navigate it):
+data:text/html,<meta http-equiv="Content-security-policy" content="script-src none;"/><script>alert(location)</script><object data="data:text/html,object<script>alert('object')</script>"></object><iframe src="data:text/html,iframe<script>alert('frame')</script>"></iframe>
+
+Expected result: no JavaScript gets executed (no alert is shown)
+Actual result: one alert saying "object" is shown
+
+This demonstrates that the iframe's document inherits parent's CSP, but the object's document doesn't. According to https://www.w3.org/TR/CSP2/#which-policy-applies they should behave the same way, i.e. being governed by "the policy of the embedding resource".
+
+This can be also used to bypass WebExtensions relying on CSP to block scripts: even though the embedded document has null origin, it could deliver a self-contained exploit.

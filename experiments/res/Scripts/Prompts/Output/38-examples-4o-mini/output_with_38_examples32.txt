@@ -1,0 +1,13 @@
+```json
+{
+  "f1036399": {
+    "url_queue.txt": "https://leak.test/CSP/f1036399/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self' 'unsafe-inline'\">\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'\">\n  </head>\n  <body>\n    <script>alert('Test XSS');</script>\n  </body>\n</html>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'self';\"\n  },\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'self' 'unsafe-inline'\"\n  }\n]"
+      }
+    }
+  }
+}
+```

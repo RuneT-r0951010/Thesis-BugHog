@@ -1,0 +1,27 @@
+UserAgent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.57 Safari/537.36
+
+Steps to reproduce the problem:
+1. Go to http://htmlpad.org/testapplet/ 
+2. It has a CSP policy of object-src data:
+-------
+source code is:
+--------
+ <meta http-equiv="Content-Security-Policy" content="object-src data:;"></meta>
+
+<object width="300" height="300"
+    data="data:application/x-silverlight-2,"
+    type="application/x-silverlight-2" >
+    <param name="source" value="SilverlightApplication1.xap"/>
+</object>
+
+What is the expected behavior?
+If I understand the CSP implementation in Chrome, the load should be blocked.
+
+What went wrong?
+The page still attempts to load the silverlight file
+
+Did this work before? N/A
+
+Chrome version: 31.0.1650.57  Channel: stable
+OS Version: 6.1 (Windows 7, Windows Server 2008 R2)
+Flash Version: Shockwave Flash 11.9 r900

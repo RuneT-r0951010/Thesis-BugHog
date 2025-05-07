@@ -1,0 +1,16 @@
+```json
+{
+  "f1738418": {
+    "url_queue.txt": "https://a.test/CSP/f1738418/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"sandbox\">\n</head>\n<body>\n  <iframe src=\"child.html\"></iframe>\n  <embed src=\"child.html\"></embed>\n  <object data=\"child.html\"></object>\n</body>\n</html>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"sandbox\"\n  }\n]"
+      },
+      "child": {
+        "index.html": "<script>prompt(document.domain)</script>\n"
+      }
+    }
+  }
+}
+```

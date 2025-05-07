@@ -1,0 +1,12 @@
+```json
+{
+  "c590505": {
+    "a.test": {
+      "main": {
+        "index.html": "<html>  \n<body>  \n  <script src='https://localhost/script/a/b/c/d/script.js'></script>  \n</body>  \n</html>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src localhost/script/a/b/C/D/\"\n    }\n]"
+      }
+    }
+  }
+}
+```

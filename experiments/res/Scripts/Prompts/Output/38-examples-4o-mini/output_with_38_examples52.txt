@@ -1,0 +1,14 @@
+```json
+{
+  "c696806": {
+    "url_queue.txt": "https://leak.test/CSP/c696806/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<?php\nheader(\"Content-Security-Policy: sandbox;\");\n?>\n<html manifest=\"manifest.txt\"></html>",
+        "headers.json": "[{\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"sandbox;\"\n}]"
+      },
+      "manifest.txt": "CACHE MANIFEST\n\nFALLBACK:\n/ /s3/xss.html\n\nNETWORK:\nhttp://*\nhttps://*\n*"
+    }
+  }
+}
+```

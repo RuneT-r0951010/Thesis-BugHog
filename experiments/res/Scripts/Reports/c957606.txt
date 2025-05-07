@@ -1,0 +1,22 @@
+VULNERABILITY DETAILS
+When a page with CSP restrictions applied creates an about:blank frame (either in an iframe or within a new window), that frame inherits the same restrictions. That prevents CSP from being bypassed within the frame.
+However, if a page with CSP restrictions first opens another website in a frame, then changes the location of the frame to about:blank, the frame won't have any CSP restrictions applied, even though it's now same-origin with the original page. The same thing also applies to data: URLs.
+VERSION
+Chrome Version: Tested on 74.0.3729.108 (stable) and 76.0.3780.0 (canary)
+Operating System: Windows 10 Pro, version 1809
+REPRODUCTION CASE
+The attached files form a simple website. To begin with, download each of the files and place them in a directory.
+In the directory you downloaded the files to, run the following command in a terminal:
+python3 server.py 8080
+This will start a simple web server that can be used to serve the files in the directory. server.py is necessary here, as it sets the following Content-Security-Policy header:
+Content-Security-Policy: img-src none
+This prevents images of any source from being included.
+In the browser, navigate to the following location:
+http://localhost:8080/index.html
+This page includes a single iframe, initially pointing to http://example.com/.
+Two seconds after the page loads, the location of the iframe is changed to about:blank. The following image element is then injected into the frame 1 second later:
+<img src="test_image.png">
+The image referenced here shouldn't load, given the above CSP restriction. Instead, it loads successfully and is displayed. Note that the image is in this case just a 10x10 black square.
+It's not possible to do this when embedding an about:blank iframe directly (i.e you have to load a different website, then change the location to about:blank). Note that the same thing also works with data: URLs.
+CREDIT INFORMATION
+Reporter credit: David Erceg

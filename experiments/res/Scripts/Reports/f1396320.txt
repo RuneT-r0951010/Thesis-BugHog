@@ -1,0 +1,19 @@
+User Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+
+Steps to reproduce:
+
+1. Go to https://test.shhnjk.com/allow-scripts.php?xss=%3Csvg%20onload=alert(document.domain)%3E
+2. You will see alert with document.domain
+
+
+Actual results:
+
+alert with document.domain
+
+
+Expected results:
+
+Firefox should grant opaque origin to document when CSP sandbox doesn't have allow-same-origin flag. Currently, "Content-Security-Policy: sandbox allow-scripts" is enough to execute script with origin.
+
+https://www.w3.org/TR/CSP2/#directive-sandbox
+"The sandbox directive allows any resource, framed or not, to ask for the same sorts of restrictions to be applied to itself."

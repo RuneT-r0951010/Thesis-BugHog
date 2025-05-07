@@ -1,0 +1,1 @@
+Sandboxed iframes run with a null principal for which Get/SetCsp is not implemented. This results in a scenario (iframe sandbox) wherein CSP is not enforced.

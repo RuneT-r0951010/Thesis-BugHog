@@ -1,0 +1,17 @@
+```json
+{
+  "c967780": {
+    "url_queue.txt": "https://a.test/CSP/c967780/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<html>\n  <body>\n    <a href=\"download.txt\" id=\"download-link\" download>Download</a>\n    <script>\n      setTimeout(function() {\n        document.getElementById('download-link').click();\n      }, 10000);\n    </script>\n  </body>\n</html>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'self';\"\n    }\n]"
+      },
+      "download.txt": {
+        "index.js": "Redirect",
+        "headers.json": "[\n  {\n    \"key\": \"status\",\n    \"value\": \"302\"\n  },\n  {\n    \"key\": \"Location\",\n    \"value\": \"javascript: window.open()\"\n  }\n]"
+      }
+    }
+  }
+}
+```

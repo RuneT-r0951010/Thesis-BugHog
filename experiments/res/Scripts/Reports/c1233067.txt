@@ -1,0 +1,14 @@
+VULNERABILITY DETAILS
+a large iframe csp attribute results in chrome sending a Sec-Fetch-CSP header without any length limit on the request to the iframe's src.
+this allows a malicious attacker to induce server errors when the request headers are too large, and the error is detectable via measuring timing of the iframe's onload event.
+Therefore, this attack can be used to do things such as measure the *exact* length of a user's cookies for any website that has SameSite=None cookies. It can also be used to probe if resources are cached (although, one would need to defeat the partitioned cache as well), as if the resource is cached, the server would not return an error.
+In bug id #959757, the length of the Referer header was limited in order to prevent these sorts of xs-leak attacks.
+VERSION
+Chrome Version: 91.0.4472.164 + stable
+Operating System: Windows 20H2 19042.1110
+REPRODUCTION CASE
+See attached file. Network tab indicates that request to https://example.com returns a 431, and the sent request headers have an extremely long Sec-Fetch-CSP header.
+CREDIT INFORMATION
+Externally reported security bugs may appear in Chrome release notes. If
+this bug is included, how would you like to be credited?
+Reporter credit: Ankur Sundara

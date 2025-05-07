@@ -1,0 +1,39 @@
+VULNERABILITY DETAILS
+A parent document with a CSP that does not allow unsafe inline scripts can still execute JavaScript URLs in inline iframes if using the iframe content window's location.href to navigate.
+This occurs because asynchronous javascript: URL navigations (such as those from location.href) do not check the parent document's CSP in the posted task- only the document of the embedded frame's CSP is checked (see ScriptController::ExecuteScriptIfJavascriptURL). Setting an iframe's document with the src attribute blocks this as expected due to the extra synchronous checks in HTMLFrameElementBase::OpenURL.
+I discovered this when working on https://crbug.com/chromium/638435, as it caused the Web Platform Test content-security-policy/navigation/to-javascript-url-script-src.html to fail when I was migrating iframe.src navigations to be async (case "<iframe src='...'> with 'unsafe-inline' navigated to 'javascript:' blocked in this document").
+More details on expected behaviour can be found here: https://github.com/w3c/webappsec-csp/issues/127
+Please let me know if you need any more info!
+VERSION
+Chrome Versions:
+Trunk (r612476)
+70.0.3538.110 + stable
+Operating System: Ubuntu 18.04.1 LTS
+REPRODUCTION CASE
+Load the attached file test.html in Chrome, with both test.html and test_frame.html hosted on an HTTP server. Observe that the iframe whose source is set with location.href erroneously executes the JavaScript URL, and prints "FAIL (JS URL executed)". The iframe whose source is set with the src attribute blocks this as expected.
+This test passes for both cases in Firefox.
+With attachment: test.html
+<!DOCTYPE html>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'nonce-whitelist'">
+
+<body>
+  Setting location with <code>iframe.contentWindow.location.href</code><br/>
+  <iframe id="iframe_href" src="test_frame.html"></iframe>
+  <hr>
+  Setting location with <code>iframe.src</code><br/>
+  <iframe id="iframe_src" src="test_frame.html"></iframe>
+  <script nonce="whitelist">
+    const iframeHref = document.querySelector("#iframe_href");
+    iframeHref.addEventListener('load', () => {
+      iframeHref.contentWindow.location.href = "javascript:'FAIL (JS URL executed)'";
+    });
+    const iframeSrc = document.querySelector("#iframe_src");
+    iframeSrc.addEventListener('load', () => {
+      iframeSrc.src = "javascript:'FAIL (JS URL executed)'";
+    });
+  </script>
+</body>
+
+With attachment: test_frame.html
+<!DOCTYPE html>
+PASS

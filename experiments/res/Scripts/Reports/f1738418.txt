@@ -1,0 +1,18 @@
+A given Content-Security-Policy: sandbox ...; HTTP header directive is not correctly enforced for <embed> and <object> child frames during load, allowing to bypass the set restrictions.
+Test case
+parent.html:
+Content-Security-Policy: sandbox
+
+<iframe src="child.html"></iframe>
+<embed src="child.html"></embed>
+<object data="child.html"></object>
+child.html:
+<script>prompt(document.domain)</script>
+Expected result
+Per the blanket sandbox directive, all three child frames should be treated as cross-origin loads and be denied script execution.
+Actual result
+The <embed> and <object> children are able to execute same-origin script code.
+CSP3 spec reference:
+6.2.2. sandbox
+The sandbox directive specifies an HTML sandbox policy which the user agent will apply to a resource, just as though it had been included in an iframe with a sandbox property.
+I will follow up with additional details to the root cause.

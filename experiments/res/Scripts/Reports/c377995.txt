@@ -1,0 +1,14 @@
+VULNERABILITY DETAILS
+We can bypass the header('Content-Security-Policy:sandbox') and access the DOM of sandboxed URLs.
+What we are doing is very simple: inject code into the page *before* it has been loaded, so Chrome will honor that code even when it should discard it. In other words, Chrome should behave exactly as if the sandboxed URL were coming from a different domain, deleting injected code. Once it reads the header, boom, destroy injected code so it doesn't run.
+VERSION
+Chrome Version: 35.0.1916.114 (Official Build 270117) m stable
+Operating System: Windows 8.1 Pro Fully Updated
+REPRODUCTION CASE
+Attached is the PoC, but here's the explanation because it's quite simple:
+We open a new window which is header-sandboxed.
+w = window.open("sandboxed.php","","width=400,height=400");
+Before it loads, we inject an event and code:
+w.onload = new w.Function("alert(document.body.innerText);document.body.innerHTML = '<h1>HACKED BY THE MAIN WINDOW</h1>'");
+That's it! Chrome will not delete the event/function so it will run in the sandboxed window.
+Thanks!

@@ -1,0 +1,17 @@
+User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36
+
+Steps to reproduce:
+
+Load a page serving an SVG with an accessKey event (see attached SVG) and the CSP header script-src 'none'. 
+
+
+Actual results:
+
+When the button is pressed, the accessKey event fires. 
+
+
+Expected results:
+
+The accessKey event should not fire. SVG access key events are blocked by Firefox when javascript is turned off via `javascript.enabled` in about:config due to the possibility of using them as a scriptless keylogger. See https://bugzilla.mozilla.org/show_bug.cgi?id=704482 for the original bug report leading to this mitigation and a PoC keylogger. 
+
+As Firefox currently works, a developer could be serving a page with Javascript disabled via CSP as a security measure, and an attacker would be able to inject a scriptless keylogger into the page.

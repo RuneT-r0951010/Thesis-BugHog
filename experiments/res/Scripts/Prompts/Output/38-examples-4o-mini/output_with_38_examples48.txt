@@ -1,0 +1,13 @@
+```json
+{
+  "c682673": {
+    "url_queue.txt": "https://a.test/CSP/c682673/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<script>\n  // Test for source-expression \"http://*:111\"\n  var xhr1 = new XMLHttpRequest();\n  xhr1.open('GET', 'http://a.com:222', true);\n  xhr1.onload = function () { document.location.href = 'https://a.test/report/?leak=c682673&test1'; };\n  xhr1.send();\n  \n  // Test for source-expression \"http://*/path\"\n  var xhr2 = new XMLHttpRequest();\n  xhr2.open('GET', 'http://a.com/other-path', true);\n  xhr2.onload = function () { document.location.href = 'https://a.test/report/?leak=c682673&test2'; };\n  xhr2.send();\n</script>",
+        "headers.json": "[{\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'none'; connect-src 'self' http://*:111 http://*/path\"\n}]"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,15 @@
+This was reported to me out of band by Mario Heiderich (in CC):
+
+If a HTTP response contains two CSP headers, the second one wins.
+The spec however, mandates that they are combined to a stricter intersection (see URL field).
+
+Example policies
+1) content-security-policy: default-src 'self' 'unsafe-inline'
+2) content-security-policy: default-src 'self'
+
+Here's what I observe:
+* two CSP headers (1, then 2): 2 wins.
+* two CSP headers (2, then 1): 1 wins. XSS possible.
+
+This is especially interesting with header injections.
+(The behavior is the same if the header injection attempts to resume the previous header. This is possible with injecting the newline and a space character and then overwriting a directive, i.e. injecting: "\n default-src 'self' 'unsafe-inline'"

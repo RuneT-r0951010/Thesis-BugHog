@@ -1,0 +1,15 @@
+```json
+{
+  "c916326": {
+    "a.test": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'self';\">\n  </head>\n  <body>\n    <script>\n      var filesystemURL = 'filesystem:https://a.test/temporary/1';  // Simulated FileSystem URL creation\n      var iframe = document.createElement('iframe');\n      iframe.src = filesystemURL;\n      document.body.appendChild(iframe);\n\n      // Simulate navigation from attacker page\n      setTimeout(function() {\n        iframe.contentWindow.location.href = 'data:text/html,<script>history.back()</script>';\n      }, 1000);\n    </script>\n  </body>\n</html>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'self'; report-uri /report/?leak=c916326\"\n  }\n]"
+      }
+    },
+    "b.test": {
+      "report": {}
+    }
+  }
+}
+```

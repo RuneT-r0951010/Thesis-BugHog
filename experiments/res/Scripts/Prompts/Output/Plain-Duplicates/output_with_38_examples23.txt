@@ -1,0 +1,17 @@
+```json
+{
+  "c941340": {
+    "a.test": {
+      "main": {
+        "index.html": "<script type=\"importmap\">\n{\n  \"imports\": {\n    \"test-module\": \"https://leak.test/CSP/c941340/helper\"\n  }\n}\n</script>\n<script type=\"module\">\n  import 'test-module';\n</script>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'none'; object-src 'none'\"\n  }\n]"
+      }
+    },
+    "leak.test": {
+      "helper": {
+        "index.js": "document.location.href = \"https://a.test/report/?leak=c941340\";\n"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,10 @@
+{
+  "f1469150": {
+    "url_queue.txt": "https://leak.test/CSP/f1469150/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'nonce-abcd1234'>\n</head>\n<body>\n  <script nonce='abcd1234'>\n    var s = document.createElement('script');\n    s.setAttribute('nonce', 'abcd1234');\n    s.src = 'https://goo.gl/jEH8zk';  // 301 redirect.\n    document.head.appendChild(s);     // Blocked by CSP in FF because of redirect.\n  </script>\n</body>\n</html>\n"
+      }
+    }
+  }
+}

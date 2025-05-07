@@ -1,0 +1,14 @@
+```json
+{
+  "f1550414": {
+    "a.test": {
+      "main": {
+        "index.html": "<meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'none'\">\n<script>alert(location.href)</script>\n<iframe src=\"helper\"></iframe>\n"
+      },
+      "helper": {
+        "index.html": "<script>\nparent.window.location = \"javascript:document.location.href = 'https://a.test/report/?leak=f1550414'\";\n</script>"
+      }
+    }
+  }
+}
+```

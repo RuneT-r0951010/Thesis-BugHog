@@ -1,0 +1,13 @@
+```json
+{
+  "f1377426": {
+    "url_queue.txt": "https://leak.test/CSP/f1377426/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<script>\n  document.location.href = \"https://a.test/report/?leak=f1377426\";\n</script>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"sandbox allow-scripts; script-src 'none'\"\n  }\n]"
+      }
+    }
+  }
+}
+```

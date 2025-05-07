@@ -1,0 +1,18 @@
+```json
+{
+  "c767635": {
+    "url_queue.txt": "https://a.test/CSP/c767635/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<iframe src=\"https://leak.test/CSP/c767635/helper\"></iframe>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'none'; img-src 'self'; style-src *\"\n  }\n]"
+      }
+    },
+    "leak.test": {
+      "helper": {
+        "index.html": "<body>\n  <script>\n    window.location.href = \"data:text/html,<img src='https://a.test/report/?leak=img' crossorigin='anonymous'>\\n<link rel='stylesheet' href='https://a.test/report/?leak=style'>\";\n  </script>\n</body>\n"
+      }
+    }
+  }
+}
+```

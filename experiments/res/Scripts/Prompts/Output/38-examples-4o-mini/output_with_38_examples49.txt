@@ -1,0 +1,12 @@
+```json
+{
+  "f1422924": {
+    "url_queue.txt": "https://a.test/CSP/f1422924/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'none';\">\n</head>\n<body>\n  <svg width=\"100\" height=\"100\">\n    <rect width=\"100%\" height=\"100%\" fill=\"red\" accessKey=\"k\" onclick=\"alert('Access key event fired!')\"/>\n  </svg>\n</body>\n</html>\n"
+      }
+    }
+  }
+}
+```

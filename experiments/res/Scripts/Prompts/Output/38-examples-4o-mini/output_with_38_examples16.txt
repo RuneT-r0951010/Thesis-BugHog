@@ -1,0 +1,12 @@
+```json
+{
+  "c957606": {
+    "url_queue.txt": "http://localhost:8080/index.html\nhttp://localhost:8080/report/?leak=baseline\n",
+    "localhost": {
+      "index": {
+        "index.html": "<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"img-src none\">\n</head>\n<body>\n  <iframe id=\"frame\" src=\"http://example.com/\"></iframe>\n  <script>\n    setTimeout(() => {\n      document.getElementById('frame').src = 'about:blank';\n    }, 2000);\n    setTimeout(() => {\n      const img = document.createElement('img');\n      img.src = 'test_image.png';\n      document.getElementById('frame').contentDocument.body.appendChild(img);\n    }, 3000);\n  </script>\n</body>\n</html>"
+      }
+    }
+  }
+}
+```

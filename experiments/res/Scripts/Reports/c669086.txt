@@ -1,0 +1,31 @@
+This template is ONLY for reporting security bugs. If you are reporting a
+Download Protection Bypass bug, please use the "Security - Download
+Protection" template. For all other reports, please use a different
+template.
+Please READ THIS FAQ before filing a bug: https://www.chromium.org/Home
+/chromium-security/security-faq
+Please see the following link for instructions on filing security bugs:
+http://www.chromium.org/Home/chromium-security/reporting-security-bugs
+NOTE: Security bugs are normally made public once a fix has been widely
+deployed.
+VULNERABILITY DETAILS
+Please provide a brief explanation of the security issue.
+By loading a new document using window.open("","_blank") and document.write-ing into it, (being in about:blank) I can circumvent the CSP restrictions put on the document my js code was running on and reach out to other sites.
+One could argue that the code was loaded with unsafe-inline in the CSP header, but that should still block any cross-site communication (e.g. 1x1px tracking image etc).
+The about:blank page has the same origin as its loading document, but CSP restrictions have been removed.
+I have seen there have been many issues around about:blank, but I have not found any reports just like this.
+My tests show that Firefox does not show this behavior, but rather makes the new document inherit CSP from its loading document.
+Here is a POC: https://grodum.org/csptest/hey.html
+VERSION
+Chrome Version: Version 54.0.2840.71 (64-bit) + [stable, beta, or dev]
+Operating System: macosx 10.11.6 (15G1108)
+REPRODUCTION CASE
+Please include a demonstration of the security bug, such as an attached
+HTML or binary file that reproduces the bug when loaded in Chrome. PLEASE
+make the file as small as possible and remove any content not required to
+demonstrate the bug.
+Demo: https://grodum.org/csptest/hey.html
+FOR CRASHES, PLEASE INCLUDE THE FOLLOWING ADDITIONAL INFORMATION
+Type of crash: [tab, browser, etc.]
+Crash State: [see link above: stack trace, registers, exception record]
+Client ID (if relevant): [see link above]

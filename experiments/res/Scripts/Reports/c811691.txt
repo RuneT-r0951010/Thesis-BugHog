@@ -1,0 +1,18 @@
+UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36
+
+Steps to reproduce the problem:
+<?php
+header("Content-Security-Policy: object-src 'none'");
+?>
+<object data="http://www.w3school.com.cn/i/eg_tulip.jpg"></object>
+
+What is the expected behavior?
+
+What went wrong?
+When CSP set `object-src 'none'`, Chrome let the image in object tag show while Firefox block it
+
+Did this work before? N/A
+
+Chrome version: 64.0.3282.140  Channel: stable
+OS Version: OS X 10.13.3
+Flash Version: Shockwave Flash 28.0 r0

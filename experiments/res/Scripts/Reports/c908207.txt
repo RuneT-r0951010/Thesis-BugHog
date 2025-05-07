@@ -1,0 +1,16 @@
+VULNERABILITY DETAILS
+CSP(Content-security-policy) vulnerabilities are not completely repaired in Chrome 70.0.3538.110 and can still be bypassed
+VERSION
+Chrome Version: [70.0.3538.110] + [stable]
+Operating System: [windows 10 professional]
+REPRODUCTION CASE
+Extract the files of htdocs.rar to an HTTP server(such as apache),csp.php is a demo page with XSS vulnerabilities.
+Accessing csp.php links on HTTP servers using chrome browser,such as:
+http://x.x.x.x/csp.php?inj=<script%20src=xss.js%20a="a"%20a="
+It will pop up a dialog box containing the text of "XSS".
+By contrast,the following links will not pop up the dialog box:
+http://x.x.x.x/csp.php?inj=<script%20src=xss.js%20a="
+Chrome says:"Refused to load the script 'http://x.x.x.x/xss.js' because it violates the following Content Security Policy directive:..."
+You can see that chrome intentionally fixes this vulnerability to better combat XSS vulnerabilities, but unfortunately, two same parameters bypass this fix and make the vulnerabilities recur.
+CREDIT INFORMATION
+Reporter credit: [Cusas @ L.O.Team]

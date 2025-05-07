@@ -1,0 +1,21 @@
+UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36
+
+Steps to reproduce the problem:
+1. Go to https://test.shhnjk.com/simple.html
+2. data URL navigated by cross-origin inherited parent's CSP
+
+What is the expected behavior?
+CSP does not inherit to cross-origin navigated data URL.
+
+What went wrong?
+Chrome always inherits CSP to data URL, whether it was navigated by same-origin page or cross-origin page. Thus allowing cross-origin page to gain information of CSP by navigating data URL which contains check of various CSP directives (PoC checks img-src and style-src).
+
+PoC shows that image request was block by parent's CSP but stylesheet was allowed. This data can be used to determine parent's website (by CSP fingerprint) and/or weakness of parent's CSP.
+
+Did this work before? N/A
+
+Chrome version: 61.0.3163.79  Channel: n/a
+OS Version: OS X 10.12.6
+Flash Version:
+
+Why Chrome started blocking server side redirect to data URL even inside iframe (see second iframe)?

@@ -1,0 +1,50 @@
+UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36
+
+Steps to reproduce the problem:
+1.
+write a html page like this
+<?php
+header("Content-Security-Policy: referrer origin-when-crossorigin");
+?>
+<html>
+<head>
+<link href="http://www.style.com" rel="stylesheet" type="text/css" />
+</head>
+<img src="https://www.img1.com/">
+<img src="http://www.img2.com/x.png">
+<img src="http://www.img3.com" rel=”noreferrer”>
+<iframe src="http://www.iframe.com/"></iframe>
+<script src="http://www.script.com/"></script>
+<script>
+var xmlhttp;
+xmlhttp = new XMLHttpRequest();
+xmlhttp.open('http://www.ajaxtesttest.com').send();
+</script>
+</html>
+
+2.
+set the csp header:
+Content-Security-Policy: referrer origin-when-crossorigin
+or
+Content-Security-Policy: referrer origin-when-cross-origin
+
+3.
+view this html page in chrome, and you will see that we can bypass the csp policy by using img/script/link tags
+
+What is the expected behavior?
+the resource requested from the webpage with csp header set  should not send the entire referer
+
+What went wrong?
+A tag href/JS ajax/iframe-src/Object-data/embed-src will follow the referrer policy in CSP header.
+but, style-link-href/img-src/script-src can bypass the csp referer policy header.
+
+btw,
+we find that the csp policy in meta tag works fine ,like this:
+<meta http-equiv="Content-Security-Policy" content="referrer origin-when-cross-origin">
+we think  csp header should be the same with meta tag
+
+Did this work before? N/A
+
+Chrome version: 50.0.2661.75  Channel: beta
+OS Version: OS X 10.11.2
+Flash Version: Shockwave Flash 21.0 r0

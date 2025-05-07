@@ -1,0 +1,13 @@
+```json
+{
+  "c740615": {
+    "url_queue.txt": "https://leak.test/CSP/c740615/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!-- the following will not execute -->\n<meta http-equiv=Content-Security-Policy\n      content=\"script-src 'nonce-abcd'\">\n<script src=data:,alert(1) nonce=\"abcd\" ></script>\n\n<!-- the following will execute -->\n<meta http-equiv=Content-Security-Policy\n      content=\"script-src 'nonce-abcd'\">\n<script src=data:,alert(1) x=\"\" x=\"<script\" nonce=\"abcd\" ></script>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'nonce-abcd'\"\n  }\n]"
+      }
+    }
+  }
+}
+```

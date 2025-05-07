@@ -1,0 +1,16 @@
+Chrome Version       : 81.0.4044.122
+OS Version: Windows 10 \ Ubuntu
+Safari: UNTESTED
+Firefox: FAIL
+IE/Edge: PARTIAL
+
+Hello
+
+If the javascript is loaded as a result of some redirect it can contain the sensitive data and the final url can be known in the current domain context.
+
+1. If the loaded script do some action, what restricted by CSP (create images for e.g.) I see the post-redirect URL with sensitive data in the CSP report (the source-file field)
+2. If I call some function from loaded script and it causes an error - I see the post-redirect URL in the stacktrace of the catched error.
+
+This bug can be used for steal sensitive data from uri in some OAuth-like flows or for steal some other sensitive data from url after redirects.
+
+The example of page and screenshots in the attach.

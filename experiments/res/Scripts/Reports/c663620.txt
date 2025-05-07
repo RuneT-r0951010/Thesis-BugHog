@@ -1,0 +1,32 @@
+UserAgent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+
+Steps to reproduce the problem:
+PoC 1:
+<link rel="prefetch" href="http://linux.im/test_prefetch.jpg">  
+
+PoC 2:
+<link rel="prerender" href="http://linux.im">  
+
+PoC 3:
+<link rel="dns-prefetch" href="http://linux.im">  
+
+PoC 4:
+<link rel="preconnect" href="http://1.111asd1-testcsp.n0tr00t.com">  
+
+PoC 5:
+<link rel="preload" href="//linux.im/styles/other.css">  
+
+What is the expected behavior?
+Refused to load the  xxxxx
+
+What went wrong?
+send a request
+
+Did this work before? N/A
+
+Chrome version: 54.0.2840.71  Channel: n/a
+OS Version: 10.0
+Flash Version: Shockwave Flash 23.0 r0
+
+Author: evi1m0
+Source: http://paper.seebug.org/91/

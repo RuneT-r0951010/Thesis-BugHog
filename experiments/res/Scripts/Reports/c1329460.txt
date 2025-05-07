@@ -1,0 +1,15 @@
+Steps to reproduce the problem:
+Access to the following page
+<!DOCTYPE html>
+<html lang="en"> <head> <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' 'strict-dynamic'"> </head> <body> <script>alert(1)</script> </body> </html>
+We can observe that inline script is executed
+Problem Description:
+According to the CSP spec for the usage of 'strict-dynamic' (https://www.w3.org/TR/CSP3/#strict-dynamic-usage), host-source and scheme-source expressions, as well as the 'unsafe-inline' and 'self' keyword-sources should be ignored when loading script if 'strict-dynamic' is specified in script-src or default-src.
+I observed that:
+When 'strict-dynamic' is specified in script-src, Chrome follows the spec.
+When 'strict-dynamic' is specified in default-src, Chrome follows the spec by ignoring the following directive values: host-source, scheme-source, and 'self'.
+However, I saw that Chrome does not ignore the 'unsafe-inline' even though 'strict-dynamic' is specified in default-src.
+I know that the security risk of this bug is not serious since developers usually use 'strict-dynamic' and nonce/hash together. But very rarely, web developers unfamiliar with the CSP specification may specify 'strict-dynamic' 'unsafe-inline' to default-src, expecting 'unsafe-inline' to be ignored by CSP level 3-supported browsers, including Chrome.
+Additional Comments:
+**Chrome version: ** 102.0.5005.63 **Channel: ** Stable
+OS: Windows

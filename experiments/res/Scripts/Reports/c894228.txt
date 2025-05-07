@@ -1,0 +1,17 @@
+UserAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36
+
+Steps to reproduce the problem:
+1. Go to https://vuln.shhnjk.com/iframer.php?url=https://test.shhnjk.com/blobCSP.html
+2. Observe an alert
+
+What is the expected behavior?
+alert is blocked by CSP
+
+What went wrong?
+Patch of issues 799747 tries to see if there is any parent/opener where blob URL can inherit CSP from. Since they finds parent with no CSP, blob URL will happily inherit that and bypasses CSP.
+
+Did this work before? N/A
+
+Chrome version: 69.0.3497.100  Channel: stable
+OS Version: 10.0
+Flash Version:

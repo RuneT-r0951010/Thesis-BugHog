@@ -1,0 +1,13 @@
+```json
+{
+  "c777350": {
+    "url_queue.txt": "https://leak.test/CSP/c777350/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n  <base href=\"https://test.shhnjk.com/\" />\n  <script>\n    // Simulate CSP violation\n    var nonCspUrl = \"http://malicious.com/\"\n    fetch(nonCspUrl);\n  </script>\n</head>\n<body>\n  <h1>Test Report URI Bypass</h1>\n</body>\n</html>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"report-uri /csp-report;\"\n  }\n]"
+      }
+    }
+  }
+}
+```

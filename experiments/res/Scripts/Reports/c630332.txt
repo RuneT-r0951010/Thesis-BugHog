@@ -1,0 +1,22 @@
+UserAgent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36
+
+Steps to reproduce the problem:
+1. Issue a CSP that includes form-action 'self'
+2. Add a form to a page that POSTs elsewhere with target="_blank"
+3. Submit the form
+
+What is the expected behavior?
+The form should be blocked.
+
+What went wrong?
+I would have expected the form to be blocked but it is not.
+
+Did this work before? N/A
+
+Chrome version: 52.0.2743.82  Channel: stable
+OS Version: 10.0
+Flash Version: Shockwave Flash 22.0 r0
+
+There is a test page here: https://scotthelme.co.uk/form-action-test-bug/
+
+Firefox blocks both forms, Chrome only blocks the one without a target attribute.

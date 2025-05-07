@@ -1,0 +1,23 @@
+DETAILS
+Missing spec on Upgrade Insecure Requests(Navigational Upgrades)
+Step to reproduce:
+Go to page which is enabled "Content-Security-Policy: upgrade-insecure-requests"
+When a user clicks a http link, chrome will not treat a http link as "https" link.
+Expected result:
+When a user clicks a http link, chrome will change a http url to https url.
+W3C specification has an example....
+Navigational Upgrades
+Megacorp, Inc. isn't quite ready to deliver Strict Transport Security headers [RFC6797], but does want to keep users on secure pages when possible. Happily, this comes for free with upgrade-insecure-requests. That is, they're already delivering pages with the following header:
+Content-Security-Policy: upgrade-insecure-requests
+This allows user agents to treat the following HTML code:
+<a href="http://example.com/">Home</a>
+as though it had been delivered as:
+<a href="https://example.com/">Home</a>
+Source: http://www.w3.org/TR/upgrade-insecure-requests/#example-navigation
+Authors should be able to ensure that all internal links correctly send users to the site's secure address, and not to its pre-migration insecure address.
+Source:http://www.w3.org/TR/upgrade-insecure-requests/#goals
+VERSION
+Chrome Version: [50.0.2661.94] + [stable]
+Operating System: [Ubuntu 14.04 LTS 64 bit]
+I uploaded my poc video to google drive. Please watch it.
+https://drive.google.com/open?id=0B5EL3NI3hlsSNlN6V0pyVTRoZ1U

@@ -1,0 +1,7 @@
+similar to https://crbug.com/chromium/669086 and https://crbug.com/chromium/747847
+but when navigate iframe to javascript scheme , the problem comes again.
+
+see poc.html
+With attachment: poc.html
+<meta http-equiv="Content-Security-Policy" content="default-src 'self';script-src 'self' 'unsafe-inline'">
+<iframe src="javascript:'<iframe src=http://www.qq.com \/>'"/>

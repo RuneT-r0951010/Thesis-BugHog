@@ -1,0 +1,8 @@
+Commonly, websites use a response header like X-Frame-Options: DENY or CSP's frame-ancestors directive to disallow being embedded across origins.
+It seems that this restriction can be easily bypassed with embeds like <object data=url> or <embed src=url>.
+STR:
+Find a website that disallows framing (i.e., X-Frame-Options set to DENY or SAMEORIGIN or has a CSP directive that does the same). This example will use https://accounts.google.com
+Embed on a different origin using embed or object elements. Example:
+data:text/html,embed:<embed src="https://accounts.google.com"><hr>object:<object data="https://accounts.google.com">
+Observe how both frames are loading successfully.
+Expected results: Frames should not load and show an error page.

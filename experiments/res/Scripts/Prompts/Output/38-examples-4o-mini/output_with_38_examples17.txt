@@ -1,0 +1,15 @@
+```json
+{
+  "c967780": {
+    "url_queue.txt": "http://localhost:8080/index.html\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!doctype html>\n<html>\n    <head>\n        <script type=\"text/javascript\" src=\"main.js\"></script>\n    </head>\n    <body>\n        <a href=\"download.txt\" id=\"download-link\" download></a>\n    </body>\n</html>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'self';\"\n  }\n]"
+      },
+      "main.js": "window.addEventListener(\"load\", function onLoad(event) {\n    setTimeout(() => {\n        var downloadLink = document.getElementById(\"download-link\");\n        downloadLink.click();\n    }, 10000);\n});"
+    },
+    "server.py": "#!/usr/bin/env python3\nfrom http.server import HTTPServer, SimpleHTTPRequestHandler, test\nimport sys\n\nclass CustomHTTPRequestHandler (SimpleHTTPRequestHandler):\n    def do_GET(self):\n        if self.path == '/download.txt':\n            self.send_response(302)\n            self.send_header('Location', \"javascript: window.open()\")\n            self.end_headers()\n        else:\n            SimpleHTTPRequestHandler.do_GET(self)\n\n    def end_headers (self):\n        self.send_header('Content-Security-Policy', \"script-src 'self';\")\n        SimpleHTTPRequestHandler.end_headers(self)\n\nif __name__ == '__main__':\n    test(CustomHTTPRequestHandler, HTTPServer, port=int(sys.argv[1]) if len(sys.argv) > 1 else 8000)"
+  }
+}
+```

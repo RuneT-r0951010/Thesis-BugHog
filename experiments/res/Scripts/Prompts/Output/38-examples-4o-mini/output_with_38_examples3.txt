@@ -1,0 +1,12 @@
+```json
+{
+  "c845961": {
+    "url_queue.txt": "https://b.test/CSP/c845961/main\nhttps://a.test/report/?leak=baseline\n",
+    "b.test": {
+      "main": {
+        "index.html": "<!doctype html><meta charset=utf-8>\n<script> const ifr = document.createElement('iframe'); ifr.src = 'http://bntk.pl/headers.php?'+Math.random(); ifr.height = '600px'; const headers = [ 'X-CSRF-TOKEN: 0123456789abcdef', 'Host: changed-host.bntk.pl', 'Cookie: aaaaa', 'User-Agent: Whatever', 'Content-type: application/json', ] ifr.csp = 'script-src\\r\\n' + headers.join('\\r\\n'); document.body.appendChild(ifr); </script>\n"
+      }
+    }
+  }
+}
+```

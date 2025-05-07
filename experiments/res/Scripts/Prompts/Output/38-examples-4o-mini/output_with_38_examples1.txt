@@ -1,0 +1,12 @@
+```json
+{
+  "c811691": {
+    "leak.test": {
+      "main": {
+        "index.html": "<?php\nheader(\"Content-Security-Policy: object-src 'none'\");\n?>\n<object data=\"https://a.test/report/?leak=c811691\"></object>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"object-src 'none'\"\n  }\n]"
+      }
+    }
+  }
+}
+```

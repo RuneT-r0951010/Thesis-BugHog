@@ -1,0 +1,12 @@
+Steps to reproduce the problem:
+1.Access to the following page
+<html> <head> <meta http-equiv="Content-Security-Policy" content="script-src-elem 'sha256-aa' http://127.0.0.1:8080 https://127.0.0.1:8081;connect-src http://127.0.0.1:8000;"> </head> <body> <!--click,Script--><a id=GGGGGybmuVGGGGG href="javascript:alert(1)">Click!</a> </body> </html
+Click the "Click!" text
+We can observe that the inline script is executed
+Problem Description:
+According to the CSP spec for the usage of the script-src-elem directive (https://www.w3.org/TR/CSP3/#directive-script-src-elem), script-src-elem applies to inline checks whose |type| is "script" and "navigation". Note that script execution through javascript URL navigation also falls into this category.
+Meanwhile, according to https://www.w3.org/TR/CSP3/#allow-all-inline, If the directive has the nonce-source or hash-source, all inline scripts without nonce or matching hash should be blocked.
+However, I saw that Chrome does not ignore the inline script executed via javascript URL even though 'shaXXX-XXX' is specified in script-src-elem. If a website has an XSS vulnerability, we can use this bug to simply bypass CSP's hash checking.
+Additional Comments:
+**Chrome version: ** 102.0.5005.108 **Channel: ** Stable
+OS: Windows

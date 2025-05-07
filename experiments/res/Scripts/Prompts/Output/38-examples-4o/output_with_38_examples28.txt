@@ -1,0 +1,14 @@
+```json
+{
+  "f949706": {
+    "url_queue.txt": "https://a.test/CSP/f949706/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; style-src 'self'\">\n  <style>\n    body {\n      background-image: url('https://a.test/report/unpermitted-image');\n    }\n  </style>\n</head>\n<body>\n  <script>\n    var worker = new Worker('worker.js');\n    worker.postMessage('test');\n  </script>\n</body>\n</html>",
+        "headers.json": "[{\n  \"key\": \"Content-Security-Policy\",\n  \"value\": \"default-src 'self'; img-src 'none'; script-src 'self'\"\n}]"
+      },
+      "worker.js": "// Attempt to import an unpermitted script\nimportScripts('https://a.test/report/unpermitted-script.js');\n"
+    }
+  }
+}
+```

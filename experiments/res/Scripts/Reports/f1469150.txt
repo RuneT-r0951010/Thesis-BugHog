@@ -1,0 +1,25 @@
+Firefox's CSP implementation blocks dynamically created script tags (scripts created via document.createElement) with a valid nonce if the URL redirects.
+Since the created script has a valid nonce it should execute (script gets executed in Chrome).
+Because of this bug, sites setting a nonce-based CSP (without strict-dynamic) randomly break in Firefox if some of their scripts are behind redirects.
+
+Code to reproduce in Firefox:
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'nonce-abcd1234'">
+</head>
+<body>
+  <script nonce='abcd1234'>
+    var s = document.createElement('script');
+    s.setAttribute('nonce', 'abcd1234');
+    s.src = 'https://goo.gl/jEH8zk';  // 301 redirect.
+    document.head.appendChild(s);     // Blocked by CSP in FF because of redirect.
+  </script>
+</body>
+</html>
+
+
+Preview
+https://gist.github.com/lweichselbaum/9c8e32c592889ffc2f103fce9d45eaea
+
+http://gist-preview.herokuapp.com/preview?gist_url=https%3A%2F%2Fgist.githubusercontent.com%2Flweichselbaum%2F9c8e32c592889ffc2f103fce9d45eaea%2Fraw%2F505ed8c472a805c70cd05059206dd5f91c9a06ce%2FFF_CSP_BUG.html

@@ -1,0 +1,19 @@
+User Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36
+
+Steps to reproduce:
+
+Open the following PoC.
+http://mallory.csrf.jp/x-mixed-replace/csp/bad.php
+
+
+
+Actual results:
+
+The response from above URL is multipart/x-mixed-replace and it contains two text/html documents in it. Both documents triggers alert(1); and alert(2) from the inline-script. This URL is protected by CSP with default-src 'self' so the inline-script should be ignored but Firefox doesn't.
+
+
+Expected results:
+
+CSP should be applied to all documents in a multipart/x-mixed-replace response.
+The inline script script execution should be ignored like ordinal HTML document (see following URL).
+http://mallory.csrf.jp/x-mixed-replace/csp/good.php

@@ -1,0 +1,16 @@
+UserAgent: Mozilla/5.0 (X11; Linux x86_64; rv:28.0) Gecko/20100101 Firefox/28.0
+
+Steps to reproduce the problem:
+Set script-src 'self' on iframe that loads a worker; the worker will make cross-origin request that should be blocked.
+
+What is the expected behavior?
+
+What went wrong?
+With CSP "connect-src 'self'; script-src 'self' 'unsafe-inline'" the
+XHR to b.lvh.me fails, but the importScripts request does not.
+
+Did this work before? N/A
+
+Chrome version: 33.0.1750.152 (Developer Build 256984)   Channel: dev
+OS Version:
+Flash Version: Shockwave Flash 11.2 r202

@@ -1,0 +1,24 @@
+VULNERABILITY DETAILS
+Chrome does not properly inherit a CSP through filesystem URIs even though they share the same origin as the context thats creates them.
+As long as an attacker can execute JavaScript and load iframes in a victim page, this allows CSP to be fully bypassed by creating a filesystem URI and assigning it to the location of a grandchild frame whose parent is in a different origin than the top frame.
+Note that this vulnerability is somewhat similar to https://crbug.com/chromium/1115628. However, I felt that this is worth reporting seperately because of the entirely different filesystem scheme and additional restrictions placed on filesystem URIs, requiring a very different frame structure.
+VERSION
+Chrome Version: 84.0.4147.125 stable
+Operating System: Windows 10 OS Version 1903 (Build 18362.959)
+This vulnerability is also present in Chrome canary 86.0.4237.0.
+REPRODUCTION CASE
+There are two origins involved in this PoC.
+Attacker origin: https://8a53k1sqt5elsz52-attacker.okay.blue
+Victim origin: https://8a53k1sqt5elsz52-victim.netlify.app
+All paths on the victim origin have a CSP of: default-src 'none'; script-src 'unsafe-inline'; frame-src https://8a53k1sqt5elsz52-attacker.okay.blue
+There is also a secret value located at https://8a53k1sqt5elsz52-victim.netlify.app/secret. Because of CSP, pages on the victim origin are normally not able to fetch() the secret.
+Therefore, if you visit https://8a53k1sqt5elsz52-victim.netlify.app/blocked an error should appear in the console.
+However, if you visit https://8a53k1sqt5elsz52-victim.netlify.app, the secret value should appear in an alert().
+Analysis:
+* The victim page first loads the attacker page in an iframe.
+* Upon load of the attacker iframe, the victim page creates a filesystem URI containing HTML which fetches /secret.
+* The victim page then assigns the filesystem URI to an empty iframe in the attacker page using contentWindow.frames[0].location.
+* The contents of /secret are then fetch()ed and displayed in an alert(). They could also easily be sent to the attacker's server.
+The victim page, the attacker page, the secret page, and the blocked page are attached.
+CREDIT INFORMATION
+Reporter credit: Philip Papurt

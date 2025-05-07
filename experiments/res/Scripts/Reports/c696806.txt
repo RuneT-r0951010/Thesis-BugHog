@@ -1,0 +1,35 @@
+VULNERABILITY DETAILS
+It seems like the specification of how App Cache is working is a lot less restrictive compared to Service Workers.
+The following scenarios are possible using an App-Cache manifest:
+* manifest can be set even though page has Content-Security-Policy: sandbox
+* manifest can be set on origin, even being on a suborigin
+* manifest FALLBACK can fetch resources not allowed by CSP
+* an SVG-file can set a manifest (even if mime is image/svg+xml)
+* an XML can set manifest (using xmlns=xhtml)
+* a file below a path (u/XYZ) can set FALLBACK for the complete origin
+This currently affects a bunch of file serving services which uses sandboxed origins but still serve inline content on the sandboxed domains. By triggering a cookie-bomb combined with a manifest, you're able to hijack any URL on the sandboxed domain using FALLBACK independently if the files are served from a sub-path on the domain.
+There are no CSP-rules to prevent the App Cache manifest from getting installed and the only mitigation as far as I know today is to block any inline content.
+Manifest should not be possible to set from a page having Content-Security-Policy: sandbox
+Manifest should (probably) not be possible to set from a subfolder onto the complete origin (this will probably break a bunch of apps tho)
+Setting a manifest should probably be restricted to text/html only.
+VERSION
+56.0.2924.87 (Official Build) (64-bit)
+REPRODUCTION CASE
+Attached a file with CSP: sandbox that will still trigger the Manifest-installation.
+Also attached a manifest.txt-file that will set the FALLBACK to a specific URL, this manifest can be set from any path on the origin and will set the FALLBACK for the complete domain.
+With attachment: test.php
+<?
+header("Content-Security-Policy: sandbox;");
+?>
+<html manifest="manifest.txt"></html>
+
+With attachment: manifest.txt
+CACHE MANIFEST
+
+FALLBACK:
+/ /s3/xss.html
+
+NETWORK:
+http://*
+https://*
+*

