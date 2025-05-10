@@ -23,4 +23,5 @@
         },
         "editor.formatOnType": true
     },
+    "editor.semanticHighlighting.enabled": true,
 }

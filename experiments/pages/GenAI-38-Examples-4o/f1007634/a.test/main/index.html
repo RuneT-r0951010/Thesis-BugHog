@@ -1,5 +1,5 @@
 <script>
-  var worker = new Worker("/worker.js");
+  var worker = new Worker("worker");
 
   worker.onmessage = function(event) {
     document.location.href = 'https://a.test/report/?leak=f1007634';

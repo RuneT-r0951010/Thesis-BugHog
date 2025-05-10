@@ -3,7 +3,7 @@
     <meta http-equiv="Content-Security-Policy-Report-Only" content="frame-src 'self'; report-uri https://a.test/report/?leak=c633348">
   </head>
   <body>
-    <iframe src="https://innocent.com/framed"></iframe>
+    <iframe src="https://leak.test/framed"></iframe>
     <script>
       document.addEventListener("securitypolicyviolation", function (e) {
         console.log("sourceFile=" + e.sourceFile);
