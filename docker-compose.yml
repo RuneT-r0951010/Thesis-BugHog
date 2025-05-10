@@ -43,7 +43,7 @@ services:
     extends: base
     hostname: bh_core
     ports:
-      - "5000:5001"
+      - "5000:5000"
     build:
       context: .
       target: dev
@@ -71,7 +71,7 @@ services:
     container_name: bh_core
     init: true
     ports:
-      - "5000:5001"
+      - "5000:5000"
     profiles:
       - prod
 
