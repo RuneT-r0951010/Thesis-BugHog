@@ -1,2 +1,0 @@
-https://leak.test/csp/f949706/main
-https://report.test/report/?bughog_sanity_check=OK

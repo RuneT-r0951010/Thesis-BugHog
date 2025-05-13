@@ -1,1 +1,1 @@
-importScripts('https://b.test/resource.js');
+importScripts('https://b.test/index.js');
