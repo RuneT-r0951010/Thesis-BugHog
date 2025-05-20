@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <script>
+      document.addEventListener('securitypolicyviolation', function(e) {
+        console.log('securitypolicyviolation_event.sourceFile=' + e.sourceFile);
+        console.log('securitypolicyviolation_event.lineNumber=' + e.lineNumber);
+        console.log('securitypolicyviolation_event.columnNumber=' + e.columnNumber);
+        document.location.href = 'https://a.test/report/?leak=c633348';
+      });
+    </script>
+  </head>
+  <body>
+    <iframe src="https://innocent.com/GenAI-38-Examples-4o-UpdatedPrompt/c633348/iframe"></iframe>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+```json
+{
+  "c358471": {
+    "url_queue.txt": "https://leak.test/CSP/c358471/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe src=\"worker\"></iframe>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'self'; connect-src 'self';\"\n    }\n]"
+      },
+      "worker": {
+        "index.js": "importScripts('https://b.test/script.js'); document.location.href = 'https://a.test/report/?leak=c358471';"
+      }
+    }
+  }
+}
+```

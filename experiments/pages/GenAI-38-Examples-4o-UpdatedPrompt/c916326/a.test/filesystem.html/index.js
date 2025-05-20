@@ -1,0 +1,1 @@
+document.location.href = "data:text/html,<script>history.back()</script>";

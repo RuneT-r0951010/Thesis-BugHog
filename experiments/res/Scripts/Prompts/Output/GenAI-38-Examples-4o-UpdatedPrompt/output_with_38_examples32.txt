@@ -1,0 +1,15 @@
+```json
+{
+    "c582387": {
+        "a.test": {
+            "main": {
+                "index.html": "<!DOCTYPE html>\n<html>\n<head>\n<script>\n  par = 'val';\n  url1 = \"javascript:'<scr\" + \"ipt>location.href=\\\"https://a.test/report/?leak=c582387-1&dom=\"+document.domain+\"&Pdom=\"+parent.document.domain+\"&par=\"+opener.par;\\</scr\" + \"ipt>'\";\n  open(url1);\n  url2 = \"javascript:location.href='https://a.test/report/?leak=c582387-2&dom=\"+document.domain+\"&Pdom=\"+parent.document.domain+\"&par=\"+opener.par;);\n  open(url2);\n</script>\n</head>\n<body>\n</body>\n</html>",
+                "headers.json": "[{\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'self';\"\n}]"
+            }
+        }
+    }
+}
+```
+
+
+Prompt tokens: 22054Completion tokens: 242Total tokens: 22296

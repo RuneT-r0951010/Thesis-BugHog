@@ -1,0 +1,12 @@
+```json
+{
+    "f1316826": {
+        "a.test": {
+            "main": {
+                "index.html": "<html>\n  <head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'nonce-123' 'strict-dynamic'\">\n  </head>\n  <body>\n    <marquee nonce=\"123\" onstart=\"document.location.href='https://a.test/report/?leak=f1316826'\"></marquee>\n  </body>\n</html>\n"
+            }
+        },
+        "url_queue.txt": "https://a.test/CSP/f1316826/main\nhttps://a.test/report/?leak=baseline\n"
+    }
+}
+```

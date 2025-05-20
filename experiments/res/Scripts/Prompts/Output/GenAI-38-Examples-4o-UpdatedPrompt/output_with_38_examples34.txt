@@ -1,0 +1,16 @@
+```json
+{
+    "f1086999": {
+        "url_queue.txt": "https://a.test/CSP/f1086999/main\nhttps://a.test/report/?leak=baseline\n",
+        "a.test": {
+            "main": {
+                "index.html": "<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA\nAAAAFAAAAAA3o3lRAAAAGXRFWHRTb2Z0d2FyZQBnZXRrZGsnICEHZjVowQAAABVJREFUCIkFwYEAAAAA\nAAAAN4AugG0A7wRop+pEAAAAAElFTkSuQmCC\" alt=\"data-image\" onerror=\"document.location='https://a.test/report/?leak=f1086999'\" />\n<script src=\"blob:https://a.test/CSP/f1086999/main\">\n",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src *\"\n    }\n]"
+            }
+        }
+    }
+}
+```
+
+
+Prompt tokens: 22026Completion tokens: 246Total tokens: 22272

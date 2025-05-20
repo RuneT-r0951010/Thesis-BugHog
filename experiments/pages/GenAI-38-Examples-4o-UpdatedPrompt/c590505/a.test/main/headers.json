@@ -1,0 +1,6 @@
+[
+    {
+        "key": "Content-Security-Policy",
+        "value": "script-src https://a.test/a/B/c/d/"
+    }
+]

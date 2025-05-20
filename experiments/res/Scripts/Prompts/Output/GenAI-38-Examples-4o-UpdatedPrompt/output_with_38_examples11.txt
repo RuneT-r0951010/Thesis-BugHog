@@ -1,0 +1,25 @@
+```json
+{
+  "c916326": {
+    "url_queue.txt": "https://leak.test/CSP/c916326/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe src=\"https://a.test/CSP/c916326/helper\"></iframe>\n<button onclick=\"go()\">Go</button>\n<script>\n  function go() {\n    location.href = location.origin;\n  }\n</script>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'self' 'nonce-random-value'\"\n  }\n]"
+      }
+    },
+    "a.test": {
+      "helper": {
+        "index.html": "<script src=\"filesystem.html\"></script>\n<script nonce=\"random-value\">\n  alert(self.origin);\n</script>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'self'; script-src 'self' 'nonce-random-value';\"\n  }\n]"
+      },
+      "filesystem.html": {
+        "index.js": "document.location.href = \"data:text/html,<script>history.back()</script>\";"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 20173Completion tokens: 292Total tokens: 20465

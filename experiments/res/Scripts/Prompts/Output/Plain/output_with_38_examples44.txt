@@ -1,0 +1,12 @@
+```json
+{
+  "f1377426": {
+    "a.test": {
+      "main": {
+        "index.html": "<script>\n  // This script should not execute due to CSP\n  document.location.href = \"https://a.test/report/?leak=f1377426\";\n</script>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"sandbox allow-scripts; script-src 'none'\"\n  }\n]"
+      }
+    }
+  }
+}
+```

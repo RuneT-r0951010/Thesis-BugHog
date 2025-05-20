@@ -1,0 +1,14 @@
+```json
+{
+    "c560695": {
+        "a.test": {
+            "main": {
+                "index.html": "<!DOCTYPE html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none';\">\n</head>\n<body>\n<a href=\"#done\" ping=\"https://a.test/report/?leak=c560695\">click here to exploit</a>\n</body>\n"
+            }
+        }
+    }
+}
+```
+
+
+Prompt tokens: 21721Completion tokens: 104Total tokens: 21825

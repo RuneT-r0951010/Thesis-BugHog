@@ -1,0 +1,7 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var newWindow = window.open("");
+    newWindow.document.write('<script src="https://a.test/report/?leak=c669086"><\/script>');
+    newWindow.document.close();
+  });
+</script>

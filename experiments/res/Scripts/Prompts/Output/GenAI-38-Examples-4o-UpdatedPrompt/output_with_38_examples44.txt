@@ -1,0 +1,21 @@
+```json
+{
+  "c663620": {
+    "url_queue.txt": "https://leak.test/CSP/c663620/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<link rel=\"prefetch\" href=\"https://a.test/report/?leak=c663620-prefetch\">\n<link rel=\"prerender\" href=\"https://a.test/CSP/c663620/prerender\">\n<link rel=\"dns-prefetch\" href=\"https://a.test\">\n<link rel=\"preconnect\" href=\"https://a.test/report/?leak=c663620-preconnect\">\n<link rel=\"preload\" href=\"https://a.test/styles/other.css\">\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'none'; prefetch-src 'none';\"\n  }\n]"
+      }
+    },
+    "a.test": {
+      "prerender": {
+        "index.html": "<html><body>Prerender Test<div id='test'></div><script>\ndocument.getElementById('test').innerHTML =\n  \"<img src='https://a.test/report/?leak=c663620-prerender'>\";\n</script>\n</body></html>"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 21550Completion tokens: 303Total tokens: 21853

@@ -1,0 +1,3 @@
+export function load() {
+    document.location.href = 'https://a.test/report/?leak=c941340';
+}

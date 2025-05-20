@@ -1,0 +1,8 @@
+<script>
+  var eventSource = new EventSource('/GenAI-38-Examples-4o-UpdatedPrompt/f1223743/replace');
+  eventSource.onmessage = function(event) {
+    if (event.data === 'alert(1)' || event.data === 'alert(2)') {
+      document.location.href = 'https://a.test/report/?leak=f1223743';
+    }
+  };
+</script>

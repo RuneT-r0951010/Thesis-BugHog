@@ -1,0 +1,15 @@
+```json
+{
+    "c1001982": {
+        "a.test": {
+            "main": {
+                "index.html": "<iframe name=\"iframe_a\" srcdoc=\"<script>document.location.href='https://a.test/report/?leak=c1001982'</script>\n  <p>about-srcdoc iframe</p>\n  <a href='https://a.test/CSP/c1001982/go-back' target='iframe_a'>click here</a>\"\n</iframe>",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'none';\"\n    }\n]"
+            },
+            "go-back": {
+                "index.html": "<script>\n  history.back();\n</script>"
+            }
+        }
+    }
+}
+```

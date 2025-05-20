@@ -31,15 +31,16 @@ class PromptBuilder:
         raise NotImplementedError 
 
     def _write_report_to_file(self, messages, start_index, n):
+        os.makedirs(self.report_path, exist_ok=True) 
         with open(f"{self.report_path}/input_start_{start_index}_with_{n}_examples.txt", "w", encoding="utf-8") as f:
             json.dump(messages, f, indent=4)
             print(f"Wrote to file: {self.report_path}/input_start_{start_index}_with_{n}_examples.txt")
     
 
 class JSONPromptBuilder(PromptBuilder):
-    def __init__(self, sorted_PoCs):
+    def __init__(self, sorted_PoCs, report_path):
         super().__init__(sorted_PoCs)
-        self.report_path = "Prompts/Input/JSON"
+        self.report_path = "Prompts/Input/" + report_path
     
 
     def __get_expected_test_solution(self, experiment_path: str):
@@ -81,7 +82,7 @@ class JSONPromptBuilder(PromptBuilder):
 
         while (num_examples <= n):
             bug_id = self.sorted_PoCs[bug_index]
-            bug_index = (bug_index + 1) % VALID_POCS
+            bug_index = (bug_index + 1) % (VALID_POCS-1)
 
             report = self.bug_report_builder.try_get_bug_report(bug_id) # Fetch the bug report or corresponding url
 
@@ -119,7 +120,7 @@ class JSONPromptBuilder(PromptBuilder):
                         task_prompt = {f"BugID={bug_id}": report}
                         tasks.append(task_prompt)
 
-                bug_index = (bug_index + 1) % VALID_POCS
+                bug_index = (bug_index + 1) % (VALID_POCS-1)
 
             result_prompt = {
                 "Role" : role,
@@ -155,9 +156,9 @@ class JSONPromptBuilder(PromptBuilder):
 
 
 class TextPromptBuilder(PromptBuilder):
-    def __init__(self, sorted_PoCs):
+    def __init__(self, sorted_PoCs, report_path):
         super().__init__(sorted_PoCs)
-        self.report_path = "Prompts/Input/Plain"
+        self.report_path = "Prompts/Input/" +  report_path
     
 
     def get_prompt_message(self, start_index: int, n: int, num_experiment_generation_per_prompt: int, report_input = False):
@@ -181,7 +182,7 @@ class TextPromptBuilder(PromptBuilder):
                     num_generated += 1
                     messages.append({"role": "user", "content": f"Generate a test for the following bug report (ID: {bug_id}):\n-START REPORT-\n{report}\n-END REPORT-\n\n"})
             
-            bug_index = (bug_index + 1) % VALID_POCS
+            bug_index = (bug_index + 1) % (VALID_POCS-1)
 
         # Save content prompt
         
@@ -253,7 +254,7 @@ class TextPromptBuilder(PromptBuilder):
 
         while(num_examples <= n):
             bug_id = self.sorted_PoCs[bug_index]
-            bug_index = (bug_index + 1) % VALID_POCS
+            bug_index = (bug_index + 1) % (VALID_POCS-1)
 
             poc_folder_path = os.path.join(CSP_TESTS_FOLDER, bug_id) 
 

@@ -1,0 +1,16 @@
+```json
+{
+  "f1036399": {
+    "url_queue.txt": "https://leak.test/CSP/f1036399/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<script>document.location='https://a.test/report/?leak=f1036399'</script>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'self';\"\n    },\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'self' 'unsafe-inline';\"\n    }\n]"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 21732Completion tokens: 166Total tokens: 21898

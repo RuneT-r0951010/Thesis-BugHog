@@ -1,0 +1,17 @@
+```json
+{
+  "c482558": {
+    "url_queue.txt": "https://a.test/CSP/c482558/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<link rel='icon' href='https://a.test/CSP/c482558/favicon.ico'>\n<link rel='apple-touch-icon' href='https://a.test/CSP/c482558/favicon.ico'>\n<link rel='apple-touch-icon-precomposed' href='https://a.test/CSP/c482558/favicon.ico'>\n<img id='leak' src='' />\n<script>\n  document.getElementById('leak').src = 'https://a.test/report/?leak=c482558';\n</script>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'none'\"\n    }\n]"
+      },
+      "favicon.ico": {
+        "index.html": "",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Type\",\n        \"value\": \"image/vnd.microsoft.icon\"\n    }\n]"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,12 @@
+```json
+{
+  "c482558": {
+    "a.test": {
+      "main": {
+        "index.html": "<link rel=\"icon\" href=\"https://a.test/report/?leak=c482558\" />",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'none'\"\n    }\n]"
+      }
+    }
+  }
+}
+```

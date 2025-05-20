@@ -1,0 +1,19 @@
+```json
+{
+  "c610441": {
+    "a.test": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"upgrade-insecure-requests\">\n  </head>\n  <body>\n    <a href=\"http://b.test/report/?leak=c610441\">Test Link</a>\n  </body>\n</html>"
+      }
+    },
+    "b.test": {
+      "report": {
+        "index.html": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Report</title>\n</head>\n<body>\n    <h1>Report Page</h1>\n    <p>This page should trigger a leak report if accessed via HTTP.</p>\n</body>\n</html>"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 22276Completion tokens: 204Total tokens: 22480

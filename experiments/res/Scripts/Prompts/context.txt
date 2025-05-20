@@ -1,39 +1,40 @@
 Context & File Structure:
 Each test is an experiment for a bug_id organized as follows:
-bug_id/
-|-- url_queue.txt (optional)
-|-- [domain1]/
-|   |-- [page1]/
-|   |   |-- index.html (or index.js)
-|   |-- [page2]/
-|       |-- index.html
-|       |-- headers.json (optional)
-|-- [domain2]/
-    |-- ...
+CSP/
+|--bug_id/
+|   |-- url_queue.txt (optional)
+|   |-- [domain1]/
+|   |   |-- [page1]/
+|   |   |   |-- index.html (or index.js)
+|   |   |-- [page2]/
+|   |       |-- index.html
+|   |       |-- headers.json (optional)
+|   |-- [domain2]/
+|       |-- ...
 
-Allowed domains:
-* leak.test, a.test, sub.a.test, sub.sub.a.test, b.test, sub.b.test, adition.com
+Allowed domains: leak.test, a.test, sub.a.test, sub.sub.a.test, b.test, sub.b.test, adition.com
 Important: Use only these domains. No others allowed.
 
 Pages:
-* A domain can have multiple page folders (e.g., main, helper, worker).
-* Each page must contain exactly one file: either index.html or index.js. No other filenames allowed.
+1. A domain can have multiple page folders (e.g., main, helper, worker).
+2. Each page must contain exactly one file: either index.html or index.js. No other filenames allowed.
+3. You can not add a file without a page folder. 
 
-Web Access:
-Files are accessed via:
-https://[domain]/[page]
-Example: a.test/main/index.html → https://a.test/main
-VERY IMPORTANT: Use only domains and pages within the experiment folder.
+Web Access: For every file you define, the URL to visit the page will look like: https://[domain]/CSP/bug_id/[page]
+Example: [domain]/main/index.html is accessable via https://[domain]/CSP/bug_id/main
+Important: Pages are only accessable via this specific URL.
 
 Headers (headers.json):
-Optional. If present, must be a non-empty JSON array of key-value objects:
+* Optional. If present, must be a non-empty JSON array of key-value objects:
 [
   {"key": "Header-Name", "value": "Header-Value"}
 ]
 
+Reporting: Experiments report their outcome by sending a request to https://[domain]/report/?leak=bug_id, where [domain] can be any supported domain. 
+Important: Each experiment should have at least reportURL. Maintain the correct URL, do not deviate from it.
+
 Navigation (url_queue.txt):
-* Required if navigation is not triggered by the browser itself.
-* Contains one URL per line, in visit order.
 * If absent, default flow:
     1. Load main page
     2. Navigate to: https://[domain]/report/?bughog_sanity_check=OK
+* If present: contains one URL per line, in visit order.

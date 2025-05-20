@@ -1,0 +1,19 @@
+```json
+{
+  "c696806": {
+    "url_queue.txt": "https://a.test/CSP/c696806/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html manifest=\"helper/manifest.txt\">\n<head>\n    <script>\n        window.addEventListener('load', function() {\n            var ifrm = document.createElement('iframe');\n            ifrm.setAttribute('src', 'https://a.test/report/?leak=c696806');\n            document.body.appendChild(ifrm);\n        });\n    </script>\n</head>\n<body>\nThis page uses App Cache which is should be restricted by CSP sandbox.\n</body>\n</html>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"sandbox\"\n    }\n]"
+      },
+      "helper": {
+        "manifest.txt": "CACHE MANIFEST\n\nFALLBACK:\n/ /report/?leak=c696806\n\nNETWORK:\nhttp://*\nhttps://*\n*\n"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 22037Completion tokens: 266Total tokens: 22303

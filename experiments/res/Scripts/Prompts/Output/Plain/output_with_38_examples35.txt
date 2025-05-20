@@ -1,0 +1,15 @@
+```json
+{
+  "f1086999": {
+    "a.test": {
+      "main": {
+        "index.html": "<body>\n  <script>\n    document.body.innerHTML += '<iframe src=\"blob:https://a.test/CSP/f1086999/helper\"></iframe>';\n    document.body.innerHTML += '<iframe src=\"data:text/html;base64,SGVsbG8sIFdvcmxkIQ==\"></iframe>';\n    document.body.innerHTML += '<iframe src=\"filesystem:https://a.test/file\"></iframe>';\n  </script>\n</body>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src *\"\n  }\n]"
+      },
+      "helper": {
+        "index.html": "<script>\n  document.location.href = \"https://a.test/report/?leak=f1086999\";\n</script>"
+      }
+    }
+  }
+}
+```

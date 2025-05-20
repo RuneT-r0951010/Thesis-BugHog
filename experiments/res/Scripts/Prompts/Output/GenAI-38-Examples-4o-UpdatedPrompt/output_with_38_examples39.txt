@@ -1,0 +1,19 @@
+```json
+{
+  "c633348": {
+    "evil.com": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <script>\n      document.addEventListener('securitypolicyviolation', function(e) {\n        console.log('securitypolicyviolation_event.sourceFile=' + e.sourceFile);\n        console.log('securitypolicyviolation_event.lineNumber=' + e.lineNumber);\n        console.log('securitypolicyviolation_event.columnNumber=' + e.columnNumber);\n        document.location.href = 'https://a.test/report/?leak=c633348';\n      });\n    </script>\n  </head>\n  <body>\n    <iframe src=\"https://innocent.com/CSP/c633348/iframe\"></iframe>\n  </body>\n</html>\n"
+      }
+    },
+    "innocent.com": {
+      "iframe": {
+        "index.html": "<html>\n  <head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"frame-src http://evil.com; report-uri /report/?leak=c633348;\">\n  </head>\n  <body>\n    <script>\n      setTimeout(function() {\n        window.location.href = 'https://another-site.com';\n      }, 1000);\n    </script>\n  </body>\n</html>\n"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 22197Completion tokens: 313Total tokens: 22510

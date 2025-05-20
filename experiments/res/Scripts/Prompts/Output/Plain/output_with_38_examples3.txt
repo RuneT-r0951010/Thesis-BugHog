@@ -1,0 +1,17 @@
+```json
+{
+  "c845961": {
+    "url_queue.txt": "https://a.test/CSP/c845961/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n  </head>\n  <body>\n    <script>\n      const ifr = document.createElement('iframe');\n      ifr.src = 'https://b.test/CSP/c845961/helper?' + Math.random();\n      ifr.height = '600px';\n      const headers = [\n        'X-CSRF-TOKEN: 0123456789abcdef',\n        'Host: changed-host.bntk.pl',\n        'Cookie: aaaaa',\n        'User-Agent: Whatever',\n        'Content-type: application/json',\n      ];\n      ifr.csp = 'script-src\\r\\n' + headers.join('\\r\\n');\n      document.body.appendChild(ifr);\n    </script>\n  </body>\n</html>"
+      }
+    },
+    "b.test": {
+      "helper": {
+        "index.html": "<html>\n  <body>\n    <script>\n      document.location.href = \"https://a.test/report/?leak=c845961\";\n    </script>\n  </body>\n</html>"
+      }
+    }
+  }
+}
+```

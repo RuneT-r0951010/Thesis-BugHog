@@ -1,0 +1,21 @@
+```json
+{
+  "f1223743": {
+    "a.test": {
+      "main": {
+        "index.html": "<script>\n  var eventSource = new EventSource('/CSP/f1223743/replace');\n  eventSource.onmessage = function(event) {\n    if (event.data === 'alert(1)' || event.data === 'alert(2)') {\n      document.location.href = 'https://a.test/report/?leak=f1223743';\n    }\n  };\n</script>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'self'\"\n  }\n]"
+      }
+    },
+    "leak.test": {
+      "replace": {
+        "index.html": "--AaB03x\nContent-Type: text/html\n\n<html><script>alert(1);</script></html>\n--AaB03x\nContent-Type: text/html\n\n<html><script>alert(2);</script></html>\n--AaB03x--\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Type\",\n    \"value\": \"multipart/x-mixed-replace; boundary=AaB03x\"\n  }\n]"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 22114Completion tokens: 292Total tokens: 22406

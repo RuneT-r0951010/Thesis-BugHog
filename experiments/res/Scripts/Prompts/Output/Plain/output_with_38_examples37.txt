@@ -1,0 +1,16 @@
+```json
+{
+  "c610441": {
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"upgrade-insecure-requests\">\n</head>\n<body>\n    <a href=\"http://b.test/report/?leak=c610441\">Click me</a>\n    <script>\n        document.querySelector('a').onclick = function(event) {\n            event.preventDefault();\n            var href = this.href;\n            if (href.startsWith('https://')) {\n                document.location.href = href;\n            }\n        };\n    </script>\n</body>\n</html>"
+      }
+    },
+    "b.test": {
+      "report": {
+        "index.html": "This is a report page."
+      }
+    }
+  }
+}
+```

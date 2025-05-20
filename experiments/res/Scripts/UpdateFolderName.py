@@ -21,4 +21,4 @@ def replace_csp_with_foldername(base_path):
                     print(f"Skipped {file_path} due to error: {e}")
 
 # Usage example
-replace_csp_with_foldername('experiments/pages/GenAI-38-Examples-4o')
+replace_csp_with_foldername('experiments/pages/GenAI-38-Examples-4o-UpdatedPrompt')

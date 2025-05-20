@@ -1,0 +1,15 @@
+```json
+{
+  "c482558": {
+    "a.test": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <link rel=\"icon\" href=\"https://a.test/report/?leak=c482558\">\n  </head>\n</html>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'none';\"\n    }\n]"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 20238Completion tokens: 115Total tokens: 20353

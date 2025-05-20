@@ -1,0 +1,12 @@
+```json
+{
+  "c1001283": {
+    "a.test": {
+      "main": {
+        "index.html": "<iframe src=\"https://evil.com\"></iframe>\n<script>\n  document.querySelector('iframe').srcdoc = \"<script>document.location.href='https://a.test/report/?leak=c1001283';window.stop()<\\/script>\";\n</script>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'none'; script-src 'self'\"\n    }\n]"
+      }
+    }
+  }
+}
+```

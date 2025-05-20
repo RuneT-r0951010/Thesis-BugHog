@@ -1,0 +1,13 @@
+```json
+{
+  "c669086": {
+    "url_queue.txt": "https://a.test/CSP/c669086/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <script nonce='test'>\n      document.addEventListener('DOMContentLoaded', (event) => {\n        var newWindow = window.open('', '_blank');\n        newWindow.document.open();\n        newWindow.document.write(\"<html>\");\n        newWindow.document.write(\"<body>\");\n        newWindow.document.write(\"<img src='https://a.test/report/?leak=c669086' />\");\n        newWindow.document.write(\"</body>\");\n        newWindow.document.write(\"</html>\");\n        newWindow.document.close();\n      });\n    </script>\n  </head>\n  <body>\n    <p>This is a test for CSP bypass using window.open and document.write.</p>\n  </body>\n</html>",
+        "headers.json": "[{\n  \"key\": \"Content-Security-Policy\",\n  \"value\": \"default-src 'self'; script-src 'nonce-test'\"\n}]"
+      }
+    }
+  }
+}
+```

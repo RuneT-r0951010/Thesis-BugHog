@@ -1,0 +1,15 @@
+```json
+{
+    "c1001283": {
+        "a.test": {
+            "main": {
+                "index.html": "<iframe srcdoc=\"<script>document.location.href = 'https://a.test/report/?leak=c1001283';</script><meta http-equiv=refresh content='0;url=https://shhnjk.azurewebsites.net/csp_srcdoc.html'>\"></iframe>",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'self'\"\n    }\n]"
+            }
+        }
+    }
+}
+```
+
+
+Prompt tokens: 20477Completion tokens: 132Total tokens: 20609

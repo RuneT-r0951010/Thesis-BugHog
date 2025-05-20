@@ -1,0 +1,18 @@
+```json
+{
+  "c682673": {
+    "a.test": {
+      "main": {
+        "index.html": "<script src=\"http://a.test:222/CSP/c682673/helper\"></script>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src http://*:111\"\n  }\n]"
+      }
+    },
+    "leak.test": {
+      "main": {
+        "index.html": "<script>\n  fetch(\"http://a.test/other-path\").then(response => {\n    document.location.href = \"https://a.test/report/?leak=c682673\";\n  });\n</script>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'self'; script-src http://*/path\"\n  }\n]"
+      }
+    }
+  }
+}
+```

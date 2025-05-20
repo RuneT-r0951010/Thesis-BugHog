@@ -1,0 +1,14 @@
+```json
+{
+  "c955350": {
+    "leak.test": {
+      "main": {
+        "index.html": "<html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; script-src 'self' 'unsafe-inline'\">\n</head>\n<body>\n    <iframe src=\"javascript:'<iframe src=\\\"https://a.test/report/?leak=c955350\\\"></iframe>'\"></iframe>\n</body>\n</html>\n"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 20077Completion tokens: 121Total tokens: 20198

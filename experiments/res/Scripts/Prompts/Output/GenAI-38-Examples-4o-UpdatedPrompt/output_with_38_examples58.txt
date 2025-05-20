@@ -1,0 +1,21 @@
+```json
+{
+  "c777350": {
+    "url_queue.txt": "https://a.test/CSP/c777350/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <base href=\"https://leak.test/\">\n  </head>\n  <body>\n    <script>\n      var image = document.createElement('img');\n      image.src = 'nonexistent.png';\n      document.body.appendChild(image);\n    </script>\n  </body>\n</html>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"img-src 'self'; report-uri /report-uri-path\"\n  }\n]"
+      }
+    },
+    "leak.test": {
+      "report-uri-path": {
+        "index.js": "console.log('Report received');\n"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 21334Completion tokens: 224Total tokens: 21558

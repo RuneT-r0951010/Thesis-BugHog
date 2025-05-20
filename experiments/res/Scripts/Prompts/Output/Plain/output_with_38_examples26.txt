@@ -1,0 +1,15 @@
+```json
+{
+  "f886164": {
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe src=\"helper\" sandbox=\"allow-scripts\"></iframe>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'self';\"\n    }\n]"
+      },
+      "helper": {
+        "index.html": "<script>\n  document.location.href = \"https://a.test/report/?leak=f886164\";\n</script>\n"
+      }
+    }
+  }
+}
+```

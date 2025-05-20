@@ -1,0 +1,13 @@
+```json
+{
+    "f1505412": {
+        "a.test": {
+            "main": {
+                "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <title>CSP Test</title>\n    <script src=\"script.js\" nonce=\"valid-nonce\"></script>\n</head>\n<body>\n    <h1>Test Page</h1>\n</body>\n</html>",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'self' 'nonce-valid-nonce'\"\n    }\n]"
+            },
+            "script.js": "fetch('https://payments.google.com/payments/v4/js/integrator.js')\n    .then(response => response.text())\n    .then(data => {\n        var script = document.createElement('script');\n        script.innerHTML = data;\n        script.nonce = 'valid-nonce';\n        document.head.appendChild(script);\n    });"
+        }
+    }
+}
+```

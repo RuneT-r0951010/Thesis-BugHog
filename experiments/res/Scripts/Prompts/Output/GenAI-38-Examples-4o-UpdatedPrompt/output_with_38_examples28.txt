@@ -1,0 +1,16 @@
+```json
+{
+  "c534542": {
+    "url_queue.txt": "https://a.test/CSP/c534542/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<script src=\"https://a.localhost/script.js\"></script>\n<img id=\"result\">\n<script>\n  document.getElementById('result').src = 'https://a.test/report/?leak=c534542';\n</script>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src *.a.localhost\"\n    }\n]"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 20587Completion tokens: 158Total tokens: 20745

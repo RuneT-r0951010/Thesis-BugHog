@@ -1,0 +1,12 @@
+```json
+{
+  "c663620": {
+    "url_queue.txt": "https://leak.test/CSP/c663620/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; img-src 'none';\">\n  <link rel=\"prefetch\" href=\"http://a.test/report/?leak=c663620-prefetch\">\n  <link rel=\"prerender\" href=\"http://a.test/report/?leak=c663620-prerender\">\n  <link rel=\"dns-prefetch\" href=\"http://a.test/report/?leak=c663620-dns-prefetch\">\n  <link rel=\"preconnect\" href=\"http://a.test/report/?leak=c663620-preconnect\">\n  <link rel=\"preload\" href=\"//a.test/report/?leak=c663620-preload\">\n  <script>\n    window.addEventListener('load', () => {\n      document.querySelectorAll('link').forEach(link => {\n        var xhr = new XMLHttpRequest();\n        xhr.open('GET', link.href);\n        xhr.send();\n      });\n    });\n  </script>\n</head>\n<body>\n  <p>Testing CSP bypass via link prefetch, prerender, dns-prefetch, preconnect, and preload.</p>\n</body>\n"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,15 @@
+```json
+{
+  "c811691": {
+    "a.test": {
+      "main": {
+        "index.html": "<object data=\"https://a.test/report/?leak=c811691\"></object>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"object-src 'none'\"\n    }\n]"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 19711Completion tokens: 94Total tokens: 19805

@@ -1,0 +1,11 @@
+```json
+{
+  "c955350": {
+    "leak.test": {
+      "main": {
+        "index.html": "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self';script-src 'self' 'unsafe-inline'\">\n<iframe src=\"javascript:'<iframe src=\\\"https://a.test/report/?leak=c955350\\\" />'\">"
+      }
+    }
+  }
+}
+```

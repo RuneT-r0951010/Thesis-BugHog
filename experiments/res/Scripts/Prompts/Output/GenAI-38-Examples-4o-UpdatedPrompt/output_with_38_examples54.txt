@@ -1,0 +1,15 @@
+```json
+{
+    "f1457100": {
+        "url_queue.txt": "https://a.test/CSP/f1457100/main\nhttps://a.test/report/?leak=baseline\n",
+        "a.test": {
+            "main": {
+                "index.html": "<meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'none';\"/>\n<script>alert(location)</script>\n<object data=\"data:text/html,object<script>document.location.href='https://a.test/report/?leak=f1457100'</script>\"></object>\n<iframe src=\"data:text/html,iframe<script>alert('frame')</script>\"></iframe>\n"
+            }
+        }
+    }
+}
+```
+
+
+Prompt tokens: 21633Completion tokens: 150Total tokens: 21783

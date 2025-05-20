@@ -1,2 +1,2 @@
-You will be shown examples of bug reports and their test solutions.
-Study these examples and then generate a new test case for a previously unseen bug report, following the structure and rules above.
+You will be shown examples of bug reports and their expected test solutions.
+Study these examples and then generate a new test case for a previously unseen bug report, following the structure of the examples and the given context.

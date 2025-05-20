@@ -1,0 +1,15 @@
+```json
+{
+  "c320796": {
+    "leak.test": {
+      "main": {
+        "index.html": "<meta http-equiv=\"Content-Security-Policy\" content=\"object-src data:;\"></meta>\n\n<object width=\"300\" height=\"300\"\n    data=\"data:application/x-silverlight-2,\"\n    type=\"application/x-silverlight-2\" >\n    <param name=\"source\" value=\"SilverlightApplication1.xap\"/>\n</object>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"object-src data:\"\n    }\n]"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 20502Completion tokens: 158Total tokens: 20660

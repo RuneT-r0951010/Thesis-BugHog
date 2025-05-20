@@ -46,7 +46,7 @@ class BugReportBuilder:
         if (saved_result):
             return saved_result
         else:
-            return self.scrape_bug_report(bug_id)
+            return "" #self.scrape_bug_report(bug_id)
     
     # Get expected bug report based on USE_URLS
     #   if true: return the url of a bugreport as only info

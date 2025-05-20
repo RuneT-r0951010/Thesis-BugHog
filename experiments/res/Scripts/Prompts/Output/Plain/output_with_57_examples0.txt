@@ -1,0 +1,12 @@
+```json
+{
+  "c990581": {
+    "a.test": {
+      "main": {
+        "index.html": "<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'unsafe-inline'\">\n</head>\n\n<body>\n    <script>  \n        let blob = new Blob([`  \n        <script>      \n        eval('document.location.href=\"https://a.test/report/?leak=c990581\"');  \n        <\\/script>  \n    `], {  \n            type: \"text/html\"  \n        });  \n        let url = URL.createObjectURL(blob);  \n        location.href = url;  \n    </script>  \n</body>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'unsafe-inline'\"\n    }\n]"
+      }
+    }
+  }
+}
+```

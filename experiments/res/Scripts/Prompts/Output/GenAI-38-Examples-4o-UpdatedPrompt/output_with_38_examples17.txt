@@ -1,0 +1,25 @@
+```json
+{
+  "c967780": {
+    "a.test": {
+      "main": {
+        "index.html": "<!doctype html>\n<html>\n    <head>\n        <script type=\"text/javascript\" src=\"helper/main.js\"></script>\n    </head>\n    <body>\n        <a href=\"helper/download.txt\" id=\"download-link\" download></a>\n    </body>\n</html>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'self'\"\n    }\n]"
+      },
+      "helper": {
+        "main.js": "window.addEventListener(\"load\", function onLoad(event) {\n    setTimeout(() => {\n        var downloadLink = document.getElementById(\"download-link\");\n        downloadLink.click();\n    }, 10000);\n});",
+        "download.txt": ""
+      }
+    },
+    "leak.test": {
+      "redirect": {
+        "index.html": "<script>\n  var w = window.open(\"\", \"_blank\");\n  w.document.body.innerHTML =\n    \"<iframe src='https://a.test/report/?leak=c967780'></iframe>\";\n</script>",
+        "headers.json": "[\n    {\n        \"key\": \"status\",\n        \"value\": \"302\"\n    },\n    {\n        \"key\": \"Location\",\n        \"value\": \"javascript: window.open()\"\n    }\n]"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 20439Completion tokens: 348Total tokens: 20787

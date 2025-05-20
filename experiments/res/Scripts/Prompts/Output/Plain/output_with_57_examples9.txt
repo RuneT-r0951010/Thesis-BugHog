@@ -1,0 +1,15 @@
+```json
+{
+  "c377995": {
+    "a.test": {
+      "main": {
+        "index.html": "<script>\n  var w = window.open(\"sandboxed\", \"\", \"width=400,height=400\");\n  w.onload = new w.Function(\n    \"document.location.href = 'https://a.test/report/?leak=c377995'\"\n  );\n</script>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"sandbox\"\n    }\n]"
+      },
+      "sandboxed": {
+        "index.html": "<!-- Empty sandboxed page -->"
+      }
+    }
+  }
+}
+```

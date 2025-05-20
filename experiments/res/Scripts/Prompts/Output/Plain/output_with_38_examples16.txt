@@ -1,0 +1,12 @@
+```json
+{
+  "c957606": {
+    "a.test": {
+      "main": {
+        "index.html": "<script>\n  window.onload = function () {\n    var iframe = document.createElement('iframe');\n    iframe.src = 'https://example.com';\n    document.body.appendChild(iframe);\n\n    setTimeout(function () {\n      iframe.contentWindow.location.href = 'about:blank';\n      setTimeout(function () {\n        var img = iframe.contentDocument.createElement('img');\n        img.src = 'https://a.test/report/?leak=c957606';\n        iframe.contentDocument.body.appendChild(img);\n      }, 1000);\n    }, 2000);\n  };\n</script>",
+        "headers.json": "[{\n  \"key\": \"Content-Security-Policy\",\n  \"value\": \"img-src 'none';\"\n}]"
+      }
+    }
+  }
+}
+```

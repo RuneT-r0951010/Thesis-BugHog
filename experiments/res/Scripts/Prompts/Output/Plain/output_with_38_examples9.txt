@@ -1,0 +1,14 @@
+```json
+{
+  "c909865": {
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; script-src 'nonce-whitelist'\">\n\n<body>\n  Setting location with <code>iframe.contentWindow.location.href</code><br/>\n  <iframe id=\"iframe_href\" src=\"helper\"></iframe>\n  <hr>\n  Setting location with <code>iframe.src</code><br/>\n  <iframe id=\"iframe_src\" src=\"helper\"></iframe>\n  <script nonce=\"whitelist\">\n    const iframeHref = document.querySelector(\"#iframe_href\");\n    iframeHref.addEventListener('load', () => {\n      iframeHref.contentWindow.location.href = \"javascript:'FAIL (JS URL executed)'\";\n    });\n    const iframeSrc = document.querySelector(\"#iframe_src\");\n    iframeSrc.addEventListener('load', () => {\n      iframeSrc.src = \"javascript:'FAIL (JS URL executed)'\";\n    });\n  </script>\n</body>\n"
+      },
+      "helper": {
+        "index.html": "<!DOCTYPE html>\nPASS\n"
+      }
+    }
+  }
+}
+```

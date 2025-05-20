@@ -1,0 +1,27 @@
+```json
+{
+  "c732779": {
+    "url_queue.txt": "https://a.test/CSP/c732779/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src a.test; report-uri https://a.test/report/?leak=c732779;\">\n</head>\n<body>\n    <iframe src=\"https://vuln.shhnjk.com/allowcsp.php\" csp=\"script-src 'sha256-test' 'report-sample'; report-uri https://a.test/report/?leak=c732779-injected;\"></iframe>\n</body>\n</html>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src a.test\"\n    }\n]"
+      }
+    },
+    "vuln.shhnjk.com": {
+      "allowcsp.php": {
+        "index.html": "<script src=\"https://a.test/CSP/c732779/script.js\"></script>",
+        "headers.json": "[\n    {\n        \"key\": \"Allow-CSP-From\",\n        \"value\": \"https://test.shhnjk.com\"\n    }\n]"
+      }
+    },
+    "leak.test": {
+      "report": {
+        "index.html": "Leaked Report\n"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 21827Completion tokens: 335Total tokens: 22162

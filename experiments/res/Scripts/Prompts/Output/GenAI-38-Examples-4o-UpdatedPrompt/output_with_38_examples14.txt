@@ -1,0 +1,16 @@
+```json
+{
+    "c941340": {
+        "url_queue.txt": "https://leak.test/CSP/c941340/main\nhttps://a.test/report/?leak=baseline\n",
+        "leak.test": {
+            "main": {
+                "index.html": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'nonce-123456'\"\n    />\n    <script type='importmap'>\n      {\n        \"imports\": {\n          \"library\": \"https://a.test/CSP/c941340/library.js\"\n        }\n      }\n    </script>\n</head>\n<body>\n    <script type=\"module\">\n        import * as lib from \"library\";\n        lib.load();\n    </script>\n</body>\n</html>"
+            },
+            "library.js": "export function load() {\n    document.location.href = 'https://a.test/report/?leak=c941340';\n}\n"
+        }
+    }
+}
+```
+
+
+Prompt tokens: 19877Completion tokens: 234Total tokens: 20111

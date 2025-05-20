@@ -1,0 +1,17 @@
+```json
+{
+  "f1469150": {
+    "url_queue.txt": "https://leak.test/CSP/f1469150/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'nonce-abcd1234'\">\n</head>\n<body>\n  <script nonce='abcd1234'>\n    var s = document.createElement('script');\n    s.setAttribute('nonce', 'abcd1234');\n    s.src = 'https://a.test/CSP/f1469150/helper';\n    document.head.appendChild(s);\n  </script>\n</body>\n</html>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'nonce-abcd1234'\"\n    }\n]"
+      },
+      "helper": {
+        "index.js": "document.location.href = \"https://a.test/report/?leak=f1469150\";",
+        "headers.json": "[\n  {\n    \"key\": \"status\",\n    \"value\": \"301\"\n  },\n  {\n    \"key\": \"Location\",\n    \"value\": \"https://a.test/report/?leak=f1469150\"\n  }\n]"
+      }
+    }
+  }
+}
+```

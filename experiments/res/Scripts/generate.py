@@ -11,7 +11,7 @@ CSP_tests_folder = "../../pages/CSP"
 
 reports_folder = "Reports"
 reports = [f for f in os.listdir(reports_folder) if os.path.isfile(os.path.join(reports_folder, f))]
-VALID_POCS = 76 # len reports
+VALID_POCS = len(reports)
 
 PoC_folders = [
     d for d in os.listdir(CSP_tests_folder)
@@ -31,8 +31,6 @@ sorted_PoCs = [item for pair in zip(sorted_chromium_bugs, sorted_firefox_bugs) f
 longer_tail = sorted_chromium_bugs[len(sorted_firefox_bugs):] if len(sorted_chromium_bugs) > len(sorted_firefox_bugs) else sorted_firefox_bugs[len(sorted_chromium_bugs):]
 sorted_PoCs.extend(longer_tail)
 
-TOTAL_NUM_POCS = len(sorted_PoCs)
-
 # Define minimum number of examples to be used to insert in the prompt
 MINIMUM_EXAMPLES = VALID_POCS // 2
 # Define maximum number of examples to be insterted in prompt (should always be > MINIMUM_EXAMPLES)
@@ -43,12 +41,15 @@ NUM_EXPERIMENT_GENERATION_PER_PROMPT = 1
 # Use URLS instead of scraped content (should be false for now as visiting links is not yet possible)
 USE_URLS = False
 
+GenAI_test_folder_name = f"GenAI-{MINIMUM_EXAMPLES}-Examples-4o-UpdatedPrompt"
+GenAI_tests_folder = f"../../pages/{GenAI_test_folder_name}"
+
 # Use JSON formatted input, if false: use plain text
 USE_JSON = True
 if (USE_JSON):
-    prompt_builder = PromptBuilder.JSONPromptBuilder(sorted_PoCs)
+    prompt_builder = PromptBuilder.JSONPromptBuilder(sorted_PoCs, GenAI_test_folder_name)
 else:
-    prompt_builder = PromptBuilder.TextPromptBuilder(sorted_PoCs)
+    prompt_builder = PromptBuilder.TextPromptBuilder(sorted_PoCs, GenAI_test_folder_name)
 # Use the beta formatted output prompt structure
 USE_FORMATTED_OUTPUT = False
 
@@ -59,8 +60,8 @@ DEBUG = False
 if (MAXIMUM_EXAMPLES - MINIMUM_EXAMPLES <= 0):
     print(f"Maximum should always be greater than minimum, MAXIMUM_EXAMPLES >= MINIMUM_EXAMPLES + 1")
     SystemExit() 
-if (MAXIMUM_EXAMPLES > TOTAL_NUM_POCS):
-    print(f"Maximum should not be higher than number of tests")
+if (MAXIMUM_EXAMPLES > VALID_POCS):
+    print(f"Maximum should not be higher than number of valid tests")
     SystemExit() 
 
 # Defenition of expected response object
@@ -108,7 +109,7 @@ def parse_json_to_files(data, base_path):
 
 def plain_response(messages, n, GenAI_tests_folder, i):
     response = client.chat.completions.create(
-        model="gpt-3o-mini", # try mini??? or gpt-4 as its said to have better code generation
+        model="gpt-4o", # try mini??? or gpt-4 as its said to have better code generation
         messages=messages, # type: ignore
     )
     print(response)
@@ -118,8 +119,14 @@ def plain_response(messages, n, GenAI_tests_folder, i):
         data = extract_json_block(response_content)
         parse_json_to_files(data, GenAI_tests_folder)
 
-    with open(f"Prompts/Output/Plain/output_with_{n}_examples{i}.txt", "w",) as f:
+    output_file = f"Prompts/Output/{GenAI_test_folder_name}"
+    os.makedirs(output_file, exist_ok=True) 
+    with open(f"{output_file}/output_with_{n}_examples{i}.txt", "w",) as f:
         f.write(response_content)
+
+        f.write(f"\n\n\nPrompt tokens: {response.usage.prompt_tokens}")
+        f.write(f"Completion tokens: {response.usage.completion_tokens}")
+        f.write(f"Total tokens: {response.usage.total_tokens}")
 
 
 def beta_formatted_response(messages, n, GenAI_tests_folder):
@@ -170,11 +177,9 @@ def beta_formatted_response(messages, n, GenAI_tests_folder):
 def generate_tests(start_index, n, messages):
     try:
         if (USE_FORMATTED_OUTPUT):
-            GenAI_tests_folder = f"../../pages/GenAI-{n}-Examples-Beta"
             os.makedirs(GenAI_tests_folder, exist_ok=True) 
             beta_formatted_response(messages, n, GenAI_tests_folder)
         else:
-            GenAI_tests_folder = f"../../pages/GenAI-{n}-Examples-3o-mini"
             os.makedirs(GenAI_tests_folder, exist_ok=True) 
             plain_response(messages, n, GenAI_tests_folder, start_index)
 

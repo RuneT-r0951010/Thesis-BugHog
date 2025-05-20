@@ -1,0 +1,19 @@
+```json
+{
+  "c894228": {
+    "url_queue.txt": "https://leak.test/CSP/c894228/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe id=\"frame\" src=\"https://a.test/CSP/c894228/helper\"></iframe>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'none'; script-src 'unsafe-inline'; frame-src 'self';\"\n  }\n]"
+      },
+      "helper": {
+        "index.html": "<script>\n  var blobContent = new Blob([\n    \"<script src='https://a.test/report/?leak=c894228'><\\/script>\"\n  ], {type : 'text/html'});\n  var blobUrl = URL.createObjectURL(blobContent);\n  document.getElementById('frame').src = blobUrl;\n</script>\n"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 19356Completion tokens: 232Total tokens: 19588

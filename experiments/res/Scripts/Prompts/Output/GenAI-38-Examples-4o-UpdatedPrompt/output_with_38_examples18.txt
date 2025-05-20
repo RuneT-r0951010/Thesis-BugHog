@@ -1,0 +1,14 @@
+```json
+{
+    "c971231": {
+        "a.test": {
+            "main": {
+                "index.html": "<html>\n<meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'unsafe-inline' 'self'; img-src 'self'\"/>\n<body>\n<button onclick=\"breakit1()\">CSP TEST1</button>\n<button onclick=\"breakit2()\">CSP TEST2</button>\n<script>\n    function breakit1() {\n        open(\"javascript:'<img src=https://a.test/report/?leak=c971231-1>'\", \"_self\");\n    }\n\n    function breakit2() {\n        location.href = \"javascript:'<img src=https://a.test/report/?leak=c971231-2>'\";\n    }\n</script>\n</body>\n</html>\n"
+            }
+        }
+    }
+}
+```
+
+
+Prompt tokens: 20605Completion tokens: 200Total tokens: 20805

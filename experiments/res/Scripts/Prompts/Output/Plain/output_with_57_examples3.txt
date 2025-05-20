@@ -1,0 +1,15 @@
+```json
+{
+    "c1001982": {
+        "url_queue.txt": "https://a.test/CSP/c1001982/main\nhttps://a.test/report/?leak=baseline\n",
+        "a.test": {
+            "main": {
+                "index.html": "<html>\n<head>\n  <meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'unsafe-inline'\">\n</head>\n<body>\n  <iframe name=\"iframe_a\" srcdoc=\"<script>history.back()</script>\n    <p>about-srcdoc iframe</p>\n    <a href='https://a.test/CSP/c1001982/payload' target='iframe_a'>click here</a>\">\n  </iframe>\n</body>\n</html>\n"
+            },
+            "payload": {
+                "index.html": "<script>alert(origin); document.location.href='https://a.test/report/?leak=c1001982';</script>\n"
+            }
+        }
+    }
+}
+```

@@ -1,0 +1,19 @@
+```json
+{
+  "f1396320": {
+    "url_queue.txt": "https://a.test/CSP/f1396320/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<iframe sandbox=\"allow-scripts\" src=\"helper\"></iframe>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"sandbox allow-scripts\"\n    }\n]"
+      },
+      "helper": {
+        "index.html": "<script>\n  document.location.href = \"https://a.test/report/?leak=f1396320\";\n</script>\n"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 21285Completion tokens: 161Total tokens: 21446

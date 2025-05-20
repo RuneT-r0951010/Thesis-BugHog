@@ -1,0 +1,12 @@
+```json
+{
+  "f1422924": {
+    "url_queue.txt": "https://a.test/CSP/f1422924/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<!DOCTYPE html>\n<html>\n  <head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'none'\">\n  </head>\n  <body>\n    <svg width=\"100\" height=\"100\">\n      <rect width=\"100\" height=\"100\" fill=\"blue\">\n        <animate attributeName=\"opacity\" from=\"1\" to=\"0.5\" dur=\"1s\" repeatCount=\"indefinite\" accessKey=\"a\" />\n      </rect>\n    </svg>\n    <button accesskey=\"a\">Button with Access Key A</button>\n    <script>\n      // Try to attach any JavaScript based event listeners\n      document.addEventListener('click', function() {\n        document.location.href = \"https://a.test/report/?leak=f1422924\";\n      });\n    </script>\n  </body>\n</html>\n"
+      }
+    }
+  }
+}
+```

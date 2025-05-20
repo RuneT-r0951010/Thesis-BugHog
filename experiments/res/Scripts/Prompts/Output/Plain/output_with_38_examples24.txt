@@ -1,0 +1,17 @@
+```json
+{
+    "c358471": {
+        "a.test": {
+            "main": {
+                "index.html": "<iframe src=\"https://leak.test/CSP/c358471/worker\"></iframe>",
+                "headers.json": "[{\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'self'; connect-src 'self'\"\n}]"
+            }
+        },
+        "leak.test": {
+            "worker": {
+                "index.js": "try {\n    importScripts('https://b.test/cross-origin-script.js');\n} catch (e) {\n    document.location.href = 'https://a.test/report/?leak=c358471';\n}"
+            }
+        }
+    }
+}
+```

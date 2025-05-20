@@ -1,0 +1,21 @@
+```json
+{
+  "f1505412": {
+    "leak.test": {
+      "main": {
+        "index.html": "<script nonce=\"123\">\n  var script = document.createElement('script');\n  script.src = 'https://a.test/CSP/f1505412/exfiltrator';\n  document.head.appendChild(script);\n</script>",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'nonce-123';\"\n  }\n]"
+      }
+    },
+    "a.test": {
+      "exfiltrator": {
+        "index.js": "document.location.href = \"https://a.test/report/?leak=f1505412\";\n"
+      }
+    },
+    "url_queue.txt": "https://leak.test/CSP/f1505412/main\nhttps://a.test/report/?leak=baseline\n"
+  }
+}
+```
+
+
+Prompt tokens: 21377Completion tokens: 207Total tokens: 21584

@@ -1,0 +1,16 @@
+```json
+{
+  "c894228": {
+    "url_queue.txt": "https://leak.test/CSP/c894228/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe id=\"iframe\" src=\"helper\"></iframe>\n<script>\n  window.onload = function() {\n    document.getElementById(\"iframe\").contentWindow.postMessage(\n      'trigger',\n      '*'\n    );\n  };\n\n  window.addEventListener(\"message\", function(event) {\n    if (event.data === \"bypass\") {\n      document.location.href = \"https://a.test/report/?leak=c894228\";\n    }\n  });\n</script>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"default-src 'none'\"\n  }\n]"
+      },
+      "helper": {
+        "index.html": "<script>\n  window.addEventListener(\"message\", function(event) {\n    if (event.data === 'trigger') {\n      var blob = new Blob([\n        \"<script>parent.postMessage('bypass', '*')<\\/script>\"\n      ], { type: 'text/html' });\n      var blobURL = URL.createObjectURL(blob);\n      event.source.postMessage(blobURL, '*');\n    }\n  });\n</script>\n"
+      }
+    }
+  }
+}
+```

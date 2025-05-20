@@ -1,0 +1,19 @@
+```json
+{
+    "c358471": {
+        "url_queue.txt": "https://a.test/CSP/c358471/main\nhttps://a.test/report/?leak=baseline\n",
+        "a.test": {
+            "main": {
+                "index.html": "<iframe src=\"worker\"></iframe>",
+                "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"script-src 'self' 'unsafe-inline'; connect-src 'self'\"\n    }\n]"
+            },
+            "worker": {
+                "index.js": "importScripts('https://b.test/script.js');\nvar xhttp = new XMLHttpRequest();\nxhttp.open(\"GET\", \"https://b.test/api\", true);\nxhttp.send();\nxhttp.onload = function() {\n  console.log('XHR completed');\n};"
+            }
+        }
+    }
+}
+```
+
+
+Prompt tokens: 20421Completion tokens: 194Total tokens: 20615

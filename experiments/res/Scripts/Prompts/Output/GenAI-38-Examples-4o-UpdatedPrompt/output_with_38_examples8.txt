@@ -1,0 +1,4 @@
+{"f1644076": {"url_queue.txt": "https://leak.test/CSP/f1644076/main\nhttps://a.test/report/?leak=baseline\n", "leak.test": {"main": {"index.html": "<html>\n  <body>\n    <embed src=\"https://a.test/report/?leak=f1644076-embed\"></embed>\n    <hr>\n    <object data=\"https://a.test/report/?leak=f1644076-object\"></object>\n  </body>\n</html>\n", "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"frame-ancestors 'none'\"\n    },\n    {\n        \"key\": \"X-Frame-Options\",\n        \"value\": \"DENY\"\n    }\n]"}}}}
+
+
+Prompt tokens: 20013Completion tokens: 188Total tokens: 20201

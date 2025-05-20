@@ -1,0 +1,4 @@
+{"f949706": {"a.test": {"main": {"index.html": "<style>\n  #imgDiv {\n    background-image: url('https://a.test/report/?leak=f949706-css');\n  }\n</style>\n<div id=\"imgDiv\"></div>\n<script>\n  const worker = new Worker('worker.js');\n</script>\n", "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"img-src 'self'; script-src 'self'\"\n  }\n]"}, "worker": {"index.js": "importScripts('https://a.test/report/?leak=f949706-worker');\n"}}}}
+
+
+Prompt tokens: 20501Completion tokens: 155Total tokens: 20656

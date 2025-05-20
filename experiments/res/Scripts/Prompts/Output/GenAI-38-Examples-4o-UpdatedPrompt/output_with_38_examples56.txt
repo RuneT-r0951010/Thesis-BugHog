@@ -1,0 +1,21 @@
+```json
+{
+  "c767635": {
+    "url_queue.txt": "https://leak.test/CSP/c767635/main\nhttps://a.test/report/?leak=baseline\n",
+    "leak.test": {
+      "main": {
+        "index.html": "<iframe src=\"https://a.test/CSP/c767635/helper\"></iframe>\n"
+      }
+    },
+    "a.test": {
+      "helper": {
+        "index.html": "<iframe srcdoc=\"<img src='https://a.test/report/if/c767635/image'><style>@import url('https://a.test/report/if/c767635/style');</style>\"></iframe>\n",
+        "headers.json": "[\n    {\n        \"key\": \"Content-Security-Policy\",\n        \"value\": \"img-src 'none'; style-src *\"\n    }\n]"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 21640Completion tokens: 194Total tokens: 21834

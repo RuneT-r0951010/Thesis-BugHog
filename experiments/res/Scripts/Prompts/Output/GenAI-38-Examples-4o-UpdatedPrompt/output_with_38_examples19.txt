@@ -1,0 +1,15 @@
+```json
+{
+    "c990581": {
+        "a.test": {
+            "main": {
+                "index.html": "<head>\n    <meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'unsafe-inline'\">\n</head>\n\n<body>\n    <script>\n        let blob = new Blob([\n            `\n            <script>\n                eval('document.location.href=\"https://a.test/report/?leak=c990581\"');\n            <\\/script>\n        `\n        ], {\n            type: \"text/html\"\n        });\n        let url = URL.createObjectURL(blob);\n        location.href = url;\n    <\\/script>\n</body>\n"
+            }
+        }
+    }
+}
+```
+
+
+
+Prompt tokens: 20180Completion tokens: 169Total tokens: 20349

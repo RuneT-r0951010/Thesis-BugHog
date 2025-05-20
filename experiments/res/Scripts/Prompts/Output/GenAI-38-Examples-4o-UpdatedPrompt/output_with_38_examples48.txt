@@ -1,0 +1,16 @@
+```json
+{
+  "f1422924": {
+    "url_queue.txt": "https://a.test/CSP/f1422924/main\nhttps://a.test/report/?leak=baseline\n",
+    "a.test": {
+      "main": {
+        "index.html": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" accesskey=\"a\">\n  <rect x=\"10\" y=\"10\" width=\"80\" height=\"80\" fill=\"blue\" accessKeyLabel=\"Press 'a'\"/>\n</svg>\n<script>\n  document.addEventListener('keydown', function(e) {\n    if (e.key === 'a') {\n      document.location.href = 'https://a.test/report/?leak=f1422924';\n    }\n  });\n</script>\n",
+        "headers.json": "[\n  {\n    \"key\": \"Content-Security-Policy\",\n    \"value\": \"script-src 'none'\"\n  }\n]\n"
+      }
+    }
+  }
+}
+```
+
+
+Prompt tokens: 21869Completion tokens: 236Total tokens: 22105

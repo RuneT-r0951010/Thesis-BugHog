@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html manifest="helper/manifest.txt">
+<head>
+    <script>
+        window.addEventListener('load', function() {
+            var ifrm = document.createElement('iframe');
+            ifrm.setAttribute('src', 'https://a.test/report/?leak=c696806');
+            document.body.appendChild(ifrm);
+        });
+    </script>
+</head>
+<body>
+This page uses App Cache which is should be restricted by CSP sandbox.
+</body>
+</html>
