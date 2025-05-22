@@ -1,0 +1,9 @@
+<iframe src="https://a.test/GenAI-38-Examples-4o-Latest/c916326/helper"></iframe>
+<button onclick="navigate()">Go</button>
+<script>
+  function navigate() {
+    var url = 'data:text/html,<script>history.back()%3Balert(self.origin)%3C/script>';
+    var iframe = document.querySelector('iframe');
+    iframe.src = url;
+  }
+</script>

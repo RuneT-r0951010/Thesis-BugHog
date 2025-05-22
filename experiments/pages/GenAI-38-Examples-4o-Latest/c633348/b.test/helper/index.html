@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      window.onload = function () {
+        // Attempt to navigate the frame, triggering a security policy violation.
+        location.href = "https://evil.com/";
+      };
+    </script>
+  </head>
+  <body>Helper Frame</body>
+</html>

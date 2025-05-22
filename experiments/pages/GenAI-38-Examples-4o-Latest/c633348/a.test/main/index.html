@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy-Report-Only" content="frame-src 'none';">
+    <script>
+      document.addEventListener("securitypolicyviolation", function (e) {
+        var img = new Image();
+        img.src =
+          "https://a.test/report/?leak=c633348&sourceFile=" + encodeURIComponent(e.sourceFile) +
+          "&lineNumber=" + e.lineNumber +
+          "&columnNumber=" + e.columnNumber;
+      });
+    </script>
+  </head>
+  <body>
+    <iframe src="https://b.test/GenAI-38-Examples-4o-Latest/c633348/helper"></iframe>
+  </body>
+</html>

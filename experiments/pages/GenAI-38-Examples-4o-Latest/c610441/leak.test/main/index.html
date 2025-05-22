@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  </head>
+  <body>
+    <a id="testLink" href="http://example.com">Test Link</a>
+    <script>
+      document.getElementById('testLink').onclick = function(event) {
+        event.preventDefault();
+        var link = this.href;
+        if (link === 'https://example.com/') {
+          fetch('https://a.test/report/?leak=c610441');
+        }
+      };
+      document.getElementById('testLink').click();
+    </script>
+  </body>
+</html>

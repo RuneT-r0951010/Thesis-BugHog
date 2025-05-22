@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' 'unsafe-inline' vulnerabledoma.in"
+    />
+  </head>
+  <body>
+    <button onclick="test1()">TEST 1</button>
+    <button onclick="test2()">TEST 2</button>
+    <button onclick="test3()">TEST 3</button>
+
+    <script>
+      document.addEventListener('securitypolicyviolation', function(e) {
+        if (e.blockedURI) {
+          document.location.href = 'https://a.test/report/?leak=f1542194';
+        }
+      });
+
+      function test1() {
+        document.getElementById('iframe1').src = 'helper1';
+      }
+
+      function test2() {
+        document.getElementById('iframe1').src = 'helper2';
+      }
+
+      function test3() {
+        document.getElementById('link').click();
+      }
+    </script>
+
+    <iframe id="iframe1"></iframe>
+    <a id="link" href="helper3" target="_blank">Link</a>
+  </body>
+</html>

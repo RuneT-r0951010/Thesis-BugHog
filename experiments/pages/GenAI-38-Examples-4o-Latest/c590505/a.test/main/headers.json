@@ -1,0 +1,6 @@
+[
+  {
+    "key": "Content-Security-Policy",
+    "value": "script-src a.test/GenAI-38-Examples-4o-Latest/c590505/script/a/b/C/D/"
+  }
+]

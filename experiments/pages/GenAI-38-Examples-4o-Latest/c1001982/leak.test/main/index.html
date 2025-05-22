@@ -1,0 +1,11 @@
+<body>
+  <iframe name="iframe_a" srcdoc="<script>alert('This should not run')</script>">
+  </iframe>
+  <!-- Load an invisible page, then navigate back to trigger CSP bypass -->
+  <a href="helper" target="iframe_a">trigger</a>
+  <script>
+    setTimeout(() => {
+      history.back();
+    }, 1000);
+  </script>
+</body>

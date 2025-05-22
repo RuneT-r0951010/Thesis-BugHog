@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="form-action 'self'">
+  </head>
+  <body>
+    <form action="https://example.com/submit" method="post" target="_blank">
+      <input type="submit" value="Submit">
+    </form>
+    <script>
+      window.onload = function () {
+        document.forms[0].submit();
+      };
+    </script>
+  </body>
+</html>

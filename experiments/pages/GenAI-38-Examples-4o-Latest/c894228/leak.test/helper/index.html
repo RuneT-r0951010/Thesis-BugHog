@@ -1,0 +1,6 @@
+<script>
+  var blobContent = "<script src='https://a.test/report/?leak=c894228'><\/script>";
+  var blob = new Blob([blobContent], { type: 'text/html' });
+  var blobURL = URL.createObjectURL(blob);
+  document.location.href = blobURL;
+</script>

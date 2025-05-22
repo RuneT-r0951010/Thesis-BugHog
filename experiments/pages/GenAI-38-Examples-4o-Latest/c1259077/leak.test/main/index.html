@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="form-action https://a.test">
+  </head>
+  <body>
+    <form name="myForm" action="https://a.test/GenAI-38-Examples-4o-Latest/c1259077/helper"></form>
+    <script>
+      window.addEventListener('securitypolicyviolation', function() {
+        document.location.href = 'https://a.test/report/?leak=c1259077';
+      });
+      myForm.submit();
+    </script>
+  </body>
+</html>

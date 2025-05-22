@@ -1,0 +1,7 @@
+<script>
+  fetch('helper').then(response => response.text()).then(data => {
+    document.open();
+    document.write(data);
+    document.close();
+  });
+</script>

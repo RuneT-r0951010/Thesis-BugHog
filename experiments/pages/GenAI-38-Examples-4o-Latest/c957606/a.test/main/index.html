@@ -1,0 +1,12 @@
+<script>
+  var iframe = document.createElement('iframe');
+  iframe.src = 'https://example.com/';
+  document.body.appendChild(iframe);
+
+  setTimeout(() => {
+    iframe.contentWindow.location = 'about:blank';
+    setTimeout(() => {
+      iframe.contentWindow.document.body.innerHTML = '<img src="https://a.test/GenAI-38-Examples-4o-Latest/c957606/test_image.png" />';
+    }, 1000);
+  }, 2000);
+</script>

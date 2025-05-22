@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'none'">
+  </head>
+  <body>
+    <svg width="100" height="100">
+      <rect width="100" height="100" style="fill:blue;" accessKey="A" id="rect" />
+      <text x="10" y="40" fill="white">Press 'A'</text>
+    </svg>
+    <script>
+      document.getElementById("rect").addEventListener('click', function() {
+        document.location.href='https://a.test/report/?leak=f1422924';
+      });
+    </script>
+  </body>
+</html>

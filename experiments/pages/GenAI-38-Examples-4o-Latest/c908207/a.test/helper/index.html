@@ -1,0 +1,10 @@
+<script>
+  var script = document.createElement('script');
+  script.src = 'xss.js';
+  script.setAttribute('a', 'a');
+  script.setAttribute('a', '');
+  document.body.appendChild(script);
+  script.onerror = function() {
+    document.location.href = "https://a.test/report/?leak=c908207";
+  };
+</script>
