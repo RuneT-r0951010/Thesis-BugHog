@@ -1,2 +1,2 @@
-https://leak.test/CSP/c916326/main
+https://leak.test/GenAI-38-Examples-4o-mini-UpdatedPrompt/c916326/main
 https://a.test/report/?leak=baseline
