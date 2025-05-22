@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>CSP Timing Attack</title>
+  </head>
+  <body>
+    <iframe id="test-iframe" src="https://example.com" onload="checkForError()"></iframe>
+    <script>
+      function checkForError() {
+        console.log('Iframe loaded.');
+        // Additional checks can be added to detect server response timing
+      }
+    </script>
+  </body>
+</html>

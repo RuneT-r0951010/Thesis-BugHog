@@ -1,0 +1,1 @@
+self.importScripts('https://b.lvh.me/script.js');

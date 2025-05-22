@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' vulnerabledoma.in">
+    <title>CSP Violation Test</title>
+</head>
+<body>
+    <script>
+        document.addEventListener('securitypolicyviolation', e => {
+            console.dir(e);
+            alert(e.blockedURI);
+        });
+    </script>
+    <button onclick="window.location='https://vulnerabledoma.in/fx_csp_violation_leak_302.php'">TEST 1</button>
+    <button onclick="window.location='https://www.vulnerabledoma.in/path?query'">TEST 2</button>
+    <button onclick="document.getElementById('link').click();">TEST 3</button>
+    <a id="link" href="https://www.vulnerabledoma.in/path?query" style="display:none;">Hidden Link</a>
+</body>
+</html>

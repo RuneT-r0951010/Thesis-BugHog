@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-security-policy" content="img-src http://127.0.0.1:8000">
+</head>
+<body>
+<script>
+    url = '<meta http-equiv="content-security-policy" content="default-src *"><img src="https://abc.xyz/img/g-icon.jpg">';
+    window.open("javascript:'"+url+"'","_self");
+</script>
+</body>
+</html>

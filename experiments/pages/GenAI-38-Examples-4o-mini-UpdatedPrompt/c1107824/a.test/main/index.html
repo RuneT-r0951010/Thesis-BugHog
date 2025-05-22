@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; frame-src 'self';"/>
+  </head>
+  <body>
+    <iframe src="?xss=<script>eval('alert(location.href)')</script>"></iframe>
+    <script>
+      // Cross window navigation PoC
+      eval('alert(location.href)');
+    </script>
+  </body>
+</html>

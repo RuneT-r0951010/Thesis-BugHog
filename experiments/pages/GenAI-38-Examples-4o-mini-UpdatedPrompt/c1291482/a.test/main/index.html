@@ -1,0 +1,9 @@
+<script>fetch('test.php').then(response => {
+    if (response.status === 100) {
+        alert('Ignored 100 response');
+    } else if (response.status === 101) {
+        alert('Parsed 101 response, body should be null.');
+    } else {
+        alert('Received response with status: ' + response.status);
+    }
+});</script>

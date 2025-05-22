@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src '*'; script-src 'self';">
+  </head>
+  <body>
+    <script>
+      // Intentionally trigger CSP violation
+      fetch('http://a.com:222/report/?leak=c682673');
+      fetch('http://a.com/other-path/report/?leak=c682673');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline';">
+    <script>
+      var worker = new Worker("/worker.js");
+      worker.onmessage = function(event) {
+        alert("Received " + event.data);
+      };
+      worker.postMessage("ping");
+    </script>
+  </head>
+  <body></body>
+</html>

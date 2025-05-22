@@ -1,0 +1,12 @@
+<style>
+  body {
+    background-image: url('https://a.test/report/?leak=f949706-image');
+  }
+</style>
+<script>
+  var worker = new Worker('worker.js');
+  worker.onmessage = function(event) {
+    console.log(event.data);
+  };
+  worker.postMessage('start');
+</script>
