@@ -1,2 +1,2 @@
-https://vuln.shhnjk.com/CSP/c732779/main
+https://vuln.shhnjk.com/GenAI-57-Examples-4o/c732779/main
 https://a.test/report/?leak=baseline

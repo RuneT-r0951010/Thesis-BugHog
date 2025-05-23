@@ -1,6 +1,6 @@
 [
   {
     "key": "Content-Security-Policy",
-    "value": "script-src 'self' //a.test/CSP/c590505/A/B/C/D/"
+    "value": "script-src 'self' //a.test/GenAI-57-Examples-4o/c590505/A/B/C/D/"
   }
 ]

@@ -1,1 +1,1 @@
-document.location.href = "https://sub.a.test/CSP/c1074317/redirected?token=sensitive-data";
+document.location.href = "https://sub.a.test/GenAI-57-Examples-4o/c1074317/redirected?token=sensitive-data";
