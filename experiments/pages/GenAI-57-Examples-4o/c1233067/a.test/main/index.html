@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CSP Header Length Test</title>
+  </head>
+  <body>
+    <iframe
+      id="testFrame"
+      src="https://example.com"
+      csp="default-src 'self' 'unsafe-inline'; " + "script-src 'self'; ".repeat(1000) + ""
+    ></iframe>
+    <script>
+      document.getElementById('testFrame').onload = function() {
+        fetch('https://a.test/report/?leak=c1233067');
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<script>
+  // Wait for the initial load of a different website in the iframe
+  var iframe = document.createElement('iframe');
+  iframe.src = 'https://example.com'; // Initial different website
+  document.body.appendChild(iframe);
+
+  setTimeout(function () {
+    // Change the iframe's location to about:blank
+    iframe.src = 'about:blank';
+
+    setTimeout(function () {
+      // Inject an image element into the about:blank document
+      var img = iframe.contentWindow.document.createElement('img');
+      img.src = 'https://a.test/?leak=c957606'; // This should get blocked by CSP
+      iframe.contentWindow.document.body.appendChild(img);
+    }, 1000);
+  }, 2000);
+</script>
