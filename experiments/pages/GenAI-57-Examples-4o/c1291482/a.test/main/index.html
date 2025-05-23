@@ -1,0 +1,12 @@
+<!-- Request to this URL should trigger handling of 100-199 status -->
+<script>
+  fetch('helper').then(response => {
+    if (response.status >= 100 && response.status < 200 && response.status !== 101) {
+      // This block should not execute in a properly compliant browser
+      document.body.innerHTML = 'Non-compliant response: ' + response.status;
+      document.location.href = 'https://a.test/report/?leak=c1291482';
+    }
+  }).catch(() => {
+    // Expected behavior
+  });
+</script>

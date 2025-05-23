@@ -1,0 +1,27 @@
+<html>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline' 'self'; img-src 'self'">
+  <body>
+    <button id="test1" onclick="breakit1()">CSP TEST1</button>
+    <button id="test2" onclick="breakit2()">CSP TEST2</button>
+    <script>
+      function breakit1() {
+        open(
+          "javascript:'<img src=https://a.test/report/?leak=c971231-test1>'",
+          "_self"
+        );
+      }
+
+      function breakit2() {
+        location.href =
+          "javascript:'<img src=https://a.test/report/?leak=c971231-test2>'";
+      }
+
+      window.onload = function() {
+        document.getElementById("test1").click();
+        setTimeout(function() {
+          document.getElementById("test2").click();
+        }, 1000);
+      };
+    </script>
+  </body>
+</html>

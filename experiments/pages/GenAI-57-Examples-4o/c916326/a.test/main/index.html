@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Nonce Bypass Test</title>
+  </head>
+  <body>
+    <iframe id="cspFrame" src="helper"></iframe>
+    <button id="goButton">Go</button>
+    <script>
+      document.getElementById("goButton").onclick = function() {
+        var win = window.open('data:text/html,<script>history.back();</script>', '_blank');
+      };
+    </script>
+  </body>
+</html>

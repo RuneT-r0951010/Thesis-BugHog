@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <base href="https://leak.test/other" />
+  </head>
+  <body>
+    <script>
+      document.addEventListener('securitypolicyviolation', function(e) {
+        if (e.blockedURI.indexOf('c777350') > -1) {
+          document.location.href = 'https://a.test/report/?leak=c777350';
+        }
+      }, false);
+      var img = document.createElement('img');
+      img.src = 'https://forbidden.domain/image.png';
+      document.body.appendChild(img);
+    </script>
+  </body>
+</html>

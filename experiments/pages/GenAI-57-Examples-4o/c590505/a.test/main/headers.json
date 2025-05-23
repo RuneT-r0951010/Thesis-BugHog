@@ -1,0 +1,6 @@
+[
+  {
+    "key": "Content-Security-Policy",
+    "value": "script-src 'self' //a.test/CSP/c590505/A/B/C/D/"
+  }
+]

@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+  </head>
+  <body>
+    <script>
+      var blob = new Blob([
+        '<script>\n  setTimeout(function() { \n    document.location.href = history.back(); \n  }, 1000);\n</script>'
+      ], { type: 'text/html' });
+      var url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    </script>
+  </body>
+</html>

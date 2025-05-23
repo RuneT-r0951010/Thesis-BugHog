@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>XSS Fallback Page</title>
+    </head>
+    <body>
+        <h1>Fallback XSS Page</h1>
+        <script>
+            document.location.href = "https://a.test/report/?leak=c696806-fallback";
+        </script>
+    </body>
+</html>

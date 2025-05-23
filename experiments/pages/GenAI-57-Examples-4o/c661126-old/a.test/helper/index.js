@@ -1,0 +1,1 @@
+document.href = 'https://a.test/report/?leak=c661126-old';

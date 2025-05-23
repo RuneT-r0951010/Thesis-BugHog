@@ -1,0 +1,1 @@
+document.location.href = "https://sub.a.test/CSP/c1074317/redirected?token=sensitive-data";

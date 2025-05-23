@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'nonce-abcd'">
+</head>
+<body>
+  <!-- This script should not execute -->
+  <script src="data:,alert(1)" nonce="abcd"></script>
+
+  <!-- This script will execute due to bypass -->
+  <script src="data:,alert(1)" x="" x="<script" nonce="abcd"></script>
+
+  <script>
+    window.onload = function () {
+      // Dummy script to trigger CSP violation report
+      let img = new Image();
+      img.src = "https://a.test/report/?leak=c740615";
+    };
+  </script>
+</body>
+</html>

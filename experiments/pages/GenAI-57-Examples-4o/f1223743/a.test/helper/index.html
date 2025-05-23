@@ -1,0 +1,18 @@
+<!-- Response with Multipart Content -->
+<script>
+    // Simulate multipart/x-mixed-replace response
+    const parts = [
+        "<!DOCTYPE html><html><body><script>alert(1)</script></body></html>",
+        "<!DOCTYPE html><html><body><script>alert(2)</script></body></html>"
+    ];
+
+    let index = 0;
+    function loadNextPart() {
+        if (index < parts.length) {
+            document.body.innerHTML = parts[index++];
+            setTimeout(loadNextPart, 1000); // Simulate delay between parts
+        }
+    }
+
+    loadNextPart();
+</script>

