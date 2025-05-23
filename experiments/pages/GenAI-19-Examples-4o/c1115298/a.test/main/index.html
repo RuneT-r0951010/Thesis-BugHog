@@ -1,0 +1,16 @@
+<script>
+  var content = `<!DOCTYPE html>
+    <html>
+      <head>
+        <meta http-equiv="refresh" content="0; url='https://a.test/GenAI-19-Examples-4o/c1115298/redirect'">
+      </head>
+      <body>
+        <script>
+          setTimeout(() => { history.back(); }, 2000);
+        <\/script>
+      </body>
+    </html>`;
+  var blob = new Blob([content], { type: 'text/html' });
+  var url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+</script>

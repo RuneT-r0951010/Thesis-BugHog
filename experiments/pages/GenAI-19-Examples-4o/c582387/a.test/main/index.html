@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'">
+    <script>
+      par = 'val';
+      url1 = "javascript:'<scr" + "ipt>alert(`dom: `+document.domain+`\\nPdom:`+parent.document.domain+`\\npar: `+opener.par);</scr" + "ipt>'";
+      open(url1);
+      url2 = "javascript:alert(`dom: `+document.domain+`\\nPdom:`+parent.document.domain+`\\npar: `+opener.par);";
+      open(url2);
+    </script>
+  </head>
+</html>

@@ -1,0 +1,13 @@
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'nonce-random';">
+</head>
+<body>
+<button id="goButton">Go</button>
+<script nonce="random">
+    document.getElementById('goButton').onclick = function() {
+        window.location.href = "data:text/html,<script>history.back()</script>";
+    };
+</script>
+</body>
+</html>

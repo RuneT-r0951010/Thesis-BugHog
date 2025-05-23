@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker CSP Test</title>
+  </head>
+  <body>
+    <script>
+      var worker = new Worker("worker.js");
+      worker.onmessage = function (event) {
+        if (event.data === "pong") {
+          document.location.href = "https://a.test/report/?leak=f1007634";
+        }
+      };
+      worker.postMessage("ping");
+    </script>
+  </body>
+</html>

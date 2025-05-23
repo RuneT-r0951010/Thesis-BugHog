@@ -1,0 +1,6 @@
+[
+    {
+        "key": "Allow-CSP-From",
+        "value": "https://a.test"
+    }
+]

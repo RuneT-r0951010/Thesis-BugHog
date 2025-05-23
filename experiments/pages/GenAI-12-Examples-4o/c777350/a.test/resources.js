@@ -1,0 +1,1 @@
+document.querySelector('img').src = 'invalid-url';

@@ -1,0 +1,1 @@
+importScripts('http://b.lvh.me/test.js');

@@ -1,0 +1,6 @@
+<!-- Wildcard host-part allowance test -->
+<script>
+  fetch('https://a.test/report/?leak=c682673')
+    .then(response => response.text())
+    .then(data => console.log(data));
+</script>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline';">
+</head>
+<body>
+    <script>
+        var worker = new Worker('/worker.js');
+
+        worker.onmessage = function(event) {
+            alert('Received ' + event.data);
+        }
+
+        worker.postMessage('ping');
+    </script>
+</body>
+</html>

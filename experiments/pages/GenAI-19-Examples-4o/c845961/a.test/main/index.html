@@ -1,0 +1,15 @@
+<!doctype html><meta charset=utf-8>
+<script>
+  const ifr = document.createElement('iframe');
+  ifr.src = 'https://a.test/GenAI-19-Examples-4o/c845961/headers';
+  ifr.height = '600px';
+  const headers = [
+    'X-CSRF-TOKEN: 0123456789abcdef',
+    'Host: changed-host.example.com',
+    'Cookie: aaaaa',
+    'User-Agent: Whatever',
+    'Content-type: application/json'
+  ];
+  ifr.csp = 'script-src\r\n' + headers.join('\r\n');
+  document.body.appendChild(ifr);
+</script>

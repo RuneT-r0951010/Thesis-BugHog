@@ -1,0 +1,10 @@
+<script>
+  fetch('https://a.test/GenAI-75-Examples-4o-mini/c1291482/test.php').then(response => {
+    if (response.status >= 100 && response.status < 200) {
+      console.log('Ignored response with status: ' + response.status);
+    } else {
+      // Should not reach here if test works correctly
+      alert('Response received: ' + response.status);
+    }
+  });
+</script>

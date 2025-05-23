@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; report-uri /report/?leak=c1074317" />
+  </head>
+  <body>
+    <script>
+      var script = document.createElement('script');
+      script.src = 'https://example.com/redirect';
+      document.body.appendChild(script);
+
+      window.addEventListener('error', function(e) {
+        var img = new Image();
+        img.src = 'https://a.test/report/?leak=c1074317&error=' + encodeURIComponent(e.error.stack);
+      });
+
+      setTimeout(function() {
+        // Assume loaded script executes a function causing a CSP violation
+        try { 
+          someFunction(); 
+        } catch (e) { 
+          // Process the error
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

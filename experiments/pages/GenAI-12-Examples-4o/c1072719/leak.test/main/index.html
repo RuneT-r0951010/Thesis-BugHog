@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-security-policy" content="img-src http://127.0.0.1:8000">
+</head>
+<body>
+<script>
+    var url = '<meta http-equiv="content-security-policy" content="default-src *"><img src="https://a.test/report/?leak=c1072719">';
+    window.open("javascript:'"+url+"'","_self");
+</script>
+</body>
+</html>

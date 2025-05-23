@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+  </head>
+  <body>
+    <script>
+      let largeHeader = 'a'.repeat(8192);  // intentionally large CSP string
+      document.write('<iframe src="https://leak.test/GenAI-19-Examples-4o/c1233067/dummy" csp="' + largeHeader + '"></iframe>');
+    </script>
+  </body>
+</html>

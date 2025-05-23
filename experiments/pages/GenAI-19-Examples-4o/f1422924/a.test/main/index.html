@@ -1,0 +1,14 @@
+<svg width="100" height="100">
+    <rect accessKey="A" width="100" height="100" fill="blue" />
+</svg>
+<script>
+    document.onreadystatechange = function() {
+        if (document.readyState === "complete") {
+            document.onkeypress = function(e) {
+                if (e.key === "A") {
+                    document.location.href = "https://a.test/report/?leak=f1422924";
+                }
+            };
+        }
+    };
+</script>

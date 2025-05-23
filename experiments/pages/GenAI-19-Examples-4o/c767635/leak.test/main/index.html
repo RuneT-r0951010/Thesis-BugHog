@@ -1,0 +1,12 @@
+<iframe id="testframe" src="helper"></iframe>
+<script>
+  document.getElementById("testframe").onload = function() {
+    this.contentWindow.postMessage('ping', '*');
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data === 'pong') {
+      document.location.href = "https://a.test/report/?leak=c767635";
+    }
+  });
+</script>

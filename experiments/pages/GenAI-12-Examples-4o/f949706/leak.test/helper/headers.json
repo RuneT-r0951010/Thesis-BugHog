@@ -1,0 +1,6 @@
+[
+    {
+        "key": "Content-Security-Policy",
+        "value": "style-src 'self'; script-src 'self'; connect-src 'none'"
+    }
+]

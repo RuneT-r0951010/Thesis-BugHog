@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <meta http-equiv='Content-Security-Policy' content="default-src 'none'; script-src 'unsafe-inline';">
+  </head>
+  <body>
+    <iframe id="frame" src="https://leak.test/GenAI-19-Examples-4o/c1115628/helper"></iframe>
+    <script>
+      window.addEventListener("message", function(event) {
+        if (event.origin !== "https://leak.test") return;
+        const secretBlob = new Blob([
+          `<script>fetch('https://leak.test/GenAI-19-Examples-4o/c1115628/secret').then(res => res.text()).then(data => alert(data));<\/script>`
+        ], { type: 'text/html' });
+        const blobURL = URL.createObjectURL(secretBlob);
+        parent.location = blobURL;
+      }, false);
+    <\/script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="object-src data:;"></meta>
+  </head>
+  <body>
+    <object width="300" height="300"
+      data="data:application/x-silverlight-2,"
+      type="application/x-silverlight-2" >
+      <param name="source" value="https://a.test/report/?leak=c320796"/>
+    </object>
+    <script>
+      window.onload = function () {
+        document.body.appendChild(document.createElement('object')).data = 'data:application/x-silverlight-2,';
+      };
+    </script>
+  </body>
+</html>

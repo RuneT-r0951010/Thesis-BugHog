@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'none';"/>
+  </head>
+  <body>
+    <script>alert(location)</script>
+    <object data="data:text/html,object<script>alert('object')</script>"></object>
+    <iframe src="data:text/html,iframe<script>alert('frame')</script>"></iframe>
+  </body>
+</html>

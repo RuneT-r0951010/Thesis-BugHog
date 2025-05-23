@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="form-action 'self';">
+    </head>
+    <body>
+        <form action="https://a.test/report/?leak=c630332" method="post" target="_blank">
+            <button type="submit">Submit</button>
+        </form>
+        <script>
+            document.querySelector('form').submit();
+        </script>
+    </body>
+</html>

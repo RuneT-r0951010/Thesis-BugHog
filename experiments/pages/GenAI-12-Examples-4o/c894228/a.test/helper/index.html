@@ -1,0 +1,7 @@
+<script nonce="123456">
+  var attackerControlledString =
+    "<script src=https://a.test/report/?leak=c894228><\/script>";
+  var blob = new Blob([attackerControlledString], { type: "text/html" });
+  var url = URL.createObjectURL(blob);
+  window.location = url;
+</script>

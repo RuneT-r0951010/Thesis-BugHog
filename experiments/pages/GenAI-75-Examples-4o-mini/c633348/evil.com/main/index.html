@@ -1,0 +1,8 @@
+<script>
+  document.addEventListener('securitypolicyviolation', function(e) {
+    console.log('securitypolicyviolation_event.sourceFile=' + e.sourceFile);
+    console.log('securitypolicyviolation_event.lineNumber=' + e.lineNumber);
+    console.log('securitypolicyviolation_event.columnNumber=' + e.columnNumber);
+  });
+</script>
+<iframe src='https://innocent.com'></iframe>

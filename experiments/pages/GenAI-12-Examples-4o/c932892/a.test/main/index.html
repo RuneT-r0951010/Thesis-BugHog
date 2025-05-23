@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="img-src 'none'; report-uri /report/?leak=c932892">
+</head>
+<body>
+    <img src="https://bugs.chromium.org/attachments/805557">
+    <script nonce="random">
+        document.addEventListener('securitypolicyviolation', (e) => {
+            const isRedirectionDetected = e.blockedURI && (e.blockedURI.includes('googleusercontent.com') || e.blockedURI.includes('accounts.google.com'));
+            if (isRedirectionDetected) {
+                fetch('/report/?leak=c932892');
+            }
+        });
+    </script>
+</body>
+</html>

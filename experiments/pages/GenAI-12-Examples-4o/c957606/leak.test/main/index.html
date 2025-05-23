@@ -1,0 +1,10 @@
+<iframe id="testFrame" src="https://example.com"></iframe>
+<script>
+  setTimeout(() => {
+    var iframe = document.getElementById('testFrame');
+    iframe.onload = function() {
+      iframe.contentWindow.document.body.innerHTML = '<img src="https://a.test/report/?leak=c957606">';
+    };
+    iframe.src = 'about:blank';
+  }, 2000);
+</script>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'">
+</head>
+<body>
+    <script>
+        alert(1);
+        document.write('<script>alert(2);<\/script>');
+    </script>
+    <script>
+        document.location.href = 'https://a.test/report/?leak=f1223743';
+    </script>
+</body>

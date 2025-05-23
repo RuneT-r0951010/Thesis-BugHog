@@ -1,0 +1,7 @@
+<iframe src="helper"></iframe>
+<button id="go">Go</button>
+<script>
+  document.getElementById("go").onclick = function() {
+    location.href = "filesystem:http://a.test/persistent/valid_nonce";
+  };
+</script>

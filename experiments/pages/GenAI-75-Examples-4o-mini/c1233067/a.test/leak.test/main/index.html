@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <title>CSP Leak Test</title>
+  </head>
+  <body>
+    <script>
+      // Simulate large CSP header and invoke request
+      const createLargeHeader = () => {
+        let largeCSP = 'default-src ';
+        for (let i = 0; i < 5000; i++) {
+          largeCSP += `${i}.example.com `;
+        }
+        return largeCSP;
+      };
+      const secFetchCSP = createLargeHeader();
+      fetch('https://example.com', {
+        method: 'GET',
+        headers: {
+          'Sec-Fetch-CSP': secFetchCSP
+        }
+      });
+    </script>
+  </body>
+</html>

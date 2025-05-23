@@ -1,0 +1,12 @@
+<head>
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; style-src 'nonce-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; img-src data: http: https:; font-src data: http https"
+  />
+  <style nonce="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855">
+    @import url('https://a.test/report/?leak=f1605814');
+  </style>
+</head>
+<body>
+  <p>This test should block the @import request in compliant browsers.</p>
+</body>

@@ -1,0 +1,13 @@
+<body>
+  <script>
+    if (location.ancestorOrigins.length === 0) {
+      var f = document.createElement('iframe');
+      f.name = 'iframe_a';
+      document.body.appendChild(f);
+      f.onload = function() {
+        history.back();
+      };
+      f.src = 'https://a.test/GenAI-12-Examples-4o/c1001982/helper';
+    }
+  </script>
+</body>

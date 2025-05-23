@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <script>
+      var iframe = document.createElement('iframe');
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      var csp = 'default-src \'none\'';
+      while (csp.length < 10000) { csp += ' ' + csp; }
+      iframe.setAttribute('csp', csp);
+      iframe.src = 'https://example.com';
+      document.body.appendChild(iframe);
+
+      iframe.onload = function() {
+        setTimeout(function() {
+          document.location.href = 'https://a.test/report/?leak=c1233067';
+        }, 1000);
+      };
+    </script>
+  </head>
+  <body></body>
+</html>

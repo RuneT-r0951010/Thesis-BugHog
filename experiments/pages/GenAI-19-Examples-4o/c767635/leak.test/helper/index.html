@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+      var img = new Image();
+      img.src = "https://example.com/blocked.png";
+
+      var style = document.createElement("style");
+      style.textContent = "body { background: url('https://example.com/allowed.png'); }";
+      document.head.appendChild(style);
+
+      window.addEventListener('message', function(event) {
+        if (event.data === 'ping') {
+          event.source.postMessage('pong', event.origin);
+        }
+      });
+    </script>
+  </body>
+</html>

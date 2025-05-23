@@ -1,0 +1,5 @@
+<script>
+  fetch('/GenAI-19-Examples-4o/c1115628/blocked').then(response => response.text()).then(data => {
+    parent.postMessage({ secret: data }, 'https://a.test');
+  });
+<\/script>

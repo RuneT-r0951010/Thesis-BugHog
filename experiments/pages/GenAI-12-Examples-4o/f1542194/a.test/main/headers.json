@@ -1,0 +1,6 @@
+[
+    {
+        "key": "Content-Security-Policy-Report-Only",
+        "value": "default-src 'self' 'unsafe-inline' vulnerabledoma.in; report-uri /report/?leak=f1542194"
+    }
+]

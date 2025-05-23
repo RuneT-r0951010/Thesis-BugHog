@@ -1,0 +1,1 @@
+importScripts('https://a.test/report/?leak=f949706-scripts');

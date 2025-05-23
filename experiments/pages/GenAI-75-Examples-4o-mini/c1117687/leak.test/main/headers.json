@@ -1,0 +1,6 @@
+[
+  {
+    "key": "Content-Security-Policy",
+    "value": "default-src 'none'; script-src 'unsafe-inline'; frame-src https://8a53k1sqt5elsz52-attacker.okay.blue"
+  }
+]

@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="img-src 'none';" />
+  </head>
+  <body>
+    <iframe id="vulnerable_iframe"></iframe>
+    <script>
+      setTimeout(() => {
+        const frame = document.getElementById('vulnerable_iframe');
+        frame.src = 'https://example.com';
+        setTimeout(() => {
+          frame.contentWindow.location = 'about:blank';
+          setTimeout(() => {
+            frame.contentDocument.body.innerHTML = '<img src="https://a.test/GenAI-19-Examples-4o/c957606/test_image.png">';
+            if (frame.contentDocument.querySelector('img').complete) {
+              document.location.href = 'https://a.test/report/?leak=c957606';
+            }
+          }, 1000);
+        }, 2000);
+      }, 1000);
+    </script>
+  </body>
+</html>

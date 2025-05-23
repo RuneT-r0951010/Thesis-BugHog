@@ -1,0 +1,15 @@
+<script>
+  const workerBlob = new Blob([
+    `importScripts('https://b.test/GenAI-12-Examples-4o/c358471/worker.js');`
+  ], { type: 'application/javascript' });
+
+  const workerUrl = URL.createObjectURL(workerBlob);
+
+  const worker = new Worker(workerUrl);
+
+  worker.onmessage = function(event) {
+    if (event.data === 'cross-origin-request-successful') {
+      document.location.href = 'https://a.test/report/?leak=c358471';
+    }
+  };
+</script>

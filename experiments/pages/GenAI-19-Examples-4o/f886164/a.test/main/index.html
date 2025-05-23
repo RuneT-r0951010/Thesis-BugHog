@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+  </head>
+  <body>
+    <iframe id="sandboxedIframe" sandbox></iframe>
+    <script>
+      var iframe = document.getElementById('sandboxedIframe');
+      var blob = new Blob([
+        '<script>document.location.href="https://a.test/report/?leak=f886164";<\/script>'
+      ], { type: 'text/html' });
+      iframe.src = URL.createObjectURL(blob);
+    </script>
+  </body>
+</html>

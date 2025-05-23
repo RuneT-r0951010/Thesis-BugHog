@@ -1,0 +1,10 @@
+[
+  {
+    "key": "Location",
+    "value": "https://a.test/report/?leak=f1469150"
+  },
+  {
+    "key": "Content-Type",
+    "value": "text/javascript"
+  }
+]

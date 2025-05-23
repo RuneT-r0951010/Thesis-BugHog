@@ -1,0 +1,10 @@
+[
+    {
+        "key": "Location",
+        "value": "javascript: window.location.href='https://a.test/report/?leak=c967780'"
+    },
+    {
+        "key": "status",
+        "value": "302"
+    }
+]

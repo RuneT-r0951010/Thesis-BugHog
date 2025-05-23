@@ -1,0 +1,9 @@
+<script>
+  var blob = new Blob(["Hello, world!"], {type: "text/plain"});
+  var blobUrl = URL.createObjectURL(blob);
+  var img = new Image();
+  img.onerror = function() {
+    document.location.href = 'https://a.test/report/?leak=f1086999-blob';
+  };
+  img.src = blobUrl;
+</script>

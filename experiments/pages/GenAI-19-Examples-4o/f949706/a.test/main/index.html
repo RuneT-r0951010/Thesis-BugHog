@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        background-image: url('https://a.test/report/?leak=f949706-cssimage');
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var worker = new Worker('worker.js');
+      worker.postMessage('start');
+    </script>
+  </body>
+</html>

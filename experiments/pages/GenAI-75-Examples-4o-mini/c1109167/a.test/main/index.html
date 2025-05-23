@@ -1,0 +1,5 @@
+<iframe id='x' src='about:blank'></iframe>
+<script nonce='1337'>
+    x.onload = _ => x.contentDocument.body.innerHTML = '<iframe onload=alert(location.href)>'; 
+    x.contentWindow.location.reload();
+</script>

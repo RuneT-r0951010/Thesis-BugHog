@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <iframe id="childFrame"></iframe>
+    <script>
+      document.getElementById('childFrame').onload = function() {
+        var childFrame = this.contentWindow;
+        var payload = "<script>\nvar req = new XMLHttpRequest();\nreq.onreadystatechange = function () { if (this.readyState == 4 && this.status == 200) { document.location.href= 'https://a.test/report/?leak=c1117687'; } };\nreq.open('GET', 'https://a.test/GenAI-12-Examples-4o/c1117687/secret', true);\nreq.send();<\/script>";
+
+        var blob = new Blob([payload], { type: 'text/html' });
+        var filesystemURL = URL.createObjectURL(blob);
+        childFrame.location = filesystemURL;
+      };
+    </script>
+  </body>
+</html>

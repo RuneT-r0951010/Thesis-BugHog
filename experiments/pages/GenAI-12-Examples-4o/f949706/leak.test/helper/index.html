@@ -1,0 +1,10 @@
+<style>
+  div {
+    background-image: url('https://a.test/report/?leak=f949706');
+  }
+</style>
+<div></div>
+<script>
+  var worker = new Worker("worker");
+  worker.postMessage("test");
+</script>

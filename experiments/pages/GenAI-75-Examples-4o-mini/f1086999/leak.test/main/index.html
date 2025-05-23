@@ -1,0 +1,6 @@
+<script>
+  var blob = new Blob(["<script>alert('Blob script executed');</script>"]);
+  var url = URL.createObjectURL(blob);
+  console.log(url);
+  document.location.href = url;
+</script>
